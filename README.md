@@ -1,4 +1,4 @@
-# Ask
+<div style="text-align:center"># Ask</div>
 A Tinder-like platform to rent & sell items in cool and smart way.
 
 ## Business Model Canvas
