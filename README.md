@@ -1,4 +1,4 @@
-# Ask![alt text](https://github.com/AlexisDrch/Ask/blob/master/CVS-Health-logo.png)
+# Ask![alt text](https://github.com/AlexisDrch/Ask/blob/master/CVS-Health-logo.png=40x10)
 A Tinder-like platform to rent & sell items in cool and smart way.
 
 ## Business Model Canvas
