@@ -15,7 +15,7 @@ public class Item {
     private double averagePrice;
     private URL image;
 
-
+    // stayayaa
     //name, picture, average price, id
 
 
