@@ -5,5 +5,5 @@ CREATE TABLE IF NOT EXISTS "item" (
 	description varchar(1000) NOT NULL
 );
 
-#items are stored by default in Ask database
-# @todo : ON DELETE CASCADE necessary / dangerous ?
+--items are stored by default in Ask database
+--@todo : ON DELETE CASCADE necessary / dangerous ?
