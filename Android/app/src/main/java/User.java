@@ -124,5 +124,5 @@ public class User {
                 ", rating=" + rating +
                 '}';
     }
-    
+
 }
