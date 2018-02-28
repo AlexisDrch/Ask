@@ -71,13 +71,14 @@ public class Request {
         return matcher;
     }
 
-    /**
-     *
-     * @param newOffer
-     * @return true of successful add, false if unsuccessful add
-     */
-    public boolean addOffer(Offer newOffer) {
+    public boolean addOfferToRequest(Offer newOffer) {
         return offers.add(newOffer);
+    }
+
+    public boolean confirmMatch(Offer offerConfirmed) {
+
+
+        return false;
     }
 
     @Override
