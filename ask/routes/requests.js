@@ -1,24 +1,24 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/User.js');
+var Request = require('../models/Request.js');
 
 
 
-/* adding user(s)
+/* adding request(s)
 	- POST
-	_ body : json user
+	_ body : json request
 */
 router.post('/',function(req, res, next) {
 
 	console.log(JSON.stringify(req.body,null,2));
 
-	User.addUser(req.body)
+	Request.addRequest(req.body)
     .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
           data: data,
-          message: 'Posted new users ' + JSON.stringify(req.body)
+          message: 'Posted new request(s) ' + JSON.stringify(req.body)
         });
     })
     .catch(function (err) {
@@ -27,22 +27,22 @@ router.post('/',function(req, res, next) {
 }); 
 
 
-/* listing user(s)
+/* listing request(s)
 	- GET
-	_ optional : /user_id
+	_ optional : /request_id
 */
-router.get('/:user_id?', function(req, res, next) {
+router.get('/:request_id?', function(req, res, next) {
 
-	// by user_id
-	if (req.params.user_id) {
+	// by request_id
+	if (req.params.request_id) {
 
-		User.getUserByUserId(req.params.user_id)
+		Request.getRequestByRequestId(req.params.request_id)
 	    .then(function (data) {
 	      res.status(200)
 	        .json({
 	          status: 'success',
 	          data: data,
-	          message: 'Retrieved user ' + JSON.stringify(req.params.user_id)
+	          message: 'Retrieved request ' + JSON.stringify(req.params.request_id)
 	        });
 	    })
 	    .catch(function (err) {
@@ -50,14 +50,14 @@ router.get('/:user_id?', function(req, res, next) {
 	    });
 
 	} else {
-		// all users
-		User.getAllUsers()
+		// all request(s)
+		Request.getAllRequests()
 	    .then(function (data) {
 	      res.status(200)
 	        .json({
 	          status: 'success',
 	          data: data,
-	          message: 'Retrieved ALL users'
+	          message: 'Retrieved ALL request(s)'
 	        });
 	    })
 	    .catch(function (err) {

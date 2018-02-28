@@ -1,13 +1,3 @@
-var promise = require('bluebird');
-
-var options = {
-  // Initialization Options
-  promiseLib: promise
-};
-
-var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://localhost:5432/ask';
-var db = pgp(connectionString);
 
 // add query functions
 function getAllItems(req, res, next) {
@@ -25,6 +15,4 @@ function getAllItems(req, res, next) {
     });
 }
 
-module.exports = {
-  getAllItems: getAllItems
-};
+router.get('/api/items', getAllItems);
