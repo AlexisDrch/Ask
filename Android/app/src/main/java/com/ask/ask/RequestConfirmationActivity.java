@@ -3,7 +3,9 @@ package com.ask.ask;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by alexander on 2/28/2018.
@@ -26,17 +28,17 @@ public class RequestConfirmationActivity extends AppCompatActivity {
             String itemName = extras.getString("itemName");
             String beginDate = extras.getString("beginDate");
             String endDate = extras.getString("endDate");
-            String price = extras.getString("price");
+            double price = extras.getDouble("price");
             String description = extras.getString("description");
 
-            textViewConfirmation.setText(itemName + " : " + beginDate + " : " + endDate + " : " + price + " : " + description);
+            textViewConfirmation.setText(itemName + " \n " + beginDate + " - " + endDate + " \n $" + price + " \n " + description);
         }
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(4000);
+                    Thread.sleep(5000);
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 } catch (InterruptedException e) {

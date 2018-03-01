@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class RequestActivity extends AppCompatActivity {
 
     private ImageView imageViewItemImage;
     private Button buttonLoadImage;
+    private SearchView searchViewItemSearch;
     private EditText editTextItemName;
     private EditText editTextBeginDate;
     private EditText editTextEndDate;
@@ -41,13 +43,23 @@ public class RequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
 
+        imageViewItemImage = (ImageView) findViewById(R.id.imageViewItemImage);
+        buttonLoadImage = findViewById(R.id.buttonLoadImage);
+        searchViewItemSearch = findViewById(R.id.searchViewItemSearch);
         editTextItemName = findViewById(R.id.editTextItemName);
         editTextBeginDate = findViewById(R.id.editTextBeginDate);
         editTextEndDate = findViewById(R.id.editTextEndDate);
         editTextPrice = findViewById(R.id.editTextPrice);
         editTextDescription = findViewById(R.id.editTextDescription);
         buttonAsk2 = findViewById(R.id.buttonAsk2);
-        buttonLoadImage = findViewById(R.id.buttonLoadImage);
+
+        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            }
+        });
 
         buttonAsk2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,18 +76,12 @@ public class RequestActivity extends AppCompatActivity {
                 intent.putExtra("endDate", endDate);
                 intent.putExtra("price", price);
                 intent.putExtra("description", description);
+//                intent.putExtra("itemImage", imageViewItemImage.getImageMatrix());
 
                 //call to database
+                //create request for user
 
                 startActivity(intent);
-            }
-        });
-
-        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
 
@@ -84,8 +90,6 @@ public class RequestActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Log.d("image message", requestCode + " " + resultCode + " " + data);
 
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri selectedImage = data.getData();
@@ -98,9 +102,10 @@ public class RequestActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
-            imageViewItemImage = (ImageView) findViewById(R.id.imageViewItemImage);
-            Log.d("err", "here");
+            Log.d("RequestActivity", "setting image");
             imageViewItemImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            //TODO: not setting image in imageView
+            Log.d("RequestActivity", "after");
         }
 
     }

@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".RequestActivity"></activity>
         <activity android:name=".RequestConfirmationActivity"></activity>
+        <activity android:name=".SidebarActivity"></activity>
     </application>
 
 </manifest>
