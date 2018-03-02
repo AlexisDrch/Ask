@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.ask.ask.MainActivity">
 
+    <!--added this button to be a temporary profile imageButton to go to the side bar page-->
     <ImageButton
         android:id="@+id/imageButtonProfile"
         android:layout_width="50dp"
