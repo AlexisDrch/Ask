@@ -1,3 +1,5 @@
+package com.ask.ask;
+
 import java.util.LinkedList;
 
 /**
@@ -71,18 +73,19 @@ public class Request {
         return matcher;
     }
 
-    /**
-     *
-     * @param newOffer
-     * @return true of successful add, false if unsuccessful add
-     */
-    public boolean addOffer(Offer newOffer) {
+    public boolean addOfferToRequest(Offer newOffer) {
         return offers.add(newOffer);
+    }
+
+    public boolean confirmMatch(Offer offerConfirmed) {
+
+
+        return false;
     }
 
     @Override
     public String toString() {
-        return "Request{" +
+        return "com.ask.ask.Request{" +
                 "requester=" + requester +
                 ", item=" + itemRequesting +
                 ", beginDate='" + beginDate + '\'' +
