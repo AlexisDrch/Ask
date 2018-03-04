@@ -29,7 +29,7 @@ public class RequestAdapter extends ArrayAdapter<Request> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
-        RequestHolder holder = null;
+        RequestHolder holder;
 
         if(row == null)
         {
