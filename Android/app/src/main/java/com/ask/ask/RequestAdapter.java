@@ -1,0 +1,73 @@
+package com.ask.ask;
+
+import android.app.Activity;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+/**
+ * Created by pulakazad on 3/3/18.
+ */
+
+public class RequestAdapter extends ArrayAdapter<Request> {
+
+    Context context;
+    int layoutResourceId;
+    Request data[] = null;
+
+    public RequestAdapter(Context context, int layoutResourceId, Request[] data) {
+        super(context, layoutResourceId, data);
+        this.layoutResourceId = layoutResourceId;
+        this.context = context;
+        this.data = data;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View row = convertView;
+        RequestHolder holder = null;
+
+        if(row == null)
+        {
+
+
+            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+            row = inflater.inflate(layoutResourceId, parent, false);
+
+            holder = new RequestHolder();
+            holder.profile = (ImageView)row.findViewById(R.id.imgIcon);
+            holder.itemPic = (ImageView)row.findViewById(R.id.imgIcon2);
+            holder.itmTitle = (TextView)row.findViewById(R.id.itmTitle);
+            holder.itmPrice = (TextView)row.findViewById(R.id.itmPrice);
+
+            row.setTag(holder);
+        }
+        else
+        {
+            holder = (RequestHolder) row.getTag();
+        }
+
+        Request request = data[position];
+        holder.itmTitle.setText(request.getItem().getName());
+        holder.profile.setImageResource(request.getRequester().getProfileImage());
+        holder.itemPic.setImageResource(request.getItem().getIcon());
+        String price = "$" + String.valueOf(request.getItem().getPrice()) + "0";
+        holder.itmPrice.setText(String.valueOf(price));
+
+        return row;
+    }
+
+    static class RequestHolder
+    {
+        ImageView profile;
+        ImageView itemPic;
+        TextView itmTitle;
+        TextView itmPrice;
+    }
+}
+
+

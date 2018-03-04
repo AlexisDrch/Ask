@@ -1,3 +1,5 @@
+package com.ask.ask;
+
 import java.util.LinkedList;
 
 /**
@@ -83,7 +85,7 @@ public class Request {
 
     @Override
     public String toString() {
-        return "Request{" +
+        return "com.ask.ask.Request{" +
                 "requester=" + requester +
                 ", item=" + itemRequesting +
                 ", beginDate='" + beginDate + '\'' +

@@ -1,3 +1,5 @@
+package com.ask.ask;
+
 /**
  * Created by alexander on 2/26/2018.
  */
@@ -60,7 +62,7 @@ public class Offer {
 
     @Override
     public String toString() {
-        return "Offer{" +
+        return "com.ask.ask.Offer{" +
                 "provider=" + provider +
                 ", itemFulfilling=" + itemFulfilling +
                 ", itemProviding=" + itemProviding +

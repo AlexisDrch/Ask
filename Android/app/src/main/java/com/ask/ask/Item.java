@@ -1,3 +1,5 @@
+package com.ask.ask;
+
 import java.net.URL;
 import java.util.LinkedList;
 
@@ -15,13 +17,20 @@ public class Item {
     private LinkedList<String> tags;
     private double price;
     private URL itemImage;
+    public char[] title;
 
-    public Item(String uuid, String name, LinkedList<String> tags, double price, URL itemImage) {
+    //temporary
+    private int icon;
+    private User user;
+
+    public Item(String uuid, String name, LinkedList<String> tags, double price, URL itemImage, int icon, User user) {
         this.uuid = uuid;
         this.name = name;
         this.tags = tags;
         this.price = price;
         this.itemImage = itemImage;
+        this.icon = icon;
+        this.user = user;
     }
 
     public String getUuid() {
@@ -30,6 +39,14 @@ public class Item {
 
     public String getName() {
         return name;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void setName(String name) {
