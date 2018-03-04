@@ -39,10 +39,11 @@ public class RequestAdapter extends ArrayAdapter<Request> {
             row = inflater.inflate(layoutResourceId, parent, false);
 
             holder = new RequestHolder();
-            holder.profile = (ImageView)row.findViewById(R.id.imgIcon);
-            holder.itemPic = (ImageView)row.findViewById(R.id.imgIcon2);
+            holder.profile = (ImageView)row.findViewById(R.id.profileIcon);
+            holder.itmPic = (ImageView)row.findViewById(R.id.itmIcon);
             holder.itmTitle = (TextView)row.findViewById(R.id.itmTitle);
             holder.itmPrice = (TextView)row.findViewById(R.id.itmPrice);
+            holder.itmDate = (TextView)row.findViewById(R.id.itmDate);
 
             row.setTag(holder);
         }
@@ -54,9 +55,11 @@ public class RequestAdapter extends ArrayAdapter<Request> {
         Request request = data[position];
         holder.itmTitle.setText(request.getItem().getName());
         holder.profile.setImageResource(request.getRequester().getProfileImage());
-        holder.itemPic.setImageResource(request.getItem().getIcon());
+        holder.itmPic.setImageResource(request.getItem().getIcon());
         String price = "$" + String.valueOf(request.getItem().getPrice()) + "0";
         holder.itmPrice.setText(String.valueOf(price));
+        String date = request.getBeginDate() + " to " + request.getEndDate();
+        holder.itmDate.setText(date);
 
         return row;
     }
@@ -64,9 +67,10 @@ public class RequestAdapter extends ArrayAdapter<Request> {
     static class RequestHolder
     {
         ImageView profile;
-        ImageView itemPic;
+        ImageView itmPic;
         TextView itmTitle;
         TextView itmPrice;
+        TextView itmDate;
     }
 }
 

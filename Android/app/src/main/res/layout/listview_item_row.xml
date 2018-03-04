@@ -7,7 +7,7 @@
     android:padding="10dp">
 
     <ImageView
-        android:id="@+id/imgIcon"
+        android:id="@+id/profileIcon"
         android:layout_width="71dp"
         android:layout_height="74dp"
         android:layout_alignParentBottom="true"
@@ -18,9 +18,9 @@
         android:gravity="center_vertical" />
 
     <ImageView
-        android:id="@+id/imgIcon2"
-        android:layout_width="87dp"
-        android:layout_height="75dp"
+        android:id="@+id/itmIcon"
+        android:layout_width="86dp"
+        android:layout_height="84dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="5dp"
@@ -30,7 +30,7 @@
 
     <LinearLayout
         android:layout_width="177dp"
-        android:layout_height="89dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -48,7 +48,7 @@
 
         <TextView
             android:id="@+id/itmPrice"
-            android:layout_width="174dp"
+            android:layout_width="167dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
@@ -56,6 +56,17 @@
             android:textColor="#85bb65"
             android:textSize="22sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/itmDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:textColor="#000000"
+            android:textSize="11sp"
+            android:textStyle="italic" />
     </LinearLayout>
 
 </LinearLayout>
