@@ -13,8 +13,6 @@ public class MainActivity extends AppCompatActivity {
     private Button ask;
     //test
 
-    private ImageButton imageButtonProfile;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +25,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), RequestActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        imageButtonProfile = findViewById(R.id.imageButtonProfile);
-
-        imageButtonProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), SidebarActivity.class);
                 startActivity(intent);
             }
         });

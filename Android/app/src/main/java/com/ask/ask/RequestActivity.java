@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -45,7 +46,6 @@ public class RequestActivity extends AppCompatActivity {
 
         imageViewItemImage = (ImageView) findViewById(R.id.imageViewItemImage);
         buttonLoadImage = findViewById(R.id.buttonLoadImage);
-        searchViewItemSearch = findViewById(R.id.searchViewItemSearch);
         editTextItemName = findViewById(R.id.editTextItemName);
         editTextBeginDate = findViewById(R.id.editTextBeginDate);
         editTextEndDate = findViewById(R.id.editTextEndDate);
@@ -64,24 +64,31 @@ public class RequestActivity extends AppCompatActivity {
         buttonAsk2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String itemName = editTextItemName.getText().toString();
-                String beginDate = editTextBeginDate.getText().toString();;
-                String endDate = editTextEndDate.getText().toString();;
-                double price = Double.parseDouble(editTextPrice.getText().toString());
-                String description = editTextDescription.getText().toString();
+                if (TextUtils.isEmpty(editTextItemName.getText()) || TextUtils.isEmpty(editTextBeginDate.getText())
+                        || TextUtils.isEmpty(editTextEndDate.getText()) || TextUtils.isEmpty(editTextPrice.getText())
+                        || TextUtils.isEmpty(editTextDescription.getText())) {
+                    Toast.makeText(RequestActivity.this, "You must fill in all fields!", Toast.LENGTH_SHORT).show();
+                } else {
+                    String itemName = editTextItemName.getText().toString();
+                    String beginDate = editTextBeginDate.getText().toString();;
+                    String endDate = editTextEndDate.getText().toString();;
+                    double price = Double.parseDouble(editTextPrice.getText().toString());
+                    String description = editTextDescription.getText().toString();
 
-                Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
-                intent.putExtra("itemName", itemName);
-                intent.putExtra("beginDate", beginDate);
-                intent.putExtra("endDate", endDate);
-                intent.putExtra("price", price);
-                intent.putExtra("description", description);
+                    Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
+                    intent.putExtra("itemName", itemName);
+                    intent.putExtra("beginDate", beginDate);
+                    intent.putExtra("endDate", endDate);
+                    intent.putExtra("price", price);
+                    intent.putExtra("description", description);
 //                intent.putExtra("itemImage", imageViewItemImage.getImageMatrix());
 
-                //call to database
-                //create request for user
+                    //call to database
+                    //create request for user
 
-                startActivity(intent);
+                    startActivity(intent);
+                }
+
             }
         });
 
@@ -104,7 +111,7 @@ public class RequestActivity extends AppCompatActivity {
 
             Log.d("RequestActivity", "setting image");
             imageViewItemImage.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-            //TODO: not setting image in imageView
+            //TODO: not setting image in imageView correctly
             Log.d("RequestActivity", "after");
         }
 
