@@ -19,6 +19,12 @@ public class RequestAdapter extends ArrayAdapter<Request> {
     int layoutResourceId;
     Request data[] = null;
 
+    /**
+     * adapter for requests that creates the view for each row in the main activity
+     * @param context the context
+     * @param layoutResourceId the layout that is being used
+     * @param data an array of requests
+     */
     public RequestAdapter(Context context, int layoutResourceId, Request[] data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
@@ -64,6 +70,9 @@ public class RequestAdapter extends ArrayAdapter<Request> {
         return row;
     }
 
+    /**
+     * initializes the image views and text views needed for each row
+     */
     static class RequestHolder
     {
         ImageView profile;
