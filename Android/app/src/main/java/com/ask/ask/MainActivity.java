@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TODO: replace the user_data, item_data, request_data arrays with actual datbase
+        //TODO: replace the user_data, item_data, request_data arrays with actual database
         //Creating an array of users
         User user_data[] = new User[]
                 {
