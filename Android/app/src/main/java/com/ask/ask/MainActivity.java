@@ -99,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setExpandedTitleTextAppearance(R.style.expandingToolbar);
         mToolbar.setCollapsedTitleTextAppearance(R.style.collapsingToolbar);
 
-
-
         //changing title font
         Typeface font = Typer.set(this).getFont(Font.ROBOTO_THIN);
         mToolbar.setExpandedTitleTypeface(font);
@@ -115,23 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        mToolbar.findViewById(R.id.collapsingToolbar).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), RequestActivity.class);
-                startActivity(intent);
-            }
-        });
-
-//        mToolbar.findViewById(R.id.toolbarid).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), RequestActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
 
     }
 
