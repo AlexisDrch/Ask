@@ -1,17 +1,25 @@
 package com.ask.ask;
 
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toolbar;
+
+import com.elmargomez.typer.Font;
+import com.elmargomez.typer.Typer;
 
 public class MainActivity extends AppCompatActivity {
 
 
     private Button ask;
     private ListView listView1;
+    private CollapsingToolbarLayout mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,21 +30,21 @@ public class MainActivity extends AppCompatActivity {
         //Creating an array of users
         User user_data[] = new User[]
                 {
-                        new User(null, "Bob", 25, R.mipmap.bob_profile,
+                        new User(null, "Bob", 25, R.drawable.bob_profile,
                                 "678-456-9831", "711-2880 Nulla St." +
                                 "Mankato, Mississippi 96522"),
 
-                        new User(null, "Jim", 29, R.mipmap.jim_profile,
+                        new User(null, "Jim", 29, R.drawable.jim_profile,
                                 "770-783-2923", "606-3727 Ullamcorper. Street " +
                                 "Roseville, NH 11523"),
 
-                        new User(null, "Nancy", 26, R.mipmap.nancy_profile,
+                        new User(null, "Nancy", 26, R.drawable.nancy_profile,
                                 "404-719-3817", "Ap #867-859 Sit Rd. Azusa, New York 39531"),
 
-                        new User(null, "Karen", 29, R.mipmap.karen_profile,
+                        new User(null, "Karen", 29, R.drawable.karen_profile,
                                 "678-820-8638", "7292 Dictum Av. San Antonio, MI 47096"),
 
-                        new User(null, "John", 31, R.mipmap.john_profile,
+                        new User(null, "John", 31, R.drawable.john_profile,
                                 "770-293-3621", "191-103 Integer Rd. " +
                                 "Corona, New Mexico 08219")
                 };
@@ -45,15 +53,15 @@ public class MainActivity extends AppCompatActivity {
         Item item_data[] = new Item[]
                 {
                         new Item(null, "Golf Club", null,
-                                5.00, null, R.mipmap.item_golfclub, user_data[0]),
+                                5.00, null, R.drawable.item_golfclub, user_data[0]),
                         new Item(null, "Pot", null,
-                                10.00, null, R.mipmap.item_pot, user_data[1]),
+                                10.00, null, R.drawable.item_pot, user_data[1]),
                         new Item(null, "Sleeping Bag", null,
-                                7.00, null, R.mipmap.item_sleepingbag, user_data[2]),
+                                7.00, null, R.drawable.item_sleepingbag, user_data[2]),
                         new Item(null, "Surfboard", null,
-                                12.00, null, R.mipmap.item_surfboard, user_data[3]),
+                                12.00, null, R.drawable.item_surfboard, user_data[3]),
                         new Item(null, "Tent", null,
-                                5.00, null, R.mipmap.item_tent, user_data[4])
+                                5.00, null, R.drawable.item_tent, user_data[4])
                 };
 
         //Creating an array of Requests
@@ -85,6 +93,21 @@ public class MainActivity extends AppCompatActivity {
         //creating Ask button and the intent
         ask = (Button) findViewById(R.id.askBtn);
 
+        //creating collapsing toolbar and adding title
+        mToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
+        mToolbar.setTitle(getTitle());
+        mToolbar.setExpandedTitleTextAppearance(R.style.expandingToolbar);
+        mToolbar.setCollapsedTitleTextAppearance(R.style.collapsingToolbar);
+
+
+
+        //changing title font
+        Typeface font = Typer.set(this).getFont(Font.ROBOTO_THIN);
+        mToolbar.setExpandedTitleTypeface(font);
+        mToolbar.setCollapsedTitleTypeface(font);
+
+
+
         ask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +115,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mToolbar.findViewById(R.id.collapsingToolbar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), RequestActivity.class);
+                startActivity(intent);
+            }
+        });
+
+//        mToolbar.findViewById(R.id.toolbarid).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), RequestActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+
     }
 
 }
