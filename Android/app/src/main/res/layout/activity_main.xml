@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FcFcFc">
+    android:background="#FcFcFc"
+    android:id="@+id/container">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -43,20 +44,28 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ListView
-                android:id="@+id/listView1"
-                android:layout_width="fill_parent"
-                android:layout_height="836dp"
-                android:layout_gravity="bottom"
-                tools:layout_editor_absoluteY="304dp" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"/>
+
 
         </LinearLayout>
+
+            <!--<ListView-->
+                <!--android:id="@+id/listView1"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="836dp"-->
+                <!--android:layout_gravity="bottom"-->
+                <!--tools:layout_editor_absoluteY="304dp" />-->
 
     </android.support.v4.widget.NestedScrollView>
 

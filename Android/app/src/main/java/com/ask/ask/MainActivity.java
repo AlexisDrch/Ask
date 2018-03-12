@@ -5,6 +5,8 @@ import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        MainMenuFragment mainMenu = new MainMenuFragment();
+//        getSupportFragmentManager().beginTransaction().add(R.id.container, mainMenu).commit();
 
         //TODO: replace the user_data, item_data, request_data arrays with actual database
         //Creating an array of users
@@ -83,16 +88,26 @@ public class MainActivity extends AppCompatActivity {
                                         " for one person")
                 };
 
-        RequestAdapter adapter = new RequestAdapter(this,
-                R.layout.listview_item_row, request_data);
-
-        listView1 = (ListView)findViewById(R.id.listView1);
-        listView1.setAdapter(adapter);
 
 
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(request_data);
+        RecyclerView myView =  (RecyclerView)findViewById(R.id.recyclerview);
+        myView.setHasFixedSize(true);
+        myView.setAdapter(adapter);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+        myView.setLayoutManager(llm);
+
+//        RequestAdapter adapter = new RequestAdapter(this,
+//                R.layout.listview_item_row, request_data);
+//
+//        listView1 = (ListView)findViewById(R.id.listView1);
+//        listView1.setAdapter(adapter);
+//
+//
         //creating Ask button and the intent
         ask = (Button) findViewById(R.id.askBtn);
-
+//
         //creating collapsing toolbar and adding title
         mToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
         mToolbar.setTitle(getTitle());
