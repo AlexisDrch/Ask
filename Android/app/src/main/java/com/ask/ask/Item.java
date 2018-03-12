@@ -1,5 +1,6 @@
 package com.ask.ask;
 
+
 import java.net.URL;
 import java.util.LinkedList;
 
@@ -91,6 +92,4 @@ public class Item {
                 '}';
     }
 
-
-    //00000
 }
