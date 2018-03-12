@@ -19,7 +19,6 @@ public class Item {
     private URL itemImage;
     public char[] title;
 
-
     //TODO: connect icon with database pictures
     //temporary
     private int icon;

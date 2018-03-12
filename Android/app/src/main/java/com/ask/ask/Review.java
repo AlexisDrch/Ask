@@ -37,4 +37,13 @@ public class Review {
         return message;
     }
 
+    @Override
+    public String toString() {
+        return "Review{" +
+                "userGivingReview=" + userGivingReview +
+                ", userReceivingReview=" + userReceivingReview +
+                ", rating=" + rating +
+                '}';
+    }
+
 }

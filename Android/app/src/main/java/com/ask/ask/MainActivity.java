@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: replace the user_data, item_data, request_data arrays with actual database
         //Creating an array of users
+
         User user_data[] = new User[]
                 {
                         new User(null, "Bob", 25, R.mipmap.bob_profile,
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 };
 
         //Creating an array of items
+
         Item item_data[] = new Item[]
                 {
                         new Item(null, "Golf Club", null,
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 };
 
         //Creating an array of Requests
+
         Request request_data[] = new Request[]
                 {
                         new Request(user_data[0], item_data[0], "6/10/18", "6/12/18",
