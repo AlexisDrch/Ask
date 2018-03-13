@@ -7,8 +7,11 @@ CREATE TABLE IF NOT EXISTS "offer" (
 	lon double precision NOT NULL,
 	lat double precision NOT NULL,
 	description varchar(1000),
-	message varchar(1000)
+	message varchar(1000),
+	PRIMARY KEY (request_id, provider_id),
+    UNIQUE (request_id, provider_id)
 );
 
 --offers are made by providers. They correspond to one item requested.
 --@todo : ON DELETE CASCADE necessary / dangerous ?
+
