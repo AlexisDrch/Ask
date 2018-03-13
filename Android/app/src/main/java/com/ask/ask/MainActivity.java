@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Button ask;
     private ListView listView1;
     private CollapsingToolbarLayout mToolbar;
+    private CardView card;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
         Typeface font = Typer.set(this).getFont(Font.ROBOTO_THIN);
         mToolbar.setExpandedTitleTypeface(font);
         mToolbar.setCollapsedTitleTypeface(font);
+
+        //creating the card
+        card = (CardView) findViewById(R.id.requestCard);
+
 
 
 
