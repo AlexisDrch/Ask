@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Offer = require('../models/Request.js');
+var Offer = require('../models/Offer.js');
 
 
 router.post('/',function(req, res, next) {

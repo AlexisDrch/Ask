@@ -46,7 +46,7 @@ var Offer = {
 				' ${end_date},'+
 				' ${lon},'+
 				' ${lat},'+
-				' ${description}'+
+				' ${description},'+
 				' ${message}'+
 			');', offer);
 	}

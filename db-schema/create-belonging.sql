@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS "belonging" (
-	belonging_id serial NOT NULL PRIMARY KEY,
+	belonging_id serial PRIMARY KEY,
 	name VARCHAR(500) NOT NULL,
 	type VARCHAR(500) NOT NULL,
 	price double precision NOT NULL,
