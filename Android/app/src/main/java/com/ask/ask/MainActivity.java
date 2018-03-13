@@ -1,22 +1,68 @@
 package com.ask.ask;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity
+    implements ProfileFragment.OnFragmentInteractionListener {
 
     private Button ask;
     private ListView listView1;
+
+    private DrawerLayout navigationDrawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //----------
+
+        //navigation bar "button"/slide
+        Toolbar navigationToolbar = findViewById(R.id.navigation_toolbar);
+        setSupportActionBar(navigationToolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_navigation_menu);
+
+        //for navigation bar
+        navigationDrawerLayout = findViewById(R.id.navigation_drawer_layout);
+
+        navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        navigationDrawerLayout.closeDrawers();
+
+                        //TODO: update UI based on what is clicked, swap UI fragments
+                        selectDrawerItem(menuItem);
+
+                        return true;
+                    }
+                });
+
+        //----------
 
         //TODO: replace the user_data, item_data, request_data arrays with actual database
         //Creating an array of users
@@ -95,6 +141,100 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+
+    /**
+     * Opens the navigation bar drawer when pressed or when left to right slide is made.
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                navigationDrawerLayout.openDrawer(GravityCompat.START); //for animation
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Determines the menuItem that was selected and goes to the corresponding fragment.
+     *
+     * @param menuItem
+     */
+    private void selectDrawerItem(MenuItem menuItem) {
+        Fragment requestedFragment = null;
+        Class requestedFragmentClass = null;
+        Log.d("selectDrawerItem", "1");
+        switch (menuItem.getItemId()) {
+            case R.id.fragment_profile:
+                Log.d("selectDrawerItem", "2a");
+                requestedFragmentClass = ProfileFragment.class;
+                break;
+//            case R.id.fragment_home:
+//                Log.d("selectDrawerItem", "2b");
+//                requestedFragmentClass = HomeFragment.class;
+//                break;
+//            case R.id.fragment_requests:
+//                Log.d("selectDrawerItem", "2c");
+//                requestedFragmentClass = RequestsFragment.class;
+//                break;
+//            case R.id.fragment_matches:
+//                Log.d("selectDrawerItem", "2d");
+//                requestedFragmentClass = MatchesFragment.class;
+//                break;
+//            case R.id.fragment_items:
+//                Log.d("selectDrawerItem", "2e");
+//                requestedFragmentClass = ItemsFragment.class;
+//                break;
+//            case R.id.fragment_settings:
+//                Log.d("selectDrawerItem", "2f");
+//                requestedFragmentClass = SettingsFragment.class;
+//                break;
+//            case R.id.fragment_about:
+//                Log.d("selectDrawerItem", "2g");
+//                requestedFragmentClass = AboutFragment.class;
+//                break;
+            default:
+                Log.d("selectDrawerItem", "2g");
+        }
+
+        //make sure a valid fragment was selected, else just return
+        try {
+            Log.d("selectDrawerItem", "3");
+            requestedFragment = (Fragment) requestedFragmentClass.newInstance();
+        } catch (Exception e) {
+            Log.d("selectDrawerItem", "4");
+            e.printStackTrace();
+            return;
+        }
+
+        Log.d("selectDrawerItem", "5");
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Log.d("selectDrawerItem", "6");
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        //fragmentTransaction.setTransition();
+        fragmentTransaction.replace(, requestedFragment); //first is where you want to put it
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        Log.d("selectDrawerItem", "7");
+
+        menuItem.setChecked(true); //highlights current fragment in navigation bar
+        setTitle(menuItem.getTitle());
+        navigationDrawerLayout.closeDrawers(); //slides navigation bar off screen
+        Log.d("selectDrawerItem", "8");
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void onFragmentInteraction(Uri uri){
+        //TODO: this is used to communicate with other fragments. Figure out how and if necessary
     }
 
 }
