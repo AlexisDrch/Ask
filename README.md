@@ -25,6 +25,10 @@ git push heroku master
 
 #### DataBase 
 
+. To get pg_dump command local
+
+export PATH=/Applications/Postgres.app/Contents/Versions/10/bin/:$PATH
+
 . To deploy database schema on heroku
 
 pg_dump --no-owner ask > ask-v0.dump

@@ -149,7 +149,6 @@ ALTER SEQUENCE item_item_id_seq OWNED BY item.item_id;
 --
 
 CREATE TABLE offer (
-    offer_id integer NOT NULL,
     belonging_id integer NOT NULL,
     request_id integer NOT NULL,
     provider_id integer NOT NULL,
@@ -157,29 +156,9 @@ CREATE TABLE offer (
     end_date date NOT NULL,
     lon double precision NOT NULL,
     lat double precision NOT NULL,
-    description character varying(1000) NOT NULL,
-    message character varying(1000) NOT NULL
+    description character varying(1000),
+    message character varying(1000)
 );
-
-
---
--- Name: offer_offer_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE offer_offer_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: offer_offer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE offer_offer_id_seq OWNED BY offer.offer_id;
 
 
 --
@@ -309,13 +288,6 @@ ALTER TABLE ONLY item ALTER COLUMN item_id SET DEFAULT nextval('item_item_id_seq
 
 
 --
--- Name: offer offer_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY offer ALTER COLUMN offer_id SET DEFAULT nextval('offer_offer_id_seq'::regclass);
-
-
---
 -- Name: picture picture_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -341,6 +313,7 @@ ALTER TABLE ONLY "user" ALTER COLUMN user_id SET DEFAULT nextval('user_user_id_s
 --
 
 COPY belonging (belonging_id, name, type, price, description, max_rent_duration, item_id, owner_id) FROM stdin;
+1	tent de pulak	typeToDefine	20.5	a 2 people tent, no scratch !	7	1	4
 \.
 
 
@@ -374,7 +347,8 @@ COPY item (item_id, name, avg_price, description) FROM stdin;
 -- Data for Name: offer; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY offer (offer_id, belonging_id, request_id, provider_id, begin_date, end_date, lon, lat, description, message) FROM stdin;
+COPY offer (belonging_id, request_id, provider_id, begin_date, end_date, lon, lat, description, message) FROM stdin;
+1	2	4	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	This offer is made by provider 4 for request 2	Hey man ! I got your board, I'll drop it at the place you asked =)
 \.
 
 
@@ -407,6 +381,7 @@ COPY "user" (user_id, name, surname, age, description, ppicture_url, phone_num, 
 1	Mark	Sanders	51	American. Man. Interested in camping and in France for 4 months. Teaching Computer Science.	http://rnoc.gatech.edu/sites/default/files/Matt%20Sanders-01_0.jpg	+33676564537	 4 rue de Saint-tout,  Metz, France.
 2	Carolyn	Shi	20	American. Girl. Interested in camping and in France for 4 months. Student Computer Science.	https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D	+33673332537	 4 rue de Valencourt,  Metz, France.
 3	Carolyn	Shi	20	American. Girl. Interested in camping and in France for 4 months. Student Computer Science.	https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D	+33673332537	 4 rue de Valencourt,  Metz, France.
+4	Pulak	Azad	20	American. Boy. Interested in camping and in France for 4 months. Student Computer Science.	https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D	+33673332537	 4 rue de MIlle,  Metz, France.
 \.
 
 
@@ -414,7 +389,7 @@ COPY "user" (user_id, name, surname, age, description, ppicture_url, phone_num, 
 -- Name: belonging_belonging_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('belonging_belonging_id_seq', 1, false);
+SELECT pg_catalog.setval('belonging_belonging_id_seq', 1, true);
 
 
 --
@@ -429,13 +404,6 @@ SELECT pg_catalog.setval('category_category_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('item_item_id_seq', 2, true);
-
-
---
--- Name: offer_offer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('offer_offer_id_seq', 1, false);
 
 
 --
@@ -456,7 +424,7 @@ SELECT pg_catalog.setval('request_request_id_seq', 7, true);
 -- Name: user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('user_user_id_seq', 3, true);
+SELECT pg_catalog.setval('user_user_id_seq', 4, true);
 
 
 --
@@ -488,7 +456,7 @@ ALTER TABLE ONLY item
 --
 
 ALTER TABLE ONLY offer
-    ADD CONSTRAINT offer_pkey PRIMARY KEY (offer_id);
+    ADD CONSTRAINT offer_pkey PRIMARY KEY (request_id, provider_id);
 
 
 --
