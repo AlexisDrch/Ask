@@ -40,3 +40,7 @@ Note that you need to be in the folder where the .dump is
 
 heroku config:get DATABASE_URL -a ask-capa
 
+. To reset postgres database
+
+heroku pg:reset DATABASE_URL
+

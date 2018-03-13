@@ -9,7 +9,9 @@
 		"3ab42709-22d0-a1ba-f385-f54459d8ae24",
 		"6eda6e45-26fb-6e09-4b75-ed1c0312e475",
 		"962008c9-db9f-67f3-38bb-64ff9f9833a0",
-		"2814f8c8-c550-2f4f-638d-7460b7de3ebf"
+		"2814f8c8-c550-2f4f-638d-7460b7de3ebf",
+		"ecea3075-6080-1529-3f85-8c2ba2bfc823",
+		"87165933-f3ae-e609-ef38-4aaa5c6eb5d9"
 	],
 	"folders": [],
 	"folders_order": [],
@@ -39,12 +41,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1520959660030,
+			"time": 1520962074318,
 			"name": "POST new request",
 			"description": "{\t\n\t\"item_id\": \"1\",\n\t\"requester_id\": \"1\",\n\t\"provider_id\": \"2\",\n\t\"begin_date\": \"2018-12-17\",\n\t\"end_date\": \"2018-12-31\",\n\t\"lon\": \"-122.431297\",\n\t\"lat\" : \"37.773972\",\n\t\"description\": \"Looking for a board 6.8 near SF. Can move to pick up !\"\n}",
 			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
 			"responses": [],
-			"rawModeData": "{\t\n\t\"item_id\": \"1\",\n\t\"requester_id\": \"1\",\n\t\"provider_id\": \"2\",\n\t\"begin_date\": \"2018-12-17\",\n\t\"end_date\": \"2018-12-31\",\n\t\"lon\": \"-122.431297\",\n\t\"lat\" : \"37.773972\",\n\t\"description\": \"Looking for a board 6.8 near SF. Can move to pick up !\"\n}"
+			"rawModeData": "{\t\n\t\"item_id\": \"1\",\n\t\"requester_id\": \"1\",\n\t\"provider_id\": \"-1\",\n\t\"begin_date\": \"2018-12-17\",\n\t\"end_date\": \"2018-12-31\",\n\t\"lon\": \"-122.431297\",\n\t\"lat\" : \"37.773972\",\n\t\"description\": \"Looking for a board 6.8 near SF. Can move to pick up !\"\n}"
 		},
 		{
 			"id": "3ab42709-22d0-a1ba-f385-f54459d8ae24",
@@ -92,12 +94,12 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1520959388013,
+			"time": 1520965345704,
 			"name": "POST new user",
 			"description": "{\t\n\t\"name\": \"Carolyn\",\n\t\"surname\": \"Shi\",\n\t\"age\": \"20\",\n\t\"description\": \"American. Girl. Interested in camping and in France for 4 months. Student Computer Science.\",\n\t\"ppicture_url\": \"https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D\",\n\t\"phone_num\": \"+33673332537\",\n\t\"address\": \" 4 rue de Valencourt,  Metz, France.\"\n}",
 			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
 			"responses": [],
-			"rawModeData": "{\t\n\t\"name\": \"Carolyn\",\n\t\"surname\": \"Shi\",\n\t\"age\": \"20\",\n\t\"description\": \"American. Girl. Interested in camping and in France for 4 months. Student Computer Science.\",\n\t\"ppicture_url\": \"https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D\",\n\t\"phone_num\": \"+33673332537\",\n\t\"address\": \" 4 rue de Valencourt,  Metz, France.\"\n}"
+			"rawModeData": "{\t\n\t\"name\": \"Pulak\",\n\t\"surname\": \"Azad\",\n\t\"age\": \"20\",\n\t\"description\": \"American. Boy. Interested in camping and in France for 4 months. Student Computer Science.\",\n\t\"ppicture_url\": \"https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D\",\n\t\"phone_num\": \"+33673332537\",\n\t\"address\": \" 4 rue de Valencourt,  Metz, France.\"\n}"
 		},
 		{
 			"id": "6eda6e45-26fb-6e09-4b75-ed1c0312e475",
@@ -145,6 +147,34 @@
 			"responses": []
 		},
 		{
+			"id": "87165933-f3ae-e609-ef38-4aaa5c6eb5d9",
+			"headers": "Content-Type: application/json; charset=UTF-8\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json; charset=UTF-8",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "https://ask-capa.herokuapp.com/api/offers",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1520968280771,
+			"name": "POST new offer",
+			"description": "A provider makes his offer to a current request",
+			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
+			"responses": []
+		},
+		{
 			"id": "962008c9-db9f-67f3-38bb-64ff9f9833a0",
 			"headers": "",
 			"headerData": [],
@@ -184,6 +214,29 @@
 			"description": "Get a user according to the userId",
 			"descriptionFormat": "html",
 			"time": 1520959429856,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "ecea3075-6080-1529-3f85-8c2ba2bfc823",
+			"headers": "",
+			"headerData": [],
+			"url": "https://ask-capa.herokuapp.com/api/offers/2",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
+			"data": null,
+			"dataMode": "params",
+			"name": "GET all offers / request",
+			"description": "given a request_id, return all current offers",
+			"descriptionFormat": "html",
+			"time": 1520968153462,
 			"version": 2,
 			"responses": [],
 			"tests": null,
