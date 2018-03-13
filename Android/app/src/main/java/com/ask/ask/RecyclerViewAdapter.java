@@ -1,5 +1,6 @@
 package com.ask.ask;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemDate = (TextView) itemView.findViewById(R.id.itemDate);
             profileName = (TextView) itemView.findViewById(R.id.profileName);
             itemPrice = (TextView) itemView.findViewById(R.id.itemPrice);
+            itemPrice.setTextColor(Color.parseColor("#85bb65"));
 
         }
     }
