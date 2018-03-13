@@ -15,6 +15,12 @@ A Tinder-like platform to rent & sell items in cool and smart way.
 
 ### Back-end
 
+. To deploy changes on heroku
+
+git add -A
+git commit
+git push heroku master
+
 #### RESTfull API
 
 #### DataBase 
@@ -29,3 +35,4 @@ Note that you need to be in the folder where the .dump is
 . Get heroku postgres database
 
 heroku config:get DATABASE_URL -a ask-capa
+
