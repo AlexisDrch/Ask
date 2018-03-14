@@ -50,14 +50,12 @@ public class MainActivity extends AppCompatActivity
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
                         // set item as selected to persist highlight
                         menuItem.setChecked(true);
                         // close drawer when item is tapped
+                        setTitle(menuItem.getTitle());
                         navigationDrawerLayout.closeDrawers();
-
-                        //TODO: update UI based on what is clicked, swap UI fragments
-                        selectDrawerItem(menuItem);
-
                         return true;
                     }
                 });
@@ -161,8 +159,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Determines the menuItem that was selected and goes to the corresponding fragment.
-     *
+     * Determines the menuItem that was selected and goes to the corresponding fragments.
      * @param menuItem
      */
     private void selectDrawerItem(MenuItem menuItem) {
@@ -198,35 +195,25 @@ public class MainActivity extends AppCompatActivity
 //                Log.d("selectDrawerItem", "2g");
 //                requestedFragmentClass = AboutFragment.class;
 //                break;
-            default:
-                Log.d("selectDrawerItem", "2g");
+//            default:
+//                Log.d("selectDrawerItem", "2g");
         }
 
         //make sure a valid fragment was selected, else just return
         try {
-            Log.d("selectDrawerItem", "3");
             requestedFragment = (Fragment) requestedFragmentClass.newInstance();
         } catch (Exception e) {
-            Log.d("selectDrawerItem", "4");
             e.printStackTrace();
             return;
         }
 
-        Log.d("selectDrawerItem", "5");
-        // Insert the fragment by replacing any existing fragment
+        //replace existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Log.d("selectDrawerItem", "6");
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         //fragmentTransaction.setTransition();
-        fragmentTransaction.replace(, requestedFragment); //first is where you want to put it
-        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment); //first is where you want to put it 0000000000
+//        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        Log.d("selectDrawerItem", "7");
-
-        menuItem.setChecked(true); //highlights current fragment in navigation bar
-        setTitle(menuItem.getTitle());
-        navigationDrawerLayout.closeDrawers(); //slides navigation bar off screen
-        Log.d("selectDrawerItem", "8");
     }
 
     /**
@@ -235,6 +222,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri){
         //TODO: this is used to communicate with other fragments. Figure out how and if necessary
+
+
     }
 
 }
