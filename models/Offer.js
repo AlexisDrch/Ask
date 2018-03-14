@@ -15,7 +15,7 @@ var Offer = {
 	use-case:
 		A requester clicks on his request and sees all the offers
 	*/
-	getAllOffers:function(request_id){
+	getAllOffersByRequestId:function(request_id){
 		return db.any('select * from "offer" where request_id = $1',request_id);
 	},
 
@@ -49,7 +49,18 @@ var Offer = {
 				' ${description},'+
 				' ${message}'+
 			');', offer);
-	}
+	},
+
+	/* Delete all offers for a request
+	params:
+		- request_id (id of the request)
+	use-case:
+		A requester accept an offer, all the offers for this request are deleted
+	*/
+	deleteOffersByRequestId:function(request_id){
+		return db.any('DELETE FROM "offer" where request_id = $1',request_id);
+	},
+
 	/*,
 	/deleteTask:function(id,callback){
 		return db.query("delete from task where Id=?",[id],callback);

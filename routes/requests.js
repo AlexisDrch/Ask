@@ -36,7 +36,7 @@ router.get('/:request_id?', function(req, res, next) {
 	// by request_id
 	if (req.params.request_id) {
 
-		Request.getRequestByRequestId(req.params.request_id)
+		Request.getRequestsByRequestId(req.params.request_id)
 	    .then(function (data) {
 	      res.status(200)
 	        .json({
@@ -51,7 +51,7 @@ router.get('/:request_id?', function(req, res, next) {
 
 	} else {
 		// all request(s)
-		Request.getAllRequests()
+		Request.getAllPendingRequests()
 	    .then(function (data) {
 	      res.status(200)
 	        .json({
@@ -66,5 +66,27 @@ router.get('/:request_id?', function(req, res, next) {
 	}
 
 });
+
+/* listing request(s)
+	- GET
+	_ optional : /request_id
+*/
+router.get('/matched/:provider_id', function(req, res, next) {
+
+	// by request_id
+	Request.getRequestsByProviderId(req.params.provider_id)
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved requests ' + JSON.stringify(req.params.request_id)
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+});
+
 
 module.exports = router;
