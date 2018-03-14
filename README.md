@@ -11,6 +11,13 @@ A Tinder-like platform to rent & sell items in cool and smart way.
 
 #### Android 
 
+##### Fragments
+
+https://developer.android.com/training/implementing-navigation/nav-drawer.html#MenuLayout
+https://developer.android.com/reference/android/app/FragmentTransaction.html
+https://guides.codepath.com/android/fragment-navigation-drawer#setup-toolbar
+https://guides.codepath.com/android/creating-and-using-fragments
+
 #### IOS 
 
 ### Back-end
