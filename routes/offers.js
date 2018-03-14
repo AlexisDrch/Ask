@@ -29,6 +29,7 @@ router.post('/accept/:requester_id',function(req, res, next) {
   Request.acceptOffer(req.body, req.params.requester_id)
     //*note that we may think about keeping the others offers if there is an issue with the accepted offer *
     .then(Offer.deleteOffersByRequestId(req.body.request_id))
+    .then(Request.updateUnFilledRequestToPending(req.body.request_id))
     .then(function (data) {
       res.status(200)
         .json({

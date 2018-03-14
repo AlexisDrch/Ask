@@ -50,14 +50,14 @@ router.get('/:request_id?', function(req, res, next) {
 	    });
 
 	} else {
-		// all request(s)
-		Request.getAllPendingRequests()
+		// all unfilled request(s)
+		Request.getAllUnFilledRequests()
 	    .then(function (data) {
 	      res.status(200)
 	        .json({
 	          status: 'success',
 	          data: data,
-	          message: 'Retrieved ALL request(s)'
+	          message: 'Retrieved ALL unfilled request(s)'
 	        });
 	    })
 	    .catch(function (err) {

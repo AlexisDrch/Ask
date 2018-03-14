@@ -1,24 +1,23 @@
 var express = require('express');
 var router = express.Router();
+var Request = require('../models/Request')
 
 var db = require('../db-connection');
 
-// shows all the requests
-function getAllRequests(req, res, next) {
-  db.any('select * from request')
+router.get('/', function(req, res, next) {
+
+  Request.getAllUnFilledRequests()
     .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
           data: data,
-          message: 'Retrieved ALL requests'
+          message: 'Retrieved ALL unfilled request(s)'
         });
     })
     .catch(function (err) {
       return next(err);
     });
-}
+});
 
-
-router.get('/', getAllRequests);
 module.exports = router;

@@ -1,5 +1,8 @@
 var db = require('../db-connection'); //reference of dbconnection.js
-const PENDING_REQUEST = 0
+const UNFILLED_REQUEST = 0
+const PENDING_REQUEST = 1
+const FILLED_REQUEST = 2
+
 // Convert Javascript date to Pg YYYY MM DD HH MI SS
 
 function pgFormatDate(date) {
@@ -9,8 +12,8 @@ function pgFormatDate(date) {
 
 var Request = {
 
-	getAllPendingRequests:function(){
-		return db.any('select * from "request" where status =' + PENDING_REQUEST);
+	getAllUnFilledRequests:function(){
+		return db.any('select * from "request" where status =' + UNFILLED_REQUEST);
 	},
 	getRequestsByRequestId:function(request_id){
 		return db.any('select * from "request" where request_id = $1',request_id);
@@ -19,7 +22,7 @@ var Request = {
 		request.begin_date = new Date('December 17, 2018');
 		request.end_date = new Date('December 31, 2018');
 		request.item_id = parseInt(request.item_id);
-		request.status = PENDING_REQUEST // note that status should always be initialize to 0 (pending)
+		request.status = UNFILLED_REQUEST // note that status should always be initialize to 0 (pending)
 		request.requester_id = parseInt(request.requester_id);
 		request.begin_date = pgFormatDate(request.begin_date);
 		request.end_date = pgFormatDate(request.end_date);
@@ -52,13 +55,26 @@ var Request = {
 	// -> is already in request object (accessible from request id)
 	acceptOffer:function(offer, requester_id){
 
-			return db.any(
-				' UPDATE "offer" set' +
-				' requester_id = ' + requester_id +
-				' WHERE request_id = ${request_id}' +
-				' AND provider_id = ${provider_id}' +
-				';', offer);
-		}
+		return db.any(
+			' UPDATE "offer" set' +
+			' requester_id = ' + requester_id +
+			' WHERE request_id = ${request_id}' +
+			' AND provider_id = ${provider_id}' +
+			';', offer);
+	},
+
+	/* Update a request from status UnFilled to Pending
+	params:
+		-  request_id
+	use-case:
+		A requester accepted an offer, its request is now pending until its completely filled.
+	*/
+	updateUnFilledRequestToPending:function(request_id){
+		return db.any(
+			' UPDATE "request" set' +
+			' status = ' + PENDING_REQUEST +
+			' WHERE request_id = $1',request_id);
+	}
 };
 
 module.exports = Request;
