@@ -2,6 +2,7 @@ package com.ask.ask;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,10 +20,14 @@ import android.widget.Button;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
-    implements ProfileFragment.OnFragmentInteractionListener {
+    implements ProfileFragment.OnFragmentInteractionListener,
+        RequestsFragment.OnFragmentInteractionListener,
+        MatchesFragment.OnFragmentInteractionListener,
+        SettingsFragment.OnFragmentInteractionListener,
+        AboutFragment.OnFragmentInteractionListener {
 
     private Button ask;
-    private ListView listView1;
+//    private ListView listView1;
 
     private DrawerLayout navigationDrawerLayout;
     private NavigationView navigationView;
@@ -51,11 +56,6 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         selectDrawerItem(menuItem);
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        setTitle(menuItem.getTitle());
-                        navigationDrawerLayout.closeDrawers();
                         return true;
                     }
                 });
@@ -125,8 +125,8 @@ public class MainActivity extends AppCompatActivity
         RequestAdapter adapter = new RequestAdapter(this,
                 R.layout.listview_item_row, request_data);
 
-        listView1 = (ListView)findViewById(R.id.listView1);
-        listView1.setAdapter(adapter);
+//        listView1 = (ListView)findViewById(R.id.listView1);
+//        listView1.setAdapter(adapter);
 
 
         //creating Ask button and the intent
@@ -165,38 +165,39 @@ public class MainActivity extends AppCompatActivity
     private void selectDrawerItem(MenuItem menuItem) {
         Fragment requestedFragment = null;
         Class requestedFragmentClass = null;
-        Log.d("selectDrawerItem", "1");
         switch (menuItem.getItemId()) {
-            case R.id.fragment_profile:
+            case R.id.fragment_home:
                 Log.d("selectDrawerItem", "2a");
+//                requestedFragmentClass = HomeFragment.class;
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return;
+            case R.id.fragment_profile:
+                Log.d("selectDrawerItem", "2b");
                 requestedFragmentClass = ProfileFragment.class;
                 break;
-//            case R.id.fragment_home:
-//                Log.d("selectDrawerItem", "2b");
-//                requestedFragmentClass = HomeFragment.class;
-//                break;
-//            case R.id.fragment_requests:
-//                Log.d("selectDrawerItem", "2c");
-//                requestedFragmentClass = RequestsFragment.class;
-//                break;
-//            case R.id.fragment_matches:
-//                Log.d("selectDrawerItem", "2d");
-//                requestedFragmentClass = MatchesFragment.class;
-//                break;
-//            case R.id.fragment_items:
-//                Log.d("selectDrawerItem", "2e");
-//                requestedFragmentClass = ItemsFragment.class;
-//                break;
-//            case R.id.fragment_settings:
-//                Log.d("selectDrawerItem", "2f");
-//                requestedFragmentClass = SettingsFragment.class;
-//                break;
-//            case R.id.fragment_about:
-//                Log.d("selectDrawerItem", "2g");
-//                requestedFragmentClass = AboutFragment.class;
-//                break;
-//            default:
-//                Log.d("selectDrawerItem", "2g");
+            case R.id.fragment_requests:
+                Log.d("selectDrawerItem", "2c");
+                requestedFragmentClass = RequestsFragment.class;
+                break;
+            case R.id.fragment_matches:
+                Log.d("selectDrawerItem", "2d");
+                requestedFragmentClass = MatchesFragment.class;
+                break;
+////            case R.id.fragment_items:
+////                Log.d("selectDrawerItem", "2e");
+////                requestedFragmentClass = ItemsFragment.class;
+////                break;
+            case R.id.fragment_settings:
+                Log.d("selectDrawerItem", "2f");
+                requestedFragmentClass = SettingsFragment.class;
+                break;
+            case R.id.fragment_about:
+                Log.d("selectDrawerItem", "2g");
+                requestedFragmentClass = AboutFragment.class;
+                break;
+            default:
+                Log.d("selectDrawerItem", "2g");
         }
 
         //make sure a valid fragment was selected, else just return
@@ -210,10 +211,14 @@ public class MainActivity extends AppCompatActivity
         //replace existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //fragmentTransaction.setTransition();
-        fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment); //first is where you want to put it 0000000000
-//        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment);
+        fragmentTransaction.addToBackStack(null); //TODO: press back to go to home immediately like Gmail
         fragmentTransaction.commit();
+        // set item as selected to persist highlight
+        menuItem.setChecked(true);
+        // close drawer when item is tapped
+        setTitle(menuItem.getTitle());
+        navigationDrawerLayout.closeDrawers();
     }
 
     /**
@@ -221,9 +226,8 @@ public class MainActivity extends AppCompatActivity
      */
     @Override
     public void onFragmentInteraction(Uri uri){
-        //TODO: this is used to communicate with other fragments. Figure out how and if necessary
-
-
+        //this is used to communicate with other fragments. Figure out how and if necessary
+        //send data I think
     }
 
 }
