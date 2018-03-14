@@ -15,8 +15,18 @@ var Offer = {
 	use-case:
 		A requester clicks on his request and sees all the offers
 	*/
-	getAllOffersByRequestId:function(request_id){
+	getOffersByRequestId:function(request_id){
 		return db.any('select * from "offer" where request_id = $1',request_id);
+	},
+
+	/* Get all offers done by a provider
+	params:
+		- provider_id (id of the provider)
+	use-case:
+		A provider wants to see the current states of its offers.
+	*/
+	getOffersByProviderId:function(provider_id){
+		return db.any('select * from "offer" where provider_id = $1', provider_id);
 	},
 
 	/* Post a new offer
@@ -55,19 +65,12 @@ var Offer = {
 	params:
 		- request_id (id of the request)
 	use-case:
-		A requester accept an offer, all the offers for this request are deleted
+		A requester accept an offer, all the other offers (provider_id is NULL)
+		for this request are deleted.
 	*/
 	deleteOffersByRequestId:function(request_id){
-		return db.any('DELETE FROM "offer" where request_id = $1',request_id);
+		return db.any('DELETE FROM "offer" where request_id = $1 AND provider_id IS NULL',request_id);
 	},
-
-	/*,
-	/deleteTask:function(id,callback){
-		return db.query("delete from task where Id=?",[id],callback);
-	},
-	updateTask:function(id,Task,callback){
-		return db.query("update task set Title=?,Status=? where Id=?",[Task.Title,Task.Status,id],callback);
-	}*/
 };
 
 module.exports = Offer;

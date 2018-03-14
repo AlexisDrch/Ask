@@ -22,11 +22,11 @@ router.post('/',function(req, res, next) {
     });
 });
 
-router.post('/match',function(req, res, next) {
+router.post('/accept/:requester_id',function(req, res, next) {
 
   console.log(JSON.stringify(req.body,null,2));
 
-  Request.acceptOffer(req.body)
+  Request.acceptOffer(req.body, req.params.requester_id)
     //*note that we may think about keeping the others offers if there is an issue with the accepted offer *
     .then(Offer.deleteOffersByRequestId(req.body.request_id))
     .then(function (data) {
@@ -44,15 +44,32 @@ router.post('/match',function(req, res, next) {
 }); 
 
 
-router.get('/:request_id', function(req, res, next) {
+router.get('/for/:request_id', function(req, res, next) {
 
-	Offer.getAllOffersByRequestId(req.params.request_id)
+	Offer.getOffersByRequestId(req.params.request_id)
     .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
           data: data,
           message: 'Retrieved request ' + JSON.stringify(req.params.request_id)
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+});
+
+
+router.get('/by/:provider_id', function(req, res, next) {
+
+  Offer.getOffersByProviderId(req.params.provider_id)
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved offers ' + JSON.stringify(req.params.provider_id)
         });
     })
     .catch(function (err) {
