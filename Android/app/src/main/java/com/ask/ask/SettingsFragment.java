@@ -4,9 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 
 /**
@@ -28,6 +33,10 @@ public class SettingsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Switch switchNotifications;
+    private CheckBox checkBoxRequestUpdates;
+    private CheckBox checkBoxMatchUpdates;
+    private Button buttonLogout;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -63,8 +72,41 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        switchNotifications = (Switch) rootView.findViewById(R.id.switchNotifications);
+        checkBoxRequestUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxRequestUpdates);
+        checkBoxMatchUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxMatchUpdates);
+        buttonLogout = (Button) rootView.findViewById(R.id.buttonLogout);
+
+        checkBoxRequestUpdates.setEnabled(false);
+        checkBoxMatchUpdates.setEnabled(false);
+
+        switchNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.d("Settings - onCreateView", "checked");
+                    checkBoxRequestUpdates.setEnabled(true);
+                    checkBoxMatchUpdates.setEnabled(true);
+                } else {
+                    Log.d("Settings - onCreateView", "unchecked");
+                    checkBoxRequestUpdates.setEnabled(false);
+                    checkBoxMatchUpdates.setEnabled(false);
+                }
+
+            }
+        });
+
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: save all change and log out user
+                Log.d("Settings", "buttonLogout");
+            }
+        });
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

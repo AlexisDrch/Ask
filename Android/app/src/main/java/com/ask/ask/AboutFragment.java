@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 
 /**
@@ -28,6 +29,7 @@ public class AboutFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private ListView listViewProfiles;
 
     public AboutFragment() {
         // Required empty public constructor
@@ -63,8 +65,21 @@ public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_about, container, false);
+        listViewProfiles = (ListView) rootView.findViewById(R.id.listViewProfiles);
+
+        String[] profileData = {"Alexis#masters student#" + R.drawable.ic_profile,
+                "Pulak#2nd year CS#" + R.drawable.ic_profile,
+                "Alex#2nd year EE#" + R.drawable.ic_profile,
+                "Carolyn#3rd year CS#" + R.drawable.ic_profile,
+                "Georgia Tech Lorraine#Spring 2018#" + R.drawable.ic_about};
+
+        ProfileAdapter adapter = new ProfileAdapter(getContext(), R.layout.listview_about_profile_row, profileData);
+
+        listViewProfiles = (ListView) rootView.findViewById(R.id.listViewProfiles);
+        listViewProfiles.setAdapter(adapter);
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,4 +120,5 @@ public class AboutFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
