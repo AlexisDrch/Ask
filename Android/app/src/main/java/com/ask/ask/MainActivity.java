@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
 
 import com.elmargomez.typer.Font;
 import com.elmargomez.typer.Typer;
@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView1;
     private CollapsingToolbarLayout mToolbar;
     private CardView card;
+
+    private Toolbar tb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        tb = (Toolbar) findViewById(R.id.toolbarid);
+//        setSupportActionBar(tb);
+//        tb.findViewById(R.id.appTitle).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), RequestActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        getSupportActionBar().setTitle(null);
 
     }
 
