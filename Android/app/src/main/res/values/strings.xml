@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Ask</string>
+    <string name="about">About</string>
+    <string name="profile">Profile</string>
+    <string name="requests">Requests</string>
+    <string name="matches">Matches</string>
+    <string name="items">Items</string>
+    <string name="settings">Settings</string>
+    <string name="home">Home</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_match_confirmation">MatchConfirmationActivity</string>
 </resources>

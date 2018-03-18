@@ -2,6 +2,9 @@ package com.ask.ask;
 
 /**
  * Created by alexander on 2/26/2018.
+ *
+ * Where offers are made.
+ *
  */
 
 public class Offer {
