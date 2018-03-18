@@ -1,5 +1,6 @@
 package com.ask.ask;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,14 +36,15 @@ public class RequestActivity extends AppCompatActivity {
     private Button buttonLoadImage;
     private SearchView searchViewItemSearch;
     private EditText edtTextItemName;
-    private EditText editTextBeginDate;
-    private EditText editTextEndDate;
+    private TextView textViewBeginDate;
+    private TextView textViewEndDate;
     private EditText editTextPrice;
     private EditText editTextDescription;
+    private Button buttonDatePicker;
     private Button buttonAsk2;
 
-    private static int RESULT_LOAD_IMAGE = 1;
-    public static final int GET_FROM_GALLERY = 1;
+//    private static int RESULT_LOAD_IMAGE = 1;
+//    public static final int GET_FROM_GALLERY = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,35 +53,47 @@ public class RequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request);
 
         imageViewItemImage = (ImageView) findViewById(R.id.imageViewItemImage);
-        buttonLoadImage = findViewById(R.id.buttonLoadImage);
-        edtTextItemName = findViewById(R.id.editTextItemName);
-        editTextBeginDate = findViewById(R.id.editTextBeginDate);
-        editTextEndDate = findViewById(R.id.editTextEndDate);
-        editTextPrice = findViewById(R.id.editTextPrice);
-        editTextDescription = findViewById(R.id.editTextDescription);
-        buttonAsk2 = findViewById(R.id.buttonAsk2);
+        buttonLoadImage = (Button) findViewById(R.id.buttonLoadImage);
+        edtTextItemName = (EditText) findViewById(R.id.editTextItemName);
+        textViewBeginDate = (TextView) findViewById(R.id.textViewBeginDate);
+        textViewEndDate = (TextView) findViewById(R.id.textViewEndDate);
+        editTextPrice = (EditText) findViewById(R.id.editTextPrice);
+        editTextDescription = (EditText) findViewById(R.id.editTextDescription);
+        buttonDatePicker = (Button) findViewById(R.id.buttonDatePicker);
+        buttonAsk2 = (Button) findViewById(R.id.buttonAsk2);
 
-        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
+//        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View arg0) {
 //                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                startActivityForResult(i, RESULT_LOAD_IMAGE);
-
+//
 //                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+//            }
+//        });
+
+        buttonDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: date validation, dates are backwards not sure why, figure out
+                Toast.makeText(getApplicationContext(), "Select Begin Date", Toast.LENGTH_LONG).show();
+                showDateBeginPickerDialog(v);
+                Toast.makeText(getApplicationContext(), "Select End Date", Toast.LENGTH_LONG).show();
+                showDateEndPickerDialog(v);
             }
         });
 
         buttonAsk2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(edtTextItemName.getText()) || TextUtils.isEmpty(editTextBeginDate.getText())
-                        || TextUtils.isEmpty(editTextEndDate.getText()) || TextUtils.isEmpty(editTextPrice.getText())
+                if (TextUtils.isEmpty(edtTextItemName.getText()) || TextUtils.isEmpty(textViewBeginDate.getText())
+                        || TextUtils.isEmpty(textViewEndDate.getText()) || TextUtils.isEmpty(editTextPrice.getText())
                         || TextUtils.isEmpty(editTextDescription.getText())) {
                     Toast.makeText(RequestActivity.this, "All fields require an input.", Toast.LENGTH_SHORT).show();
                 } else {
                     String itemName = edtTextItemName.getText().toString();
-                    String beginDate = editTextBeginDate.getText().toString();;
-                    String endDate = editTextEndDate.getText().toString();;
+                    String beginDate = textViewBeginDate.getText().toString();
+                    String endDate = textViewEndDate.getText().toString();
                     double price = Double.parseDouble(editTextPrice.getText().toString());
                     String description = editTextDescription.getText().toString();
 
@@ -101,8 +116,21 @@ public class RequestActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    /*
+    * Used to pick date.
+     */
+    public void showDateBeginPickerDialog(View v) {
+        DialogFragment datePickerFragment = new DatePickerFragment(textViewBeginDate);
+        datePickerFragment.show(getSupportFragmentManager(), "dateBeginPicker");
+    }
+
+    public void showDateEndPickerDialog(View v) {
+        DialogFragment datePickerFragment = new DatePickerFragment(textViewEndDate);
+        datePickerFragment.show(getSupportFragmentManager(), "dateEndPicker");
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
 //
 //        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null) {
@@ -136,7 +164,7 @@ public class RequestActivity extends AppCompatActivity {
 //                e.printStackTrace();
 //            }
 //        }
-
-    }
+//
+//    }
 
 }
