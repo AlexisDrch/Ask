@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RequestActivity" />
+        <activity android:name=".RequestActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".RequestConfirmationActivity" />
     </application>
 
