@@ -13,15 +13,18 @@ class AmazonproducctSpider(scrapy.Spider):
     def parse(self, response):
         items = AmazonItem()
         title = response.xpath('//h1[@id="title"]/span/text()').extract()
-        sale_price = response.xpath('//span[contains(@id,"ourprice")]')
+        sale_price = response.xpath('//div[@id="cerberus-data-metrics"]/@data-asin-price').extract()
         category = response.xpath('//a[@class="a-link-normal a-color-tertiary"]/text()').extract()
-        
+        img = response.xpath('//div[@id="imgTagWrapperId"]/img/@alt').extract()
+       
         items['name'] = ''.join(title).strip()
         items['avg_price'] = ''.join(sale_price).strip()
         items['description'] = ','.join(map(lambda x: x.strip(), category)).strip()
+        items['img'] = ','.join(img).strip()
         yield items
         
         
         
-        
+        #productThumbnailContainer item m-b productThumbnailContainer--responsive col-sm-6 col-md-4 col-xl-3 col-xxl-1-5 js-#productThumbnailParent 
+        #productThumbnailContainer item m-b productThumbnailContainer--responsive col-sm-6 col-md-4 col-xl-3 col-xxl-1-5 js-#productThumbnailParent
         
