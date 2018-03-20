@@ -2,13 +2,15 @@ var express = require('express');
 var router = express.Router();
 var Offer = require('../models/Offer.js');
 var Request = require('../models/Request.js');
+var User = require('../models/User.js');
 
 
 router.post('/',function(req, res, next) {
 
 	console.log(JSON.stringify(req.body,null,2));
 
-	Offer.makeOffer(req.body)
+	User.getUserByUserId(req.body.provider_id)
+    .then(array_users => Offer.makeOffer(array_users[0], req.body))
     .then(function (data) {
       res.status(200)
         .json({

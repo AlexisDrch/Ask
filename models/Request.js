@@ -32,7 +32,7 @@ var Request = {
 		request.requester_name = requester.name;
 		request.requester_surname = requester.surname;
 		request.requester_ppicture_url = requester.ppicture_url;
-		console.log(JSON.stringify(request, null, 2));
+		//console.log(JSON.stringify(request, null, 2));
 		return db.any(
 			' Insert into "request"' +
 			' (item_id, requester_id, requester_name, requester_surname, requester_ppicture_url,' +

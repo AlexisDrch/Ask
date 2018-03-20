@@ -35,7 +35,7 @@ var Offer = {
 	use-case:
 		A provider clicks on a request, fills his offer, and presses on match
 	*/
-	makeOffer:function(offer){
+	makeOffer:function(provider, offer){
 		offer.begin_date = new Date('December 17, 2018');
 		offer.end_date = new Date('December 31, 2018');
 		offer.request_id = parseInt(offer.request_id);
@@ -45,13 +45,22 @@ var Offer = {
 		offer.end_date = pgFormatDate(offer.end_date);
 		offer.lon = parseFloat(offer.lon);
 		offer.lat = parseFloat(offer.lat);
+		offer.provider_name = provider.name;
+		offer.provider_surname = provider.surname;
+		offer.provider_ppicture_url = provider.ppicture_url;
+		console.log(JSON.stringify(offer, null, 2));
 		return db.any(
 			' Insert into "offer"' +
-			' (belonging_id, request_id, provider_id, begin_date, end_date, lon, lat, description, message)' +
+			' (belonging_id, request_id, '+
+			' provider_id, provider_name, provider_surname, provider_ppicture_url, '+
+			' begin_date, end_date, lon, lat, description, message)' +
 			' values('+
 				' ${belonging_id},'+
 				' ${request_id},'+
 				' ${provider_id},'+
+				' ${provider_name},'+
+				' ${provider_surname},'+
+				' ${provider_ppicture_url},'+
 				' ${begin_date},'+
 				' ${end_date},'+
 				' ${lon},'+
