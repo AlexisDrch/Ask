@@ -69,6 +69,28 @@ router.get('/:request_id?', function(req, res, next) {
 	}
 });
 
+/* listing request(s)
+	- GET
+	_ optional : /request_id
+*/
+router.get('/by/:requester_id?', function(req, res, next) {
+
+	// by requester_id
+	Request.getRequestsByRequesterId(req.params.requester_id)
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved all requests done by ' + JSON.stringify(req.params.requester_id)
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+ 
+});
+
 
 
 module.exports = router;

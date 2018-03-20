@@ -18,6 +18,9 @@ var Request = {
 	getRequestsByRequestId:function(request_id){
 		return db.any('select * from "request" where request_id = $1',request_id);
 	},
+	getRequestsByRequesterId:function(requester_id){
+		return db.any('select * from "request" where requester_id = $1',requester_id);
+	},
 	addRequest:function(requester, request){
 		request.begin_date = new Date('December 17, 2018');
 		request.end_date = new Date('December 31, 2018');
