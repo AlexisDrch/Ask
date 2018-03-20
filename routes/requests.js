@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Request = require('../models/Request.js');
+var User = require('../models/User.js');
 
 
 
@@ -12,7 +13,9 @@ router.post('/',function(req, res, next) {
 
 	console.log(JSON.stringify(req.body,null,2));
 
-	Request.addRequest(req.body)
+	// Get requester infos
+	User.getUserByUserId(req.body.requester_id)
+	.then(array_users => Request.addRequest(array_users[0], req.body))
     .then(function (data) {
       res.status(200)
         .json({
@@ -36,7 +39,7 @@ router.get('/:request_id?', function(req, res, next) {
 	// by request_id
 	if (req.params.request_id) {
 
-		Request.getRequestByRequestId(req.params.request_id)
+		Request.getRequestsByRequestId(req.params.request_id)
 	    .then(function (data) {
 	      res.status(200)
 	        .json({
@@ -50,21 +53,22 @@ router.get('/:request_id?', function(req, res, next) {
 	    });
 
 	} else {
-		// all request(s)
-		Request.getAllRequests()
+		// all unfilled request(s)
+		Request.getAllUnFilledRequests()
 	    .then(function (data) {
 	      res.status(200)
 	        .json({
 	          status: 'success',
 	          data: data,
-	          message: 'Retrieved ALL request(s)'
+	          message: 'Retrieved ALL unfilled request(s)'
 	        });
 	    })
 	    .catch(function (err) {
 	      return next(err);
 	    });
 	}
-
 });
+
+
 
 module.exports = router;

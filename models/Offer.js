@@ -15,8 +15,18 @@ var Offer = {
 	use-case:
 		A requester clicks on his request and sees all the offers
 	*/
-	getAllOffers:function(request_id){
+	getOffersByRequestId:function(request_id){
 		return db.any('select * from "offer" where request_id = $1',request_id);
+	},
+
+	/* Get all offers done by a provider
+	params:
+		- provider_id (id of the provider)
+	use-case:
+		A provider wants to see the current states of its offers.
+	*/
+	getOffersByProviderId:function(provider_id){
+		return db.any('select * from "offer" where provider_id = $1', provider_id);
 	},
 
 	/* Post a new offer
@@ -25,7 +35,7 @@ var Offer = {
 	use-case:
 		A provider clicks on a request, fills his offer, and presses on match
 	*/
-	makeOffer:function(offer){
+	makeOffer:function(provider, offer){
 		offer.begin_date = new Date('December 17, 2018');
 		offer.end_date = new Date('December 31, 2018');
 		offer.request_id = parseInt(offer.request_id);
@@ -35,13 +45,22 @@ var Offer = {
 		offer.end_date = pgFormatDate(offer.end_date);
 		offer.lon = parseFloat(offer.lon);
 		offer.lat = parseFloat(offer.lat);
+		offer.provider_name = provider.name;
+		offer.provider_surname = provider.surname;
+		offer.provider_ppicture_url = provider.ppicture_url;
+		console.log(JSON.stringify(offer, null, 2));
 		return db.any(
 			' Insert into "offer"' +
-			' (belonging_id, request_id, provider_id, begin_date, end_date, lon, lat, description, message)' +
+			' (belonging_id, request_id, '+
+			' provider_id, provider_name, provider_surname, provider_ppicture_url, '+
+			' begin_date, end_date, lon, lat, description, message)' +
 			' values('+
 				' ${belonging_id},'+
 				' ${request_id},'+
 				' ${provider_id},'+
+				' ${provider_name},'+
+				' ${provider_surname},'+
+				' ${provider_ppicture_url},'+
 				' ${begin_date},'+
 				' ${end_date},'+
 				' ${lon},'+
@@ -49,14 +68,20 @@ var Offer = {
 				' ${description},'+
 				' ${message}'+
 			');', offer);
-	}
-	/*,
-	/deleteTask:function(id,callback){
-		return db.query("delete from task where Id=?",[id],callback);
 	},
-	updateTask:function(id,Task,callback){
-		return db.query("update task set Title=?,Status=? where Id=?",[Task.Title,Task.Status,id],callback);
-	}*/
+
+	/* Delete all offers for a request
+	params:
+		- request_id (id of the request)
+	use-case:
+		A requester accept an offer, all the other offers (provider_id is NULL)
+		for this request are deleted.
+	*/
+	deleteOffersByRequestId:function(request_id){
+		return db.any('DELETE FROM "offer" where request_id = $1 AND provider_id IS NULL',request_id);
+	},
+
+	
 };
 
 module.exports = Offer;
