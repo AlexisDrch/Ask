@@ -2,7 +2,6 @@ package com.ask.ask;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.provider.Settings;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
     implements ProfileFragment.OnFragmentInteractionListener,
@@ -90,15 +88,15 @@ public class MainActivity extends AppCompatActivity
 
         Item item_data[] = new Item[]
                 {
-                        new Item(null, "Golf Club", null,
+                        new Item(null,null, "Golf Club", null,
                                 5.00, null, R.mipmap.item_golfclub, user_data[0]),
-                        new Item(null, "Pot", null,
-                                10.00, null, R.mipmap.item_pot, user_data[1]),
-                        new Item(null, "Sleeping Bag", null,
+                        new Item(null,null, "Pot", null,
+                                10.00,null, R.mipmap.item_pot, user_data[1]),
+                        new Item(null,null, "Sleeping Bag", null,
                                 7.00, null, R.mipmap.item_sleepingbag, user_data[2]),
-                        new Item(null, "Surfboard", null,
+                        new Item(null,null, "Surfboard", null,
                                 12.00, null, R.mipmap.item_surfboard, user_data[3]),
-                        new Item(null, "Tent", null,
+                        new Item(null,null, "Tent", null,
                                 5.00, null, R.mipmap.item_tent, user_data[4])
                 };
 

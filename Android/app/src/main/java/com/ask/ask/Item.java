@@ -13,6 +13,7 @@ import java.util.LinkedList;
 public class Item {
 
     private String uuid;
+    private String categoryUuid;
     private String name;
     private LinkedList<String> tags;
     private double price;
@@ -24,8 +25,9 @@ public class Item {
     private int icon;
     private User user;
 
-    public Item(String uuid, String name, LinkedList<String> tags, double price, URL itemImage, int icon, User user) {
+    public Item(String uuid, String categoryUuid, String name, LinkedList<String> tags, double price, URL itemImage, int icon, User user) {
         this.uuid = uuid;
+        this.categoryUuid = categoryUuid;
         this.name = name;
         this.tags = tags;
         this.price = price;
@@ -36,6 +38,10 @@ public class Item {
 
     public String getUuid() {
         return uuid;
+    }
+
+    public String getCategoryUuid() {
+        return categoryUuid;
     }
 
     public String getName() {
@@ -86,10 +92,10 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "uuid='" + uuid + '\'' +
+                ", categoryUuid='" + categoryUuid + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }
-
 
     //00000
 }

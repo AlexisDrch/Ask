@@ -3,7 +3,7 @@ package com.ask.ask;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
+import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.Toast;
-
-import javax.xml.datatype.Duration;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,7 +22,8 @@ import javax.xml.datatype.Duration;
  * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends PreferenceFragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -151,4 +148,5 @@ public class SettingsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

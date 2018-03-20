@@ -1,6 +1,7 @@
 package com.ask.ask;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,23 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.common.api.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 /** Created by pulakazad on 2/28/18.
  *
@@ -99,9 +117,7 @@ public class RequestActivity extends AppCompatActivity {
                         return;
                 }
 
-//                view.setBackgroundColor(Color.TRANSPARENT);
                 categoriesSpinnerPosition = position;
-//                view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
                 itemsSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerItems.setAdapter(itemsSpinnerAdapter);
@@ -176,8 +192,16 @@ public class RequestActivity extends AppCompatActivity {
                     intent.putExtra("description", description);
 //                intent.putExtra("itemImage", imageViewItemImage.getImageMatrix());
 
-                    //TODO: call to database
-//                    Request request = new Request(1, 1, beginDate, endDate, description);
+
+                    User user = new User("1", "Mark Sanders", 51, -1, "+33676564537", " 4 rue de Saint-tout,  Metz, France.");
+                    Item item = new Item("1", "1", itemName, null, price, null, -1, user);
+                    Request request = new Request(user, item, beginDate, endDate, description);
+
+//                    sendData(request);
+
+//                    Log.d("POST", "1");
+//                    sendDataToServer(request);
+//                    Log.d("POST", "10");
 
                     startActivity(intent);
                 }
@@ -198,4 +222,161 @@ public class RequestActivity extends AppCompatActivity {
         datePickerBeginFragment.show(getSupportFragmentManager(), "dateBeginPicker");
     }
 
+    //----------POST
+
+//    private void sendData() {
+//        String url = "http://httpbin.org/post";
+//
+//        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject jsonResponse = new JSONObject(response).getJSONObject("form");
+//                            String site = jsonResponse.getString("site"),
+//                                    network = jsonResponse.getString("network");
+//                            System.out.println("Site: "+site+"\nNetwork: "+network);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        error.printStackTrace();
+//                    }
+//                }
+//        ) {
+//            @Override
+//            protected Map<String, String> getParams()
+//            {
+//                Map<String, String>  params = new HashMap<>();
+//                // the POST parameters:
+//                params.put("site", "code");
+//                params.put("network", "tutsplus");
+//                return params;
+//            }
+//        };
+//        Volley.newRequestQueue(this).add(postRequest);
+//
+//
+//
+//    }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//    private void sendDataToServer(Request request) {
+//        final JSONObject requestJSON = formatJSONRequest(request);
+//        Log.d("POST", "4");
+//
+//        if (requestJSON != null) {
+//            new AsyncTask<Void, Void, String>() {
+//
+//                @Override
+//                protected String doInBackground(Void... params) {
+//                    Log.d("POST", "5");
+//                    return getServerResponse(requestJSON);
+//                }
+//
+//                @Override
+//                protected void onPostExecute(String result) {
+//                    Log.d("POST", "6");
+//                    Log.d("requestPOSTResult", "" + result);
+//                }
+//
+//            }.execute();
+//        } else {
+//            Log.d("POST", "7");
+//            Toast.makeText(this, "Data NOT Sent!", Toast.LENGTH_SHORT);
+//        }
+//
+//    }
+//
+//    private JSONObject formatJSONRequest(Request request) {
+//        final JSONObject requestJSON = new JSONObject();
+//        try {
+//            Log.d("POST", "2");
+//            requestJSON.put("item_id", request.getItem().getUuid());
+//            requestJSON.put("requester_id", request.getRequester().getUuid());
+//            requestJSON.put("begin_date", request.getBeginDate());
+//            requestJSON.put("end_date", request.getEndDate());
+////            requestJSON.put("lon", );
+////            requestJSON.put("lan", );
+//            requestJSON.put("description", request.getDescription());
+//
+//            Log.d("POST", "3a");
+//            return requestJSON;
+//        } catch (JSONException e) {
+//            Log.d("POST", "3b");
+//        }
+//
+//        return null;
+//    }
+//
+//    private String getServerResponse(JSONObject requestJSON) {
+//        Log.d("POST", "8");
+//
+//        DataOutputStream outputStream = null;
+//
+//        try {
+//            URL url = new URL("https://ask-capa.herokuapp.com/api/requests");
+//            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+//
+//            urlConnection.setRequestMethod("POST");
+//            urlConnection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+//            urlConnection.setRequestProperty("Accept", "application/json");
+//            urlConnection.setDoOutput(true);
+//            urlConnection.setDoInput(true);
+//            urlConnection.connect();
+//
+//            Log.d("POST", "81");
+//            outputStream = new DataOutputStream(urlConnection.getOutputStream());
+//            outputStream.writeChars("request=" + requestJSON.toString());
+//            outputStream.flush();
+//            outputStream.close();
+////            urlConnection.disconnect();
+//            Log.d("POST", "82");
+////            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+//            Log.d("POST", "9a");
+//
+//            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+//                Log.d("Success","Success");
+//            } else {
+//                Log.d("Failure", "Failure");
+//            }
+//
+//        } catch (MalformedURLException e) {
+//            Log.d("POST", "9b");
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            Log.d("POST", "9c");
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            Log.d("POST", "9d");
+//            e.printStackTrace();
+//        }
+//
+//        Log.d("POST", "9e");
+//
+//        return null;
+//    }
+//
+//    //----------
+//
 }
