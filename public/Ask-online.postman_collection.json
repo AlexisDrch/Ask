@@ -83,6 +83,17 @@
 			"response": []
 		},
 		{
+			"name": "GET requests made by a user",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/requests/by/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "get request by request_id = 1"
+			},
+			"response": []
+		},
+		{
 			"name": "GET offers for a request",
 			"request": {
 				"url": "https://ask-capa.herokuapp.com/api/offers/for/1",
@@ -94,7 +105,7 @@
 			"response": []
 		},
 		{
-			"name": "GET offers from a user",
+			"name": "GET offers made by a user",
 			"request": {
 				"url": "https://ask-capa.herokuapp.com/api/offers/by/4",
 				"method": "GET",
@@ -125,9 +136,9 @@
 			"response": []
 		},
 		{
-			"name": "POST : accepting an offer for a request",
+			"name": "POST accepting an offer for a request",
 			"request": {
-				"url": "http://localhost:3000/api/offers/accept/1",
+				"url": "https://ask-capa.herokuapp.com/api/offers/accept/1",
 				"method": "POST",
 				"header": [
 					{
