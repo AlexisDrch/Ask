@@ -28,6 +28,9 @@ import android.support.v7.widget.Toolbar;
 import com.elmargomez.typer.Font;
 import com.elmargomez.typer.Typer;
 
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity
     implements ProfileFragment.OnFragmentInteractionListener {
 
@@ -75,6 +78,8 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
+
+
         //----------
 
         //TODO: replace the user_data, item_data, request_data arrays with actual database
@@ -82,21 +87,21 @@ public class MainActivity extends AppCompatActivity
 
         User user_data[] = new User[]
                 {
-                        new User(null, "Bob", 25, R.drawable.bob_profile,
+                        new User(5, "Bob", 25, R.drawable.bob_profile,
                                 "678-456-9831", "711-2880 Nulla St." +
                                 "Mankato, Mississippi 96522"),
 
-                        new User(null, "Jim", 29, R.drawable.jim_profile,
+                        new User(6, "Jim", 29, R.drawable.jim_profile,
                                 "770-783-2923", "606-3727 Ullamcorper. Street " +
                                 "Roseville, NH 11523"),
 
-                        new User(null, "Nancy", 26, R.drawable.nancy_profile,
+                        new User(7, "Nancy", 26, R.drawable.nancy_profile,
                                 "404-719-3817", "Ap #867-859 Sit Rd. Azusa, New York 39531"),
 
-                        new User(null, "Karen", 29, R.drawable.karen_profile,
+                        new User(8, "Karen", 29, R.drawable.karen_profile,
                                 "678-820-8638", "7292 Dictum Av. San Antonio, MI 47096"),
 
-                        new User(null, "John", 31, R.drawable.john_profile,
+                        new User(9, "John", 31, R.drawable.john_profile,
                                 "770-293-3621", "191-103 Integer Rd. " +
                                 "Corona, New Mexico 08219")
                 };
@@ -105,16 +110,16 @@ public class MainActivity extends AppCompatActivity
 
         Item item_data[] = new Item[]
                 {
-                        new Item(null, "Golf Club", null,
-                                5.00, null, R.drawable.item_golfclub, user_data[0]),
-                        new Item(null, "Pot", null,
-                                10.00, null, R.drawable.item_pot, user_data[1]),
-                        new Item(null, "Sleeping Bag", null,
-                                7.00, null, R.drawable.item_sleepingbag, user_data[2]),
-                        new Item(null, "Surfboard", null,
-                                12.00, null, R.drawable.item_surfboard, user_data[3]),
-                        new Item(null, "Tent", null,
-                                5.00, null, R.drawable.item_tent, user_data[4])
+                        new Item(1, "Golf Club", null,
+                                5.00, null, R.drawable.item_golfclub),
+                        new Item(2, "Pot", null,
+                                10.00, null, R.drawable.item_pot),
+                        new Item(3, "Sleeping Bag", null,
+                                7.00, null, R.drawable.item_sleepingbag),
+                        new Item(4, "Surfboard", null,
+                                12.00, null, R.drawable.item_surfboard),
+                        new Item(5, "Tent", null,
+                                5.00, null, R.drawable.item_tent)
                 };
 
         //Creating an array of Requests
@@ -171,6 +176,13 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("https://ask-capa.herokuapp.com/api/")
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build();
+//
+//        final RequestService service = retrofit.create(RequestService.class);
     }
 
 

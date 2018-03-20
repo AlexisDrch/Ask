@@ -30,6 +30,10 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:27.1.0'
     compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
 
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
 
 
     compile 'com.elmargomez.typer:typerlib:1.0.0'

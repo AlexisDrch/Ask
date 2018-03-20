@@ -1,6 +1,8 @@
 package com.ask.ask;
 
 import java.util.LinkedList;
+import com.google.gson.annotations.SerializedName;
+
 
 /**
  * Created by alexander on 2/26/2018.
@@ -11,11 +13,36 @@ import java.util.LinkedList;
 
 public class Request {
 
+    @SerializedName("request_id")
+    private int request_id;
+
+    @SerializedName("item_id")
+    private int item_id;
+
+    @SerializedName("requester_id")
+    private int requester_id;
+
+    @SerializedName("provider_id")
+    private int provider_id;
+
+    @SerializedName("begin_date")
+    private String beginDate;
+
+    @SerializedName("end_date")
+    private String endDate;
+
+    @SerializedName("description")
+    private String description;
+
+    @SerializedName("lon")
+    private int lon;
+
+    @SerializedName("lat")
+    private int lat;
+
+
     private User requester;
     private Item itemRequesting;
-    private String beginDate;
-    private String endDate;
-    private String description;
 
     private int DELETED = -1;
     private int IN_PROGRESS = 0;
@@ -28,10 +55,15 @@ public class Request {
 
     public Request(User requester, Item itemRequesting, String beginDate, String endDate, String description) {
         this.requester = requester;
+        requester_id = requester.getUserId();
+
         this.itemRequesting = itemRequesting;
+        item_id = itemRequesting.getItem_id();
+
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.description = description;
+
         this.status = IN_PROGRESS;
         this.offers = new LinkedList<>();
         this.matcher = null;
@@ -39,6 +71,10 @@ public class Request {
 
     public User getRequester() {
         return requester;
+    }
+
+    public int getRequest_id() {
+        return request_id;
     }
 
     public Item getItem() {

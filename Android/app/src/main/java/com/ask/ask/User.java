@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+
 /**
  * Created by alexander on 2/26/2018.
  *
@@ -13,7 +14,7 @@ import java.util.LinkedList;
 
 public class User {
 
-    private String uuid;
+    private int user_id;
     private String name;
     private int age;
 
@@ -29,8 +30,8 @@ public class User {
 
     private LinkedList<Review> reviews;
 
-    public User(String uuid, String name, int age, int profileImage, String phoneNumber, String address) {
-        this.uuid = uuid;
+    public User(int user_id, String name, int age, int profileImage, String phoneNumber, String address) {
+        this.user_id = user_id;
         this.name = name;
         this.age = age;
         this.profileImage = profileImage;
@@ -42,8 +43,8 @@ public class User {
         this.matches = new ArrayList<>();
     }
 
-    public String getUuid() {
-        return uuid;
+    public int getUserId() {
+        return user_id;
     }
 
     public String getName() {
@@ -124,7 +125,7 @@ public class User {
     @Override
     public String toString() {
         return "com.ask.ask.User{" +
-                "uuid='" + uuid + '\'' +
+                "uuid='" + user_id + '\'' +
                 ", name='" + name + '\'' +
                 ", rating=" + rating +
                 '}';
