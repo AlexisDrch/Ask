@@ -73,6 +73,7 @@ public class RequestAdapter extends ArrayAdapter<Request> {
     /**
      * initializes the image views and text views needed for each row
      */
+
     static class RequestHolder
     {
         ImageView profile;

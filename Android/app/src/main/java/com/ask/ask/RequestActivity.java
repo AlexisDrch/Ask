@@ -1,5 +1,8 @@
 package com.ask.ask;
 
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
@@ -20,11 +23,13 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by pulakazad on 2/28/18.
+/** Created by pulakazad on 2/28/18.
  *
  * Request activity to collect information for each user request.
  */
@@ -40,15 +45,34 @@ public class RequestActivity extends AppCompatActivity {
     private EditText editTextPrice;
     private EditText editTextDescription;
     private Button buttonAsk2;
+    private Button view_all;
 
     private static int RESULT_LOAD_IMAGE = 1;
     public static final int GET_FROM_GALLERY = 1;
+
+    //generic item id counter
+    private int item_count = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
+
+        //Creating the user
+        //TODO: should be able to call the user from the MainActivity
+        final User request_user = new User(6, "Jim", 29, R.drawable.jim_profile,
+                "770-783-2923", "606-3727 Ullamcorper. Street " +
+                "Roseville, NH 11523");
+
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://ask-capa.herokuapp.com/api/requests/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        final RequestService service = retrofit.create(RequestService.class);
 
         imageViewItemImage = (ImageView) findViewById(R.id.imageViewItemImage);
         buttonLoadImage = findViewById(R.id.buttonLoadImage);
@@ -58,6 +82,7 @@ public class RequestActivity extends AppCompatActivity {
         editTextPrice = findViewById(R.id.editTextPrice);
         editTextDescription = findViewById(R.id.editTextDescription);
         buttonAsk2 = findViewById(R.id.buttonAsk2);
+        view_all = findViewById(R.id.view_all);
 
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +93,15 @@ public class RequestActivity extends AppCompatActivity {
 //                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
             }
         });
+
+        view_all.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ViewAllRequestsActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         buttonAsk2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +117,7 @@ public class RequestActivity extends AppCompatActivity {
                     double price = Double.parseDouble(editTextPrice.getText().toString());
                     String description = editTextDescription.getText().toString();
 
+                    //should probably utilize parceable
                     Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
                     intent.putExtra("itemName", itemName);
                     intent.putExtra("beginDate", beginDate);
@@ -91,7 +126,45 @@ public class RequestActivity extends AppCompatActivity {
                     intent.putExtra("description", description);
 //                intent.putExtra("itemImage", imageViewItemImage.getImageMatrix());
 
-                    //call to database
+
+
+
+                    Item newItem = new Item(item_count, itemName, null, price, null, 0);
+                    item_count++;
+
+
+//
+//                    //call to database
+//                    Request request = new Request(request_user, newItem, beginDate, endDate, description);
+//                    Call<Request> createCall = service.create(request);
+//
+//                    createCall.enqueue(new Callback<Request>() {
+//                        @Override
+//                        public void onResponse(Call<Request> foo, Response<Request> resp) {
+//                            String newRequest = resp.headers().toString();
+//
+//                            System.out.println("Headers: " + newRequest);
+//
+////
+////                            int duration = Toast.LENGTH_SHORT;
+////                            if (newRequest.getItem() != null) {
+////                                Toast toast = Toast.makeText(getBaseContext(), "Added new request to database" + newRequest.getItem().getName(), duration);
+////                                toast.show();
+////                            }
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<Request> foo, Throwable t) {
+//                            t.printStackTrace();
+//
+//                            int durationShort = Toast.LENGTH_SHORT;
+//                            Toast toast = Toast.makeText(getBaseContext(), t.getMessage(), durationShort);
+//                            toast.show();
+//
+//                        }
+//                    });
+
                     //create request for user
 
                     startActivity(intent);

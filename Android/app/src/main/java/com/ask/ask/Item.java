@@ -12,31 +12,28 @@ import java.util.LinkedList;
 
 public class Item {
 
-    private String uuid;
+    private int item_id;
     private String name;
     private LinkedList<String> tags;
     private double price;
     private URL itemImage;
     public char[] title;
 
-
     //TODO: connect icon with database pictures
     //temporary
     private int icon;
-    private User user;
 
-    public Item(String uuid, String name, LinkedList<String> tags, double price, URL itemImage, int icon, User user) {
-        this.uuid = uuid;
+    public Item(int item_id, String name, LinkedList<String> tags, double price, URL itemImage, int icon) {
+        this.item_id = item_id;
         this.name = name;
         this.tags = tags;
         this.price = price;
         this.itemImage = itemImage;
         this.icon = icon;
-        this.user = user;
     }
 
-    public String getUuid() {
-        return uuid;
+    public int getItem_id() {
+        return item_id;
     }
 
     public String getName() {
@@ -47,9 +44,9 @@ public class Item {
         return icon;
     }
 
-    public User getUser() {
-        return user;
-    }
+//    public User getUser() {
+//        return user;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -86,7 +83,7 @@ public class Item {
     @Override
     public String toString() {
         return "Item{" +
-                "uuid='" + uuid + '\'' +
+                "item_id='" + item_id + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }
