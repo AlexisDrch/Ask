@@ -36,6 +36,11 @@ git push heroku master
 
 export PATH=/Applications/Postgres.app/Contents/Versions/10/bin/:$PATH
 
+
+. To reset postgres database
+
+heroku pg:reset DATABASE_URL
+
 . To deploy database schema on heroku
 
 pg_dump --no-owner ask > ask-v0.dump
@@ -47,7 +52,4 @@ Note that you need to be in the folder where the .dump is
 
 heroku config:get DATABASE_URL -a ask-capa
 
-. To reset postgres database
-
-heroku pg:reset DATABASE_URL
 

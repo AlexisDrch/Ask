@@ -152,6 +152,10 @@ CREATE TABLE offer (
     belonging_id integer NOT NULL,
     request_id integer NOT NULL,
     provider_id integer NOT NULL,
+    provider_name character varying(500),
+    provider_surname character varying(500),
+    provider_ppicture_url character varying(1000),
+    requester_id integer,
     begin_date date NOT NULL,
     end_date date NOT NULL,
     lon double precision NOT NULL,
@@ -201,7 +205,10 @@ CREATE TABLE request (
     request_id integer NOT NULL,
     item_id integer NOT NULL,
     requester_id integer NOT NULL,
-    provider_id integer NOT NULL,
+    requester_name character varying(500),
+    requester_surname character varying(500),
+    requester_ppicture_url character varying(1000),
+    status integer NOT NULL,
     begin_date date NOT NULL,
     end_date date NOT NULL,
     lon double precision NOT NULL,
@@ -340,6 +347,8 @@ COPY is_in (category_id, item_id) FROM stdin;
 COPY item (item_id, name, avg_price, description) FROM stdin;
 1	tent	15.5	casual tent for student camping. 2 people
 2	surfboard	13.5	surfboard. 6.8 inches
+3	tent	15.5	casual tent for student camping. 2 people
+4	surfboard	13.5	surfboard. 6.8 inches
 \.
 
 
@@ -347,8 +356,8 @@ COPY item (item_id, name, avg_price, description) FROM stdin;
 -- Data for Name: offer; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY offer (belonging_id, request_id, provider_id, begin_date, end_date, lon, lat, description, message) FROM stdin;
-1	2	4	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	This offer is made by provider 4 for request 2	Hey man ! I got your board, I'll drop it at the place you asked =)
+COPY offer (belonging_id, request_id, provider_id, provider_name, provider_surname, provider_ppicture_url, requester_id, begin_date, end_date, lon, lat, description, message) FROM stdin;
+1	1	4	Pulak	Azad	https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D	1	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	This offer is made by provider 4 for request 1	Hey ! I have a nice board for ya. Pulak
 \.
 
 
@@ -364,12 +373,8 @@ COPY picture (picture_id, url, category_id, item_id) FROM stdin;
 -- Data for Name: request; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY request (request_id, item_id, requester_id, provider_id, begin_date, end_date, lon, lat, description) FROM stdin;
-2	1	1	2	2018-12-17	2018-12-17	-122.431297000000001	37.7739720000000005	Looking for a board 6.8 near SF. Can move to pick up !
-3	1	1	2	2018-12-17	2018-12-17	-122.431297000000001	37.7739720000000005	Looking for a board 6.8 near SF. Can move to pick up !
-5	1	1	2	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for a board 6.8 near SF. Can move to pick up !
-6	1	1	2	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for a board 6.8 near SF. Can move to pick up !
-7	1	1	2	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for a board 6.8 near SF. Can move to pick up !
+COPY request (request_id, item_id, requester_id, requester_name, requester_surname, requester_ppicture_url, status, begin_date, end_date, lon, lat, description) FROM stdin;
+1	1	1	Mark	Sanders	http://rnoc.gatech.edu/sites/default/files/Matt%20Sanders-01_0.jpg	1	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for a board 6.8 near SF. Can move to pick up !
 \.
 
 
@@ -403,7 +408,7 @@ SELECT pg_catalog.setval('category_category_id_seq', 1, false);
 -- Name: item_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('item_item_id_seq', 2, true);
+SELECT pg_catalog.setval('item_item_id_seq', 4, true);
 
 
 --
@@ -417,7 +422,7 @@ SELECT pg_catalog.setval('picture_picture_id_seq', 1, false);
 -- Name: request_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('request_request_id_seq', 7, true);
+SELECT pg_catalog.setval('request_request_id_seq', 1, true);
 
 
 --
@@ -540,6 +545,14 @@ ALTER TABLE ONLY offer
 
 
 --
+-- Name: offer offer_requester_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY offer
+    ADD CONSTRAINT offer_requester_id_fkey FOREIGN KEY (requester_id) REFERENCES "user"(user_id) ON DELETE CASCADE;
+
+
+--
 -- Name: picture picture_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -561,14 +574,6 @@ ALTER TABLE ONLY picture
 
 ALTER TABLE ONLY request
     ADD CONSTRAINT request_item_id_fkey FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE;
-
-
---
--- Name: request request_provider_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY request
-    ADD CONSTRAINT request_provider_id_fkey FOREIGN KEY (provider_id) REFERENCES "user"(user_id) ON DELETE CASCADE;
 
 
 --

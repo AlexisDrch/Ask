@@ -1,247 +1,199 @@
 {
-	"id": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-	"name": "Ask-online",
-	"description": "",
-	"order": [
-		"77f64a3f-68b7-dcf2-4c7e-0d3f17eaca89",
-		"58afeff2-8148-3523-d161-18f46d9e7a83",
-		"c753da57-3054-3993-702a-ae3a1a769de0",
-		"3ab42709-22d0-a1ba-f385-f54459d8ae24",
-		"6eda6e45-26fb-6e09-4b75-ed1c0312e475",
-		"962008c9-db9f-67f3-38bb-64ff9f9833a0",
-		"2814f8c8-c550-2f4f-638d-7460b7de3ebf",
-		"ecea3075-6080-1529-3f85-8c2ba2bfc823",
-		"87165933-f3ae-e609-ef38-4aaa5c6eb5d9"
-	],
-	"folders": [],
-	"folders_order": [],
-	"timestamp": 1520879899925,
-	"owner": "1414690",
-	"public": false,
-	"requests": [
+	"variables": [],
+	"info": {
+		"name": "Ask-online",
+		"_postman_id": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
 		{
-			"id": "2814f8c8-c550-2f4f-638d-7460b7de3ebf",
-			"headers": "Content-Type: application/json; charset=UTF-8\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json; charset=UTF-8",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "https://ask-capa.herokuapp.com/api/requests",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1520962074318,
-			"name": "POST new request",
-			"description": "{\t\n\t\"item_id\": \"1\",\n\t\"requester_id\": \"1\",\n\t\"provider_id\": \"2\",\n\t\"begin_date\": \"2018-12-17\",\n\t\"end_date\": \"2018-12-31\",\n\t\"lon\": \"-122.431297\",\n\t\"lat\" : \"37.773972\",\n\t\"description\": \"Looking for a board 6.8 near SF. Can move to pick up !\"\n}",
-			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-			"responses": [],
-			"rawModeData": "{\t\n\t\"item_id\": \"1\",\n\t\"requester_id\": \"1\",\n\t\"provider_id\": \"-1\",\n\t\"begin_date\": \"2018-12-17\",\n\t\"end_date\": \"2018-12-31\",\n\t\"lon\": \"-122.431297\",\n\t\"lat\" : \"37.773972\",\n\t\"description\": \"Looking for a board 6.8 near SF. Can move to pick up !\"\n}"
-		},
-		{
-			"id": "3ab42709-22d0-a1ba-f385-f54459d8ae24",
-			"headers": "",
-			"headerData": [],
-			"url": "https://ask-capa.herokuapp.com/",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-			"data": null,
-			"dataMode": "params",
-			"name": "Index",
-			"description": "get all requests",
-			"descriptionFormat": "html",
-			"time": 1520959466923,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
-		},
-		{
-			"id": "58afeff2-8148-3523-d161-18f46d9e7a83",
-			"headers": "Content-Type: application/json; charset=UTF-8\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json; charset=UTF-8",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "https://ask-capa.herokuapp.com/api/users",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "POST",
-			"data": [],
-			"dataMode": "raw",
-			"version": 2,
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1520965345704,
-			"name": "POST new user",
-			"description": "{\t\n\t\"name\": \"Carolyn\",\n\t\"surname\": \"Shi\",\n\t\"age\": \"20\",\n\t\"description\": \"American. Girl. Interested in camping and in France for 4 months. Student Computer Science.\",\n\t\"ppicture_url\": \"https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D\",\n\t\"phone_num\": \"+33673332537\",\n\t\"address\": \" 4 rue de Valencourt,  Metz, France.\"\n}",
-			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-			"responses": [],
-			"rawModeData": "{\t\n\t\"name\": \"Pulak\",\n\t\"surname\": \"Azad\",\n\t\"age\": \"20\",\n\t\"description\": \"American. Boy. Interested in camping and in France for 4 months. Student Computer Science.\",\n\t\"ppicture_url\": \"https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D\",\n\t\"phone_num\": \"+33673332537\",\n\t\"address\": \" 4 rue de Valencourt,  Metz, France.\"\n}"
-		},
-		{
-			"id": "6eda6e45-26fb-6e09-4b75-ed1c0312e475",
-			"headers": "",
-			"headerData": [],
-			"url": "https://ask-capa.herokuapp.com/api/requests",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-			"data": null,
-			"dataMode": "params",
-			"name": "GET all requests",
-			"description": "",
-			"descriptionFormat": "html",
-			"time": 1520959497221,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
-		},
-		{
-			"id": "77f64a3f-68b7-dcf2-4c7e-0d3f17eaca89",
-			"headers": "",
-			"headerData": [],
-			"url": "https://ask-capa.herokuapp.com/api/users/",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
-			"version": 2,
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1520959269459,
 			"name": "GET all users",
-			"description": "",
-			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-			"responses": []
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/users/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
 		},
 		{
-			"id": "87165933-f3ae-e609-ef38-4aaa5c6eb5d9",
-			"headers": "Content-Type: application/json; charset=UTF-8\n",
-			"headerData": [
-				{
-					"key": "Content-Type",
-					"value": "application/json; charset=UTF-8",
-					"description": "",
-					"enabled": true
-				}
-			],
-			"url": "https://ask-capa.herokuapp.com/api/offers",
-			"queryParams": [],
-			"preRequestScript": null,
-			"pathVariables": {},
-			"pathVariableData": [],
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1520968280771,
-			"name": "POST new offer",
-			"description": "A provider makes his offer to a current request",
-			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-			"responses": []
+			"name": "POST new user",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/users",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"name\": \"Pulak\",\n\t\"surname\": \"Azad\",\n\t\"age\": \"20\",\n\t\"description\": \"American. Boy. Interested in camping and in France for 4 months. Student Computer Science.\",\n\t\"ppicture_url\": \"https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D\",\n\t\"phone_num\": \"+33673332537\",\n\t\"address\": \" 4 rue de Valencourt,  Metz, France.\"\n}"
+				},
+				"description": "{\t\n\t\"name\": \"Carolyn\",\n\t\"surname\": \"Shi\",\n\t\"age\": \"20\",\n\t\"description\": \"American. Girl. Interested in camping and in France for 4 months. Student Computer Science.\",\n\t\"ppicture_url\": \"https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D\",\n\t\"phone_num\": \"+33673332537\",\n\t\"address\": \" 4 rue de Valencourt,  Metz, France.\"\n}"
+			},
+			"response": []
 		},
 		{
-			"id": "962008c9-db9f-67f3-38bb-64ff9f9833a0",
-			"headers": "",
-			"headerData": [],
-			"url": "https://ask-capa.herokuapp.com/api/requests/1",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-			"data": null,
-			"dataMode": "params",
-			"name": "GET one request",
-			"description": "GET a request according to the requestId",
-			"descriptionFormat": "html",
-			"time": 1520959574553,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
-		},
-		{
-			"id": "c753da57-3054-3993-702a-ae3a1a769de0",
-			"headers": "",
-			"headerData": [],
-			"url": "https://ask-capa.herokuapp.com/api/users/1",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-			"data": null,
-			"dataMode": "params",
 			"name": "GET one user",
-			"description": "Get a user according to the userId",
-			"descriptionFormat": "html",
-			"time": 1520959429856,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/users/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Get a user according to the userId"
+			},
+			"response": []
 		},
 		{
-			"id": "ecea3075-6080-1529-3f85-8c2ba2bfc823",
-			"headers": "",
-			"headerData": [],
-			"url": "https://ask-capa.herokuapp.com/api/offers/2",
-			"queryParams": [],
-			"pathVariables": {},
-			"pathVariableData": [],
-			"preRequestScript": null,
-			"method": "GET",
-			"collectionId": "e7be44b4-c3ae-407a-5b2f-b6bb7c4318be",
-			"data": null,
-			"dataMode": "params",
+			"name": "Index",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "get all requests"
+			},
+			"response": []
+		},
+		{
+			"name": "GET all requests",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/requests",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET one request",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/requests/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "GET a request according to the requestId"
+			},
+			"response": []
+		},
+		{
+			"name": "GET offers for a request",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/offers/for/1",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "GET all offers made for the request (request_id = 1)"
+			},
+			"response": []
+		},
+		{
+			"name": "GET offers from a user",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/offers/by/4",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "Get all offers done by user 4"
+			},
+			"response": []
+		},
+		{
+			"name": "POST new offer",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/offers",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"belonging_id\": \"1\",\n\t\"request_id\": \"1\",\n\t\"provider_id\": \"4\",\n\t\"begin_date\": \"2018-12-17\",\n\t\"end_date\": \"2018-12-31\",\n\t\"lon\": \"-122.431297\",\n\t\"lat\" : \"37.773972\",\n\t\"description\": \"This offer is made by provider 4 for request 1\",\n\t\"message\": \"Hey ! I have a nice board for ya. Pulak\"\n}\n"
+				},
+				"description": "POST a new offer for a request"
+			},
+			"response": []
+		},
+		{
+			"name": "POST : accepting an offer for a request",
+			"request": {
+				"url": "http://localhost:3000/api/offers/accept/1",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"belonging_id\": 1,\n    \"request_id\": 1,\n    \"provider_id\": 4,\n    \"begin_date\": \"2018-12-16T23:00:00.000Z\",\n    \"end_date\": \"2018-12-30T23:00:00.000Z\",\n    \"lon\": -122.431297,\n    \"lat\": 37.773972,\n    \"description\": \"This offer is made by provider 4 for request 1\",\n    \"message\": \"Hey ! I have a nice board for ya. Pulak\"\n}"
+				},
+				"description": "Requester(1) accepts offer"
+			},
+			"response": []
+		},
+		{
+			"name": "POST new request",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/requests",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"item_id\": \"1\",\n\t\"requester_id\": \"1\",\n\t\"begin_date\": \"2018-12-17\",\n\t\"end_date\": \"2018-12-31\",\n\t\"lon\": \"-122.431297\",\n\t\"lat\" : \"37.773972\",\n\t\"description\": \"Looking for a board 6.8 near SF. Can move to pick up !\"\n}"
+				},
+				"description": "{\t\n\t\"item_id\": \"1\",\n\t\"requester_id\": \"1\",\n\t\"provider_id\": \"2\",\n\t\"begin_date\": \"2018-12-17\",\n\t\"end_date\": \"2018-12-31\",\n\t\"lon\": \"-122.431297\",\n\t\"lat\" : \"37.773972\",\n\t\"description\": \"Looking for a board 6.8 near SF. Can move to pick up !\"\n}"
+			},
+			"response": []
+		},
+		{
 			"name": "GET all offers / request",
-			"description": "given a request_id, return all current offers",
-			"descriptionFormat": "html",
-			"time": 1520968153462,
-			"version": 2,
-			"responses": [],
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {}
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/offers/2",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "given a request_id, return all current offers"
+			},
+			"response": []
+		},
+		{
+			"name": "POST new offer",
+			"request": {
+				"url": "https://ask-capa.herokuapp.com/api/offers",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"belonging_id\": \"1\",\n\t\"request_id\": \"2\",\n\t\"provider_id\": \"-1\",\n\t\"begin_date\": \"2018-12-17\",\n\t\"end_date\": \"2018-12-31\",\n\t\"lon\": \"-122.431297\",\n\t\"lat\" : \"37.773972\",\n\t\"description\": \"This offer is made by provider 4 for request 2\",\n\t\"message\": \"Hey man ! I got your board, I'll drop it at the place you asked =)\"\n}\n"
+				},
+				"description": "A provider makes his offer to a current request"
+			},
+			"response": []
 		}
 	]
 }
