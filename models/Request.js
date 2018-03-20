@@ -18,7 +18,7 @@ var Request = {
 	getRequestsByRequestId:function(request_id){
 		return db.any('select * from "request" where request_id = $1',request_id);
 	},
-	addRequest:function(request){
+	addRequest:function(requester, request){
 		request.begin_date = new Date('December 17, 2018');
 		request.end_date = new Date('December 31, 2018');
 		request.item_id = parseInt(request.item_id);
@@ -28,13 +28,21 @@ var Request = {
 		request.end_date = pgFormatDate(request.end_date);
 		request.lon = parseFloat(request.lon);
 		request.lat = parseFloat(request.lat);
-		//console.log(JSON.stringify(request, null, 2));
+		request.requester_id = requester.user_id;
+		request.requester_name = requester.name;
+		request.requester_surname = requester.surname;
+		request.requester_ppicture_url = requester.ppicture_url;
+		console.log(JSON.stringify(request, null, 2));
 		return db.any(
 			' Insert into "request"' +
-			' (item_id, requester_id, status, begin_date, end_date, lon, lat, description)' +
+			' (item_id, requester_id, requester_name, requester_surname, requester_ppicture_url,' +
+			' status, begin_date, end_date, lon, lat, description)' +
 			' values('+
 				' ${item_id},'+
 				' ${requester_id},'+
+				' ${requester_name},'+
+				' ${requester_surname},'+
+				' ${requester_ppicture_url},'+
 				' ${status},'+
 				' ${begin_date},'+
 				' ${end_date},'+

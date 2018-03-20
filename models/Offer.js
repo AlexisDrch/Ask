@@ -71,6 +71,8 @@ var Offer = {
 	deleteOffersByRequestId:function(request_id){
 		return db.any('DELETE FROM "offer" where request_id = $1 AND provider_id IS NULL',request_id);
 	},
+
+	
 };
 
 module.exports = Offer;
