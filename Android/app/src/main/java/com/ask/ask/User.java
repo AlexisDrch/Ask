@@ -25,7 +25,7 @@ public class User {
 
     private ArrayList<Request> requests;
     private ArrayList<Offer> offers;
-    private ArrayList<Match> matches;
+    private ArrayList<Offer> matches;
 
     private LinkedList<Review> reviews;
 
@@ -107,7 +107,7 @@ public class User {
         return offers;
     }
 
-    public ArrayList<Match> getMatches() {
+    public ArrayList<Offer> getOfferes() {
         return matches;
     }
 

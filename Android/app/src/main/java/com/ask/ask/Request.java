@@ -69,7 +69,7 @@ public class Request {
         return offers;
     }
 
-    public User getMatcher() {
+    public User getOfferer() {
         return matcher;
     }
 
@@ -77,7 +77,7 @@ public class Request {
         return offers.add(newOffer);
     }
 
-    public boolean confirmMatch(Offer offerConfirmed) {
+    public boolean confirmOffer(Offer offerConfirmed) {
 
 
         return false;

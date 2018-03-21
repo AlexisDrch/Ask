@@ -1,7 +1,5 @@
 package com.ask.ask;
 
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,24 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-
-import static java.lang.annotation.ElementType.METHOD;
 
 /** Created by pulakazad on 2/28/18.
  *
@@ -163,7 +146,7 @@ public class RequestActivity extends AppCompatActivity {
                 //TODO: date validation
                 //TODO: set end date to be day after the begin date to make it more concise
                 //TODO: merge into 1 calendar so user can see both dates at same time
-                showDateBeginPickerDialog(v);
+                showDateBeginPickerDialog(v, "Select Begin Date");
             }
         });
 
@@ -181,24 +164,22 @@ public class RequestActivity extends AppCompatActivity {
                     double price = Double.parseDouble(editTextPrice.getText().toString());
                     String description = editTextDescription.getText().toString();
 
+                    //for RequestConfirmationActivity display
                     Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
                     intent.putExtra("itemName", itemName);
                     intent.putExtra("beginDate", beginDate);
                     intent.putExtra("endDate", endDate);
                     intent.putExtra("price", price);
                     intent.putExtra("description", description);
-//                intent.putExtra("itemImage", imageViewItemImage.getImageMatrix());
 
+                    User user = new User("1", "Alex Fache", 19, -1, "+123456789", " 4 rue de Saint-tout,  Metz, France.");
+                    Item item = new Item("1", "1", itemName, null, price, null, -1, user);
+                    com.ask.ask.Request request = new com.ask.ask.Request(user, item, beginDate, endDate, description);
 
-//                    User user = new User("1", "Mark Sanders", 51, -1, "+33676564537", " 4 rue de Saint-tout,  Metz, France.");
-//                    Item item = new Item("1", "1", itemName, null, price, null, -1, user);
-//                    Request request = new Request(user, item, beginDate, endDate, description);
-
-//                    sendData(request);
-
-//                    Log.d("POST", "1");
-//                    sendDataToServer(request);
-//                    Log.d("POST", "10");
+                    //Volley POST
+                    final String url = "https://ask-capa.herokuapp.com/api/requests";
+                    POSTData postData = new POSTData();
+                    postData.postRequest(url, request, getApplicationContext());
 
                     startActivity(intent);
                 }
@@ -211,162 +192,12 @@ public class RequestActivity extends AppCompatActivity {
     /*
     * Used to pick date.
      */
-    public void showDateBeginPickerDialog(View v) {
-        Toast toast = Toast.makeText(getApplicationContext(), "Select Begin Date", Toast.LENGTH_SHORT);
+    public void showDateBeginPickerDialog(View view, String message) {
+        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
-        DialogFragment datePickerBeginFragment = new DatePickerFragment(textViewBeginDate, textViewEndDate, v, 0);
+        DialogFragment datePickerBeginFragment = new DatePickerFragment(textViewBeginDate, textViewEndDate, view, 0);
         datePickerBeginFragment.show(getSupportFragmentManager(), "dateBeginPicker");
     }
 
-    //----------POST
-
-//    private void sendData() {
-//        String url = "http://httpbin.org/post";
-//
-//        StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
-//                url,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//            }
-//        }) {
-//
-//            @Override
-//            public String getBodyContentType() {
-//                return "application/x-www-form-urlencoded; charset=UTF-8";
-//            }
-//
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//
-//
-//                Map<String, String> postParam = new HashMap<String, String>();
-//
-//                postParam.put("email", "asd@asd.com");
-//                postParam.put("password", "asd");
-//
-//
-//                return postParam;
-//            }
-//
-//        };
-//
-//        requestQueue.add(jsonObjRequest);
-//
-//
-//
-//    }
-//
-//
-//
-//
-//
-//
-//
-//
-//    private void sendDataToServer(Request request) {
-//        final JSONObject requestJSON = formatJSONRequest(request);
-//        Log.d("POST", "4");
-//
-//        if (requestJSON != null) {
-//            new AsyncTask<Void, Void, String>() {
-//
-//                @Override
-//                protected String doInBackground(Void... params) {
-//                    Log.d("POST", "5");
-//                    return getServerResponse(requestJSON);
-//                }
-//
-//                @Override
-//                protected void onPostExecute(String result) {
-//                    Log.d("POST", "6");
-//                    Log.d("requestPOSTResult", "" + result);
-//                }
-//
-//            }.execute();
-//        } else {
-//            Log.d("POST", "7");
-//            Toast.makeText(this, "Data NOT Sent!", Toast.LENGTH_SHORT);
-//        }
-//
-//    }
-//
-//    private JSONObject formatJSONRequest(Request request) {
-//        final JSONObject requestJSON = new JSONObject();
-//        try {
-//            Log.d("POST", "2");
-//            requestJSON.put("item_id", request.getItem().getUuid());
-//            requestJSON.put("requester_id", request.getRequester().getUuid());
-//            requestJSON.put("begin_date", request.getBeginDate());
-//            requestJSON.put("end_date", request.getEndDate());
-////            requestJSON.put("lon", );
-////            requestJSON.put("lan", );
-//            requestJSON.put("description", request.getDescription());
-//
-//            Log.d("POST", "3a");
-//            return requestJSON;
-//        } catch (JSONException e) {
-//            Log.d("POST", "3b");
-//        }
-//
-//        return null;
-//    }
-//
-//    private String getServerResponse(JSONObject requestJSON) {
-//        Log.d("POST", "8");
-//
-//        DataOutputStream outputStream = null;
-//
-//        try {
-//            URL url = new URL("https://ask-capa.herokuapp.com/api/requests");
-//            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-//
-//            urlConnection.setRequestMethod("POST");
-//            urlConnection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-//            urlConnection.setRequestProperty("Accept", "application/json");
-//            urlConnection.setDoOutput(true);
-//            urlConnection.setDoInput(true);
-//            urlConnection.connect();
-//
-//            Log.d("POST", "81");
-//            outputStream = new DataOutputStream(urlConnection.getOutputStream());
-//            outputStream.writeChars("request=" + requestJSON.toString());
-//            outputStream.flush();
-//            outputStream.close();
-////            urlConnection.disconnect();
-//            Log.d("POST", "82");
-////            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-//            Log.d("POST", "9a");
-//
-//            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-//                Log.d("Success","Success");
-//            } else {
-//                Log.d("Failure", "Failure");
-//            }
-//
-//        } catch (MalformedURLException e) {
-//            Log.d("POST", "9b");
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            Log.d("POST", "9c");
-//            e.printStackTrace();
-//        } catch (Exception e) {
-//            Log.d("POST", "9d");
-//            e.printStackTrace();
-//        }
-//
-//        Log.d("POST", "9e");
-//
-//        return null;
-//    }
-//
-//    //----------
-//
 }

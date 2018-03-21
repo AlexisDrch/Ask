@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -26,27 +27,32 @@ import java.util.Date;
 /**
  * Created by alexander on 3/18/2018.
  *
- * This fragment is used to display a popup calendar where the user can select their request dates.
+ * This fragment is used to display a popup calendar where the user can select their request begin and date.
  */
 
-//TODO: some how display the message of which date to select in title bar or something not through mistimed toasts
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     private DatePickerDialog datePickerDialog;
 
     private TextView textViewBegin;
     private TextView textViewEnd;
-    private View v;
-    private int dateTime; //0 = begin, 1 = end
+    private View view;
+    private int dateTime; //-1 = complete, 0 = begin, 1 = end
+
+    private String BEGIN_DATE = "Select Begin Date.";
+    private String END_DATE = "Select End Date.";
+    private String INVALID_DATE = "Invalid Date Selected.";
+    private String NO_DATE = "No date selected.";
+
 
     public DatePickerFragment() {};
 
     @SuppressLint("ValidFragment")
-    public DatePickerFragment(TextView textViewBegin, TextView textViewEnd, View v, int dateTime) {
+    public DatePickerFragment(TextView textViewBegin, TextView textViewEnd, View view, int dateTime) {
         super();
         this.textViewBegin = textViewBegin;
         this.textViewEnd = textViewEnd;
-        this.v = v;
+        this.view = view;
         this.dateTime = dateTime;
     }
 
@@ -57,25 +63,24 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int day;
 
         if (dateTime == 0) {
-            Calendar calendar = Calendar.getInstance(); //get today's date
+            Calendar calendar = Calendar.getInstance();
             year = calendar.get(Calendar.YEAR);
             month = calendar.get(Calendar.MONTH);
             day = calendar.get(Calendar.DAY_OF_MONTH);
-        } else { //TODO: use begin's dates, errors when invalid date selectrd for begin because nothing is filled out
-            String[] date = textViewBegin.getText().toString().split("/");
+        } else {
+            String[] date = textViewBegin.getText().toString().split("/"); //TODO: settings thing to add different formatting (month fist or second)
             year = Integer.parseInt(date[2]);
             month = Integer.parseInt(date[0]) - 1;
             day = Integer.parseInt(date[1]);
         }
 
         datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
-//        datePickerDialog.setTitle("Select Begin and End Dates.");
 
         return datePickerDialog;
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        Log.d("onDateSet " + dateTime, "year: " + year + ", month: " + (month + 1) + ", day: " + day); //month starts 1t 0
+        Log.d("onDateSet " + dateTime, "year: " + year + ", month: " + (month + 1) + ", day: " + day); //month begins at 0
         String date = (month + 1) + "/" + day + "/" + year;
 
         if (dateTime == 0) { //begin date
@@ -86,30 +91,49 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
             if (isDateValid(year, month, day, yearToday, monthToday, dayToday)) {
                 textViewBegin.setText(date);
+                dateTime = 1;
+                showDateEndPickerDialog(view, END_DATE);
             } else {
-                //TODO: add begin date verification
+                showDateBeginPickerDialog(view, INVALID_DATE + " " + BEGIN_DATE);
             }
-
-            dateTime = 1;
-            showDateEndPickerDialog(v, "Select End Date.");
-        } else {
+        } else { //end date
             String[] beginDate = textViewBegin.getText().toString().split("/");
             int yearBegin = Integer.parseInt(beginDate[2]);
             int monthBegin = Integer.parseInt(beginDate[0]) - 1;
             int dayBegin = Integer.parseInt(beginDate[1]);
-            if (isDateValid(year, month, day, yearBegin, monthBegin, dayBegin)) { //date validation
+            if (isDateValid(year, month, day, yearBegin, monthBegin, dayBegin)) {
                 textViewEnd.setText(date);
+                dateTime = -1;
             } else {
-                showDateEndPickerDialog(v, "Invalid date selected. Select End Date.");
+                showDateEndPickerDialog(view, INVALID_DATE + " " + END_DATE);
             }
         }
+
     }
 
     public void onCancel(DialogInterface dialog){
         if (dateTime == 0) {
-            dateTime = 1;
-            showDateEndPickerDialog(v, "Select End Date.");
+            if (TextUtils.isEmpty(textViewBegin.getText().toString())) { //invalid selection
+                showDateBeginPickerDialog(view, NO_DATE + " " + BEGIN_DATE);
+            } else { //valid selection
+                dateTime = 1;
+                showDateEndPickerDialog(view, END_DATE);
+            }
+        } else if (dateTime == 1) {
+            if (TextUtils.isEmpty(textViewEnd.getText().toString())) { //invalid selection
+                showDateEndPickerDialog(view, NO_DATE + " " + END_DATE);
+            }
+            //valid selection
         }
+
+    }
+
+    public void showDateBeginPickerDialog(View view, String message) {
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
+        DialogFragment datePickerBeginFragment = new DatePickerFragment(textViewBegin, textViewEnd, view, 0);
+        datePickerBeginFragment.show(getFragmentManager(), "dateBeginPicker");
     }
 
     public void showDateEndPickerDialog(View v, String message) {
@@ -121,29 +145,11 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     public boolean isDateValid(int year, int month, int day, int yearBegin, int monthBegin, int dayBegin) {
-        if (year < yearBegin || month < monthBegin || day <= dayBegin) { //can't choose same day, or can you...?
+        if (year < yearBegin || month < monthBegin || day < dayBegin) {
             return false;
         } else {
             return true;
         }
     }
 
-    //TODO: for later
-//    datePickerDialog.setOnDismissListener(mOnDismissListener);
-//   datePickerDialog.show();
-//    datePickerDialog_visible=true;  //indicate dialog is up
-//} // [END showDatePickerDialog]
-//
-//    //onDismiss handler
-//    private DialogInterface.OnDismissListener mOnDismissListener =
-//            new DialogInterface.OnDismissListener() {
-//                public void onDismiss(DialogInterface dialog) {
-//                    datePickerDialog_visible=false;  //indicate dialog is cancelled/gone
-//                    if (isDataSet) {  // [IF date was picked
-//                        //do something, date now selected
-//                    } else {
-//                        //do someething else, dialog cancelled or exited
-//                    }
-//                }
-//            };
 }

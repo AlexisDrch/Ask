@@ -65,7 +65,7 @@ public class Offer {
 
     @Override
     public String toString() {
-        return "com.ask.ask.Offer{" +
+        return "Offer{" +
                 "provider=" + provider +
                 ", itemFulfilling=" + itemFulfilling +
                 ", itemProviding=" + itemProviding +

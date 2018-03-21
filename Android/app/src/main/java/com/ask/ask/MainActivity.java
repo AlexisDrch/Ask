@@ -20,7 +20,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
     implements ProfileFragment.OnFragmentInteractionListener,
         RequestsFragment.OnFragmentInteractionListener,
-        MatchesFragment.OnFragmentInteractionListener,
+        OffersFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener,
         AboutFragment.OnFragmentInteractionListener {
 
@@ -178,9 +178,9 @@ public class MainActivity extends AppCompatActivity
                 Log.d("selectDrawerItem", "2c");
                 requestedFragmentClass = RequestsFragment.class;
                 break;
-            case R.id.fragment_matches:
+            case R.id.fragment_offers:
                 Log.d("selectDrawerItem", "2d");
-                requestedFragmentClass = MatchesFragment.class;
+                requestedFragmentClass = OffersFragment.class;
                 break;
 ////            case R.id.fragment_items:
 ////                Log.d("selectDrawerItem", "2e");

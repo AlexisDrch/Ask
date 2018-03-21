@@ -8,7 +8,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -30,7 +43,15 @@ public class RequestsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+
     private ExpandableListView expandableListViewRequests;
+    private ExpandableListAdapter expandableListViewAdapter;
+    private List<Request> listRequests;
+    private List<String> listItemNames;
+    private List<String> listElements;
+    private HashMap<String, List<String>> hashMapRequestData;
+
 
     public RequestsFragment() {
         // Required empty public constructor
@@ -64,75 +85,63 @@ public class RequestsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d("onCreateView()", "RequestsFragment");
         View rootView = inflater.inflate(R.layout.fragment_requests, container, false);
 
-        User user_data[] = new User[]
-                {
-                        new User(null, "Bob", 25, R.mipmap.bob_profile,
-                                "678-456-9831", "711-2880 Nulla St." +
-                                "Mankato, Mississippi 96522"),
-
-                        new User(null, "Jim", 29, R.mipmap.jim_profile,
-                                "770-783-2923", "606-3727 Ullamcorper. Street " +
-                                "Roseville, NH 11523"),
-
-                        new User(null, "Nancy", 26, R.mipmap.nancy_profile,
-                                "404-719-3817", "Ap #867-859 Sit Rd. Azusa, New York 39531"),
-
-                        new User(null, "Karen", 29, R.mipmap.karen_profile,
-                                "678-820-8638", "7292 Dictum Av. San Antonio, MI 47096"),
-
-                        new User(null, "John", 31, R.mipmap.john_profile,
-                                "770-293-3621", "191-103 Integer Rd. " +
-                                "Corona, New Mexico 08219")
-                };
-
-        //Creating an array of items
-
-        Item item_data[] = new Item[]
-                {
-                        new Item(null, null,"Golf Club", null,
-                                5.00, null, R.mipmap.item_golfclub, user_data[0]),
-                        new Item(null, null,"Pot", null,
-                                10.00, null, R.mipmap.item_pot, user_data[1]),
-                        new Item(null, null,"Sleeping Bag", null,
-                                7.00, null, R.mipmap.item_sleepingbag, user_data[2]),
-                        new Item(null, null,"Surfboard", null,
-                                12.00, null, R.mipmap.item_surfboard, user_data[3]),
-                        new Item(null,null, "Tent", null,
-                                5.00, null, R.mipmap.item_tent, user_data[4])
-                };
-
-        //Creating an array of Requests
-
-        Request request_data[] = new Request[]
-                {
-                        new Request(user_data[0], item_data[0], "6/10/18", "6/12/18",
-                                "I want a golf club for one weekend," +
-                                        " price can be negotiable" ),
-                        new Request(user_data[1], item_data[1], "7/05/18", "7/06/18",
-                                "I am traveling for a day and " +
-                                        "need a pot to cook some food" ),
-                        new Request(user_data[2], item_data[2], "7/15/18", "7/18/18",
-                                "I am camping for a couple of days and need" +
-                                        " a sleeping bag"),
-                        new Request(user_data[3], item_data[3], "6/12/18", "6/13/18",
-                                "I want to go surfing for the day"),
-                        new Request(user_data[4], item_data[4], "7/24/18", "7/26/18",
-                                "I need a tent for the weekend, preferably" +
-                                        " for one person")
-                };
-
-//        ExpandableRequestAdapter adapter = new ExpandableRequestAdapter(getContext(), R.layout.listview_request_row, request_data);
+//        listRequests = getUsersRequests(); //TODO: use Pulak's FetchRequests method
+//        listItemNames = new ArrayList<>(listRequests.size());
+//        listElements = new ArrayList<>();
+//        hashMapRequestData = new HashMap<>(listRequests.size());
+//
+//        for (int i = 0; i < listRequests.size(); i++) {
+//            listItemNames.add(listRequests.get(i).getItem().getName());
+//
+//            listElements.clear();
+//            listElements.add(listRequests.get(i).getBeginDate() + " - " + listRequests.get(i).getEndDate());
+//            listElements.add("$" + listRequests.get(i).getItem().getPrice());
+//            listElements.add(listRequests.get(i).getDescription());
+//
+//            hashMapRequestData.put(listItemNames.get(i), listElements);
+//        }
+//
 //        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
-//        expandableListViewRequests.setAdapter(adapter);
+//        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapRequestData);
+//        expandableListViewRequests.setAdapter(expandableListViewAdapter);
 
         return rootView;
     }
+
+//    //----------
+//    public List<Request> getUsersRequests() {
+//        List<Request> parsedRequests = new ArrayList<>();
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+//
+//        final String url = "https://ask-capa.herokuapp.com/api/requests/by/1";
+//
+//        JsonObjectRequest getRequest = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        Log.d("RESPONSE", response.toString());
+////                        parsedRequests = parseJSONObject(response.toString());
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        //TODO: trycatch for error types
+//                        Log.d("Error.Response", error.getMessage());
+//                    }
+//                }
+//            );
+//
+//        requestQueue.add(getRequest);
+//
+//        return parsedRequests;
+//    }
+//    //----------
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

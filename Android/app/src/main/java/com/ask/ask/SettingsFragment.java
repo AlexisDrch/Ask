@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ import android.widget.Switch;
  * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends PreferenceFragment {
+public class SettingsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -36,7 +37,7 @@ public class SettingsFragment extends PreferenceFragment {
     private OnFragmentInteractionListener mListener;
     private Switch switchNotifications;
     private CheckBox checkBoxRequestUpdates;
-    private CheckBox checkBoxMatchUpdates;
+    private CheckBox checkBoxOfferUpdates;
     private Button buttonLogout;
 
     public SettingsFragment() {
@@ -77,11 +78,11 @@ public class SettingsFragment extends PreferenceFragment {
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         switchNotifications = (Switch) rootView.findViewById(R.id.switchNotifications);
         checkBoxRequestUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxRequestUpdates);
-        checkBoxMatchUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxMatchUpdates);
+        checkBoxOfferUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxOfferUpdates);
         buttonLogout = (Button) rootView.findViewById(R.id.buttonLogout);
 
         checkBoxRequestUpdates.setEnabled(false);
-        checkBoxMatchUpdates.setEnabled(false);
+        checkBoxOfferUpdates.setEnabled(false);
 
         switchNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -89,11 +90,11 @@ public class SettingsFragment extends PreferenceFragment {
                 if (isChecked) {
                     Log.d("Settings - onCreateView", "checked");
                     checkBoxRequestUpdates.setEnabled(true);
-                    checkBoxMatchUpdates.setEnabled(true);
+                    checkBoxOfferUpdates.setEnabled(true);
                 } else {
                     Log.d("Settings - onCreateView", "unchecked");
                     checkBoxRequestUpdates.setEnabled(false);
-                    checkBoxMatchUpdates.setEnabled(false);
+                    checkBoxOfferUpdates.setEnabled(false);
                 }
 
             }

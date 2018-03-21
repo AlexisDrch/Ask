@@ -7,17 +7,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MatchesFragment.OnFragmentInteractionListener} interface
+ * {@link OffersFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MatchesFragment#newInstance} factory method to
+ * Use the {@link OffersFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MatchesFragment extends Fragment {
+public class OffersFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +35,16 @@ public class MatchesFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public MatchesFragment() {
+
+    private ExpandableListView expandableListViewOffers;
+    private ExpandableListAdapter expandableListViewAdapter;
+    private List<Offer> listOffers;
+    private List<String> listItemNames;
+    private List<String> listElements;
+    private HashMap<String, List<String>> hashMapOfferData;
+
+
+    public OffersFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +54,11 @@ public class MatchesFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MatchesFragment.
+     * @return A new instance of fragment OffersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MatchesFragment newInstance(String param1, String param2) {
-        MatchesFragment fragment = new MatchesFragment();
+    public static OffersFragment newInstance(String param1, String param2) {
+        OffersFragment fragment = new OffersFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,8 +78,28 @@ public class MatchesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_matches, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
+
+//        listOffers = null; //TODO: get matches
+//        listOffers = new ArrayList<>();
+//        listItemNames = new ArrayList<>(listOffers.size());
+//        listElements = new ArrayList<>();
+//        hashMapOfferData = new HashMap<>(listOffers.size());
+//
+//        for (int i = 0; i < listOffers.size(); i++) {
+//            listItemNames.add();
+//
+//            listElements.clear();
+//            listElements.add();
+//
+//            hashMapOfferData.put(listItemNames.get(i), listElements);
+//        }
+//
+//        expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
+//        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapOfferData);
+//        expandableListViewOffers.setAdapter(expandableListViewAdapter);
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -105,4 +140,5 @@ public class MatchesFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
