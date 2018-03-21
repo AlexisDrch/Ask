@@ -1,0 +1,10 @@
+BULK INSERT items1
+FROM
+WITH
+(
+    FIRSTROW = 2
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR = '\n',
+    TABLOCK
+
+)
