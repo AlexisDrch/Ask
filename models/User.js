@@ -9,6 +9,9 @@ var User = {
 	getUserByUserId:function(user_id){
 		return db.any('select * from "user" where user_id = $1',user_id);
 	},
+	getUserByEmailNameAndPassword(user){
+		return db.any('select * from "user" where email = ${email} AND password = ${password}',user);
+	},
 	addUser:function(user){
 		user.age = parseInt(user.age);
 		return db.any(
