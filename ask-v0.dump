@@ -77,8 +77,8 @@ ALTER SEQUENCE belonging_belonging_id_seq OWNED BY belonging.belonging_id;
 CREATE TABLE category (
     category_id integer NOT NULL,
     name character varying(500) NOT NULL,
-    description character varying(500) NOT NULL,
-    tips character varying(1000) NOT NULL
+    description character varying(500),
+    tips character varying(1000)
 );
 
 
@@ -103,24 +103,16 @@ ALTER SEQUENCE category_category_id_seq OWNED BY category.category_id;
 
 
 --
--- Name: is_in; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE is_in (
-    category_id integer NOT NULL,
-    item_id integer NOT NULL
-);
-
-
---
 -- Name: item; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE item (
     item_id integer NOT NULL,
     name character varying(500) NOT NULL,
+    category_id integer,
     avg_price double precision NOT NULL,
-    description character varying(1000) NOT NULL
+    picture character varying(1000) NOT NULL,
+    description character varying(1000)
 );
 
 
@@ -163,38 +155,6 @@ CREATE TABLE offer (
     description character varying(1000),
     message character varying(1000)
 );
-
-
---
--- Name: picture; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE picture (
-    picture_id integer NOT NULL,
-    url character varying(5000) NOT NULL,
-    category_id integer,
-    item_id integer
-);
-
-
---
--- Name: picture_picture_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE picture_picture_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: picture_picture_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE picture_picture_id_seq OWNED BY picture.picture_id;
 
 
 --
@@ -243,13 +203,19 @@ ALTER SEQUENCE request_request_id_seq OWNED BY request.request_id;
 
 CREATE TABLE "user" (
     user_id integer NOT NULL,
+    user_name character varying(500) NOT NULL,
+    password character varying(500) NOT NULL,
+    email character varying(500) NOT NULL,
     name character varying(500) NOT NULL,
     surname character varying(500) NOT NULL,
-    age integer NOT NULL,
-    description character varying(1000) NOT NULL,
+    description character varying(1000) DEFAULT NULL::character varying,
     ppicture_url character varying(1000) NOT NULL,
-    phone_num character varying(500) NOT NULL,
-    address character varying(500) DEFAULT NULL::character varying
+    phone_num character varying(500) DEFAULT NULL::character varying,
+    age integer,
+    sex integer,
+    country integer,
+    address character varying(1000) DEFAULT NULL::character varying,
+    address_string character varying(1000) DEFAULT NULL::character varying
 );
 
 
@@ -295,13 +261,6 @@ ALTER TABLE ONLY item ALTER COLUMN item_id SET DEFAULT nextval('item_item_id_seq
 
 
 --
--- Name: picture picture_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY picture ALTER COLUMN picture_id SET DEFAULT nextval('picture_picture_id_seq'::regclass);
-
-
---
 -- Name: request request_id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -320,7 +279,6 @@ ALTER TABLE ONLY "user" ALTER COLUMN user_id SET DEFAULT nextval('user_user_id_s
 --
 
 COPY belonging (belonging_id, name, type, price, description, max_rent_duration, item_id, owner_id) FROM stdin;
-1	tent de pulak	typeToDefine	20.5	a 2 people tent, no scratch !	7	1	4
 \.
 
 
@@ -329,14 +287,16 @@ COPY belonging (belonging_id, name, type, price, description, max_rent_duration,
 --
 
 COPY category (category_id, name, description, tips) FROM stdin;
-\.
-
-
---
--- Data for Name: is_in; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY is_in (category_id, item_id) FROM stdin;
+1	name	description	tips
+2	camping	 Spend time outdoors by camping! Camping is an outdoor activity involving overnight stays away from home in a shelter, such as a tent. 	 'tip: bring bug repellent'
+3	hiking	 	\N
+4	climbing	\N	\N
+5	cycling	\N	\N
+6	paddling	\N	\N
+7	running	\N	\N
+8	snow	\N	\N
+9	travel	\N	\N
+10	yoga	\N	\N
 \.
 
 
@@ -344,11 +304,15 @@ COPY is_in (category_id, item_id) FROM stdin;
 -- Data for Name: item; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY item (item_id, name, avg_price, description) FROM stdin;
-1	tent	15.5	casual tent for student camping. 2 people
-2	surfboard	13.5	surfboard. 6.8 inches
-3	tent	15.5	casual tent for student camping. 2 people
-4	surfboard	13.5	surfboard. 6.8 inches
+COPY item (item_id, name, category_id, avg_price, picture, description) FROM stdin;
+1	Big AgnesTumble 3 mtnGLO Tent	1	329.949999999999989	https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/travel-B1boKMl9M.png	Winner of Backpacker's 2015 Editors' Choice Award for its built-in LED lights, this 3-person, 3-season tent will light up your backcountry trip with a click of a button.
+2	REI Co-opHalf Dome 2 Plus Tent	1	229	https://www.rei.com/media/75001195-d47d-4f26-b78d-fbad3a073725?size=1020x510	Your home away from home shouldn't skimp on the essentials. The 3-season REI Co-op Half Dome 2 Plus backpacking tent provides you and a partner with plenty of room to stretch out and stay comfortable.
+3	REI Co-opuarter Dome Air Hammock	1	219	https://www.rei.com/media/30c63cb7-3b81-48ce-bde2-7e0843594a3f?size=1020x510	A minimalist alternative to a tent, the REI Quarter Dome Air hammock packs light, sets up easy and provides a structured, open sleeping area up off the ground with a stowable bug net for protection.
+4	Marmot Sawtooth Down Sleeping Bag	1	239	https://www.rei.com/media/4870e86e-29b9-40b8-b880-b2f502592376?size=1020x510	Lightweight and compressible, the Marmot Sawtooth down sleeping bag blends just-right warmth with just-right weight, making it a superb all-around cold-weather backpacking bag.
+5	Marmotngel Fire Sleeping Bag - Women's	1	193.930000000000007	https://www.rei.com/media/bfc754d0-dee7-433e-8bdf-dfae34844234?size=1020x510	Purposely designed for a woman?s comfort, the Marmot Angel Fire places insulation in areas of increased heat-loss, while its durable construction and high-quality down make it a reliable 3-season bag.
+6	ENOED DoubleNest Hammock	1	99.9500000000000028	https://www.rei.com/media/5d288f61-943a-4580-b755-eb7e30ce4328?size=1020x510	Light up camp with the integrated lights of the ENO LED DoubleNest hammock. It's compact enough for backpacking, robust enough for backyard luxury and sets up in seconds with plenty of room for 2.
+7	REI Co-oplexlite Macro Chair	1	99.9500000000000028	https://www.rei.com/media/3b4d4ad6-529c-4800-bdf9-fbb235951220?size=1020x510	Supportive and easy-to-pack, the REI Co-op Flexlite Macro Chair offers a deep, comfortable seat with generous support and lightweight construction that's perfect for camping.
+8	GarminnReach Explorer Satellite Communicator	1	450	https://www.rei.com/media/0a2bf89c-3035-4e86-ab9d-37c8bf37f1c6?size=1020x510	Roam far and wide without worrying your loved ones. The Garmin inReach Explorer+ satellite communicator is a GPS tracker, navigation tool, 2-way satellite messenger and SOS device all in one.
 \.
 
 
@@ -357,15 +321,6 @@ COPY item (item_id, name, avg_price, description) FROM stdin;
 --
 
 COPY offer (belonging_id, request_id, provider_id, provider_name, provider_surname, provider_ppicture_url, requester_id, begin_date, end_date, lon, lat, description, message) FROM stdin;
-1	1	4	Pulak	Azad	https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D	1	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	This offer is made by provider 4 for request 1	Hey ! I have a nice board for ya. Pulak
-\.
-
-
---
--- Data for Name: picture; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY picture (picture_id, url, category_id, item_id) FROM stdin;
 \.
 
 
@@ -382,11 +337,11 @@ COPY request (request_id, item_id, requester_id, requester_name, requester_surna
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY "user" (user_id, name, surname, age, description, ppicture_url, phone_num, address) FROM stdin;
-1	Mark	Sanders	51	American. Man. Interested in camping and in France for 4 months. Teaching Computer Science.	http://rnoc.gatech.edu/sites/default/files/Matt%20Sanders-01_0.jpg	+33676564537	 4 rue de Saint-tout,  Metz, France.
-2	Carolyn	Shi	20	American. Girl. Interested in camping and in France for 4 months. Student Computer Science.	https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D	+33673332537	 4 rue de Valencourt,  Metz, France.
-3	Carolyn	Shi	20	American. Girl. Interested in camping and in France for 4 months. Student Computer Science.	https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D	+33673332537	 4 rue de Valencourt,  Metz, France.
-4	Pulak	Azad	20	American. Boy. Interested in camping and in France for 4 months. Student Computer Science.	https://scontent-cdg2-1.xx.fbcdn.net/v/t31.0-8/17880179_10208715461596099_3355323953469725432_o.jpg?oh=6dd31e690157a219522784a8c4fc3de6&oe=5B42535D	+33673332537	 4 rue de MIlle,  Metz, France.
+COPY "user" (user_id, user_name, password, email, name, surname, description, ppicture_url, phone_num, age, sex, country, address, address_string) FROM stdin;
+1	shi.carolyn	askisd@best	cs947@cornell.edu	Carolyn	Shi	college student looking for outdoor equipment for her weekend adventures!	https://res.cloudinary.com/campus-job/image/upload/t_student-public-page/v1/profile_pictures/Qooxf0yZAH_20151129.jpeg	33767968976	89	0	13	2 rue marconi	2 rue marconi, Metz, France 57070
+2	pulak.azad	logs4daze	pulakazad28@gmail.com	Pulak	Azad	lit	https://pbs.twimg.com/media/CkiDYVmUoAAoe6n.jpg	134567890	28	1	67	567 Pharmacia Lane	# some address, Kiev, Ukraine, 09980
+3	alexanderthe1st	empIYAH	alexander.fache@gmail.com	Alexander	Fache	\N	https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/light-B195YGl9M.png	\N	\N	\N	\N	\N	\N
+4	alexisdurocherrrr	passwordalexis	aleksi.durocher@gmail.com	Alexis	Durocher	\N	https://media-exp2.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAd1AAAAJDg2NTUyM2Y1LWJlZDktNDA0ZS04M2Q5LWU5MGUyODdiYzlhYQ.jpg	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -394,28 +349,21 @@ COPY "user" (user_id, name, surname, age, description, ppicture_url, phone_num, 
 -- Name: belonging_belonging_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('belonging_belonging_id_seq', 1, true);
+SELECT pg_catalog.setval('belonging_belonging_id_seq', 1, false);
 
 
 --
 -- Name: category_category_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('category_category_id_seq', 1, false);
+SELECT pg_catalog.setval('category_category_id_seq', 10, true);
 
 
 --
 -- Name: item_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('item_item_id_seq', 4, true);
-
-
---
--- Name: picture_picture_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('picture_picture_id_seq', 1, false);
+SELECT pg_catalog.setval('item_item_id_seq', 8, true);
 
 
 --
@@ -465,14 +413,6 @@ ALTER TABLE ONLY offer
 
 
 --
--- Name: picture picture_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY picture
-    ADD CONSTRAINT picture_pkey PRIMARY KEY (picture_id);
-
-
---
 -- Name: request request_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -489,51 +429,27 @@ ALTER TABLE ONLY "user"
 
 
 --
--- Name: belonging belonging_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: user user_user_name_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY belonging
-    ADD CONSTRAINT belonging_item_id_fkey FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE;
-
-
---
--- Name: belonging belonging_owner_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY belonging
-    ADD CONSTRAINT belonging_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES "user"(user_id) ON DELETE CASCADE;
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT user_user_name_email_key UNIQUE (user_name, email);
 
 
 --
--- Name: is_in is_in_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: user user_user_name_password_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY is_in
-    ADD CONSTRAINT is_in_category_id_fkey FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE CASCADE;
-
-
---
--- Name: is_in is_in_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY is_in
-    ADD CONSTRAINT is_in_item_id_fkey FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE;
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT user_user_name_password_key UNIQUE (user_name, password);
 
 
 --
--- Name: offer offer_belonging_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: item item_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY offer
-    ADD CONSTRAINT offer_belonging_id_fkey FOREIGN KEY (belonging_id) REFERENCES belonging(belonging_id) ON DELETE CASCADE;
-
-
---
--- Name: offer offer_provider_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY offer
-    ADD CONSTRAINT offer_provider_id_fkey FOREIGN KEY (provider_id) REFERENCES "user"(user_id) ON DELETE CASCADE;
+ALTER TABLE ONLY item
+    ADD CONSTRAINT item_category_id_fkey FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE CASCADE;
 
 
 --
@@ -542,46 +458,6 @@ ALTER TABLE ONLY offer
 
 ALTER TABLE ONLY offer
     ADD CONSTRAINT offer_request_id_fkey FOREIGN KEY (request_id) REFERENCES request(request_id) ON DELETE CASCADE;
-
-
---
--- Name: offer offer_requester_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY offer
-    ADD CONSTRAINT offer_requester_id_fkey FOREIGN KEY (requester_id) REFERENCES "user"(user_id) ON DELETE CASCADE;
-
-
---
--- Name: picture picture_category_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY picture
-    ADD CONSTRAINT picture_category_id_fkey FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE CASCADE;
-
-
---
--- Name: picture picture_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY picture
-    ADD CONSTRAINT picture_item_id_fkey FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE;
-
-
---
--- Name: request request_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY request
-    ADD CONSTRAINT request_item_id_fkey FOREIGN KEY (item_id) REFERENCES item(item_id) ON DELETE CASCADE;
-
-
---
--- Name: request request_requester_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY request
-    ADD CONSTRAINT request_requester_id_fkey FOREIGN KEY (requester_id) REFERENCES "user"(user_id) ON DELETE CASCADE;
 
 
 --

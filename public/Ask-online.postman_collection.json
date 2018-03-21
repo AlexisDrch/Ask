@@ -19,6 +19,26 @@
 			"response": []
 		},
 		{
+			"name": "POST login email/password",
+			"request": {
+				"url": "http://localhost:3000/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json; charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"email\": \"cs947@cornell.edu\",\n\t\"password\": \"askisd@best\"\n}\n"
+				},
+				"description": "POST a email/password login\n"
+			},
+			"response": []
+		},
+		{
 			"name": "POST new user",
 			"request": {
 				"url": "https://ask-capa.herokuapp.com/api/users",
