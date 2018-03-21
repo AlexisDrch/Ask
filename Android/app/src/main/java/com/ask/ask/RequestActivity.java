@@ -20,11 +20,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.DataOutputStream;
@@ -36,6 +31,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import static java.lang.annotation.ElementType.METHOD;
 
 /** Created by pulakazad on 2/28/18.
  *
@@ -193,9 +190,9 @@ public class RequestActivity extends AppCompatActivity {
 //                intent.putExtra("itemImage", imageViewItemImage.getImageMatrix());
 
 
-                    User user = new User("1", "Mark Sanders", 51, -1, "+33676564537", " 4 rue de Saint-tout,  Metz, France.");
-                    Item item = new Item("1", "1", itemName, null, price, null, -1, user);
-                    Request request = new Request(user, item, beginDate, endDate, description);
+//                    User user = new User("1", "Mark Sanders", 51, -1, "+33676564537", " 4 rue de Saint-tout,  Metz, France.");
+//                    Item item = new Item("1", "1", itemName, null, price, null, -1, user);
+//                    Request request = new Request(user, item, beginDate, endDate, description);
 
 //                    sendData(request);
 
@@ -227,52 +224,45 @@ public class RequestActivity extends AppCompatActivity {
 //    private void sendData() {
 //        String url = "http://httpbin.org/post";
 //
-//        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+//        StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
+//                url,
 //                new Response.Listener<String>() {
 //                    @Override
 //                    public void onResponse(String response) {
-//                        try {
-//                            JSONObject jsonResponse = new JSONObject(response).getJSONObject("form");
-//                            String site = jsonResponse.getString("site"),
-//                                    network = jsonResponse.getString("network");
-//                            System.out.println("Site: "+site+"\nNetwork: "+network);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
+//
 //                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        error.printStackTrace();
-//                    }
-//                }
-//        ) {
+//                }, new Response.ErrorListener() {
+//
 //            @Override
-//            protected Map<String, String> getParams()
-//            {
-//                Map<String, String>  params = new HashMap<>();
-//                // the POST parameters:
-//                params.put("site", "code");
-//                params.put("network", "tutsplus");
-//                return params;
+//            public void onErrorResponse(VolleyError error) {
 //            }
+//        }) {
+//
+//            @Override
+//            public String getBodyContentType() {
+//                return "application/x-www-form-urlencoded; charset=UTF-8";
+//            }
+//
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//
+//
+//                Map<String, String> postParam = new HashMap<String, String>();
+//
+//                postParam.put("email", "asd@asd.com");
+//                postParam.put("password", "asd");
+//
+//
+//                return postParam;
+//            }
+//
 //        };
-//        Volley.newRequestQueue(this).add(postRequest);
+//
+//        requestQueue.add(jsonObjRequest);
 //
 //
 //
 //    }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
