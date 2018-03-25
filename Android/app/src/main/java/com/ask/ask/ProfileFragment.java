@@ -36,11 +36,15 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
     private Button buttonEditSave;
     private EditText editTextName;
-//    private RatingBar ratingBarUserRating;
-    private EditText editTextAge;
+    private EditText editTextEmail;
+    private EditText editTextPhone;
     private boolean currentlyEditing;
+
+    //    private RatingBar ratingBarUserRating;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -88,12 +92,13 @@ public class ProfileFragment extends Fragment {
 
         editTextName = (EditText) rootView.findViewById(R.id.editTextName);
 //        ratingBarUserRating = (RatingBar) rootView.findViewById(R.id.ratingBarUserRating);
-        editTextAge = (EditText) rootView.findViewById(R.id.editTextAge);
+        editTextEmail = (EditText) rootView.findViewById(R.id.editTextEmail);
+        editTextPhone = (EditText) rootView.findViewById(R.id.editTextPhone);
         buttonEditSave = (Button) rootView.findViewById(R.id.buttonEditSave);
 
         editTextName.setEnabled(false);
 //        ratingBarUserRating.setEnabled(false);
-        editTextAge.setEnabled(false);
+        editTextEmail.setEnabled(false);
 
 
 //        ratingBarUserRating.setRating(4.3f);
@@ -104,14 +109,16 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 if (currentlyEditing) { //save user's edit
                     editTextName.setEnabled(false);
-                    editTextAge.setEnabled(false);
+                    editTextEmail.setEnabled(false);
+                    editTextPhone.setEnabled(false);
                     buttonEditSave.setText("Edit");
                     currentlyEditing = false;
 
                     Toast.makeText(getContext(), "Changes Saved!", Toast.LENGTH_SHORT).show();
                 } else { //allow user to edit
                     editTextName.setEnabled(true);
-                    editTextAge.setEnabled(true);
+                    editTextEmail.setEnabled(true);
+                    editTextPhone.setEnabled(true);
                     buttonEditSave.setText("Save");
                     currentlyEditing = true;
                 }

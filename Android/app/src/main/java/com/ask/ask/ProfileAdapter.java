@@ -59,7 +59,6 @@ public class ProfileAdapter extends ArrayAdapter<String> {
         int profileImage = Integer.parseInt(currData[2]);
 
         holder.imageViewProfileImage.setImageResource(profileImage);
-        holder.imageViewProfileImage.setVisibility(View.GONE);
         holder.textViewName.setText(name);
         holder.textViewBio.setText(bio);
 

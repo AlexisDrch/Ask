@@ -80,25 +80,28 @@ public class OffersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
 
-        //https://ask-capa.herokuapp.com/api/offers/by/4
-//        listOffers = null; //TODO: get offers
-//        listOffers = new ArrayList<>();
-//        listItemNames = new ArrayList<>(listOffers.size());
-//        listElements = new ArrayList<>();
-//        hashMapOfferData = new HashMap<>(listOffers.size());
-//
-//        for (int i = 0; i < listOffers.size(); i++) {
-//            listItemNames.add();
-//
-//            listElements.clear();
-//            listElements.add();
-//
-//            hashMapOfferData.put(listItemNames.get(i), listElements);
-//        }
-//
-//        expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
-//        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapOfferData);
-//        expandableListViewOffers.setAdapter(expandableListViewAdapter);
+        https://ask-capa.herokuapp.com/api/offers/by/4
+        listOffers = ; //TODO: get offers
+        listOffers = new ArrayList<>();
+        listItemNames = new ArrayList<>(listOffers.size());
+        listElements = new ArrayList<>();
+        hashMapOfferData = new HashMap<>(listOffers.size());
+
+        for (int i = 0; i < listOffers.size(); i++) {
+            listItemNames.add(listOffers.get(i).getItemFulfilling().getName());
+
+            listElements.clear();
+            listElements.add(listOffers.get(i).getRequester().getName());
+            //date
+            listElements.add("$" + listOffers.get(i).getItemFulfilling().getPrice());
+            //description
+
+            hashMapOfferData.put(listItemNames.get(i), listElements);
+        }
+
+        expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
+        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapOfferData);
+        expandableListViewOffers.setAdapter(expandableListViewAdapter);
 
         return rootView;
     }

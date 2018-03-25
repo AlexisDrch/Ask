@@ -90,25 +90,25 @@ public class RequestsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_requests, container, false);
 
         //https://ask-capa.herokuapp.com/api/requests/by/1
-//        listRequests = getUsersRequests(); //TODO: use Pulak's FetchRequests method
-//        listItemNames = new ArrayList<>(listRequests.size());
-//        listElements = new ArrayList<>();
-//        hashMapRequestData = new HashMap<>(listRequests.size());
-//
-//        for (int i = 0; i < listRequests.size(); i++) {
-//            listItemNames.add(listRequests.get(i).getItem().getName());
-//
-//            listElements.clear();
-//            listElements.add(listRequests.get(i).getBeginDate() + " - " + listRequests.get(i).getEndDate());
-//            listElements.add("$" + listRequests.get(i).getItem().getPrice());
-//            listElements.add(listRequests.get(i).getDescription());
-//
-//            hashMapRequestData.put(listItemNames.get(i), listElements);
-//        }
-//
-//        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
-//        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapRequestData);
-//        expandableListViewRequests.setAdapter(expandableListViewAdapter);
+        listRequests = ; //TODO: use Pulak's FetchRequests method
+        listItemNames = new ArrayList<>(listRequests.size());
+        listElements = new ArrayList<>();
+        hashMapRequestData = new HashMap<>(listRequests.size());
+
+        for (int i = 0; i < listRequests.size(); i++) {
+            listItemNames.add(listRequests.get(i).getItem().getName());
+
+            listElements.clear();
+            listElements.add(listRequests.get(i).getBeginDate() + " - " + listRequests.get(i).getEndDate());
+            listElements.add("$" + listRequests.get(i).getItem().getPrice());
+            listElements.add(listRequests.get(i).getDescription());
+
+            hashMapRequestData.put(listItemNames.get(i), listElements);
+        }
+
+        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
+        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapRequestData);
+        expandableListViewRequests.setAdapter(expandableListViewAdapter);
 
         return rootView;
     }

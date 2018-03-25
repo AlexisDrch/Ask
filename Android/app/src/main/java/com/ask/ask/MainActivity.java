@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity
         switch (menuItem.getItemId()) {
             case R.id.fragment_home:
                 Log.d("selectDrawerItem", "2a");
-//                requestedFragmentClass = HomeFragment.class;
+//                requestedFragmentClass = HomeFragment.class; //TODO: this would be replaced by Pulak/s main class fragment
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return;
