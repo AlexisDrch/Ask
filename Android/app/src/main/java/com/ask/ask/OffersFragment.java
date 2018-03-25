@@ -80,7 +80,8 @@ public class OffersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
 
-//        listOffers = null; //TODO: get matches
+        //https://ask-capa.herokuapp.com/api/offers/by/4
+//        listOffers = null; //TODO: get offers
 //        listOffers = new ArrayList<>();
 //        listItemNames = new ArrayList<>(listOffers.size());
 //        listElements = new ArrayList<>();

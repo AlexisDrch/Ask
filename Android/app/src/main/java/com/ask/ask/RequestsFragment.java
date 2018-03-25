@@ -89,6 +89,7 @@ public class RequestsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_requests, container, false);
 
+        //https://ask-capa.herokuapp.com/api/requests/by/1
 //        listRequests = getUsersRequests(); //TODO: use Pulak's FetchRequests method
 //        listItemNames = new ArrayList<>(listRequests.size());
 //        listElements = new ArrayList<>();
@@ -112,6 +113,7 @@ public class RequestsFragment extends Fragment {
         return rootView;
     }
 
+    //not necessary anymore
 //    //----------
 //    public List<Request> getUsersRequests() {
 //        List<Request> parsedRequests = new ArrayList<>();

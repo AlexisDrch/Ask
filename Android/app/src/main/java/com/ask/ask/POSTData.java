@@ -115,7 +115,7 @@ public class POSTData {
         requestParams.put("requester_id", request.getRequester().getUuid());
         requestParams.put("begin_date", request.getBeginDate());
         requestParams.put("end_date", request.getEndDate());
-        requestParams.put("lon", "-1"); //TODO: add this feature later
+        requestParams.put("lon", "-1");
         requestParams.put("lat", "-1");
         requestParams.put("description", request.getDescription());
 

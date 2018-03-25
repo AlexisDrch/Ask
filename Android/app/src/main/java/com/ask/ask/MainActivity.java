@@ -182,16 +182,12 @@ public class MainActivity extends AppCompatActivity
                 Log.d("selectDrawerItem", "2d");
                 requestedFragmentClass = OffersFragment.class;
                 break;
-////            case R.id.fragment_items:
-////                Log.d("selectDrawerItem", "2e");
-////                requestedFragmentClass = ItemsFragment.class;
-////                break;
             case R.id.fragment_settings:
-                Log.d("selectDrawerItem", "2f");
+                Log.d("selectDrawerItem", "2e");
                 requestedFragmentClass = SettingsFragment.class;
                 break;
             case R.id.fragment_about:
-                Log.d("selectDrawerItem", "2g");
+                Log.d("selectDrawerItem", "2f");
                 requestedFragmentClass = AboutFragment.class;
                 break;
             default:

@@ -62,8 +62,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         int month;
         int day;
 
+        Calendar calendar = Calendar.getInstance();
+
         if (dateTime == 0) {
-            Calendar calendar = Calendar.getInstance();
             year = calendar.get(Calendar.YEAR);
             month = calendar.get(Calendar.MONTH);
             day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -72,9 +73,12 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             year = Integer.parseInt(date[2]);
             month = Integer.parseInt(date[0]) - 1;
             day = Integer.parseInt(date[1]);
+
+            calendar.set(year, month, day);
         }
 
         datePickerDialog = new DatePickerDialog(getActivity(), this, year, month, day);
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis() - 1000);
 
         return datePickerDialog;
     }
@@ -144,8 +148,12 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         datePickerEndFragment.show(getFragmentManager(), "dateEndPicker");
     }
 
+    /*
+    * Check if date selected is valid.
+    * Begin and End dates may be the same.
+     */
     public boolean isDateValid(int year, int month, int day, int yearBegin, int monthBegin, int dayBegin) {
-        if (year < yearBegin || month < monthBegin || day < dayBegin) {
+        if (year < yearBegin || month < monthBegin || (month == monthBegin && day < dayBegin)) {
             return false;
         } else {
             return true;

@@ -38,7 +38,7 @@ public class ProfileFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private Button buttonEditSave;
     private EditText editTextName;
-    private RatingBar ratingBarUserRating;
+//    private RatingBar ratingBarUserRating;
     private EditText editTextAge;
     private boolean currentlyEditing;
 
@@ -87,16 +87,16 @@ public class ProfileFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
         editTextName = (EditText) rootView.findViewById(R.id.editTextName);
-        ratingBarUserRating = (RatingBar) rootView.findViewById(R.id.ratingBarUserRating);
+//        ratingBarUserRating = (RatingBar) rootView.findViewById(R.id.ratingBarUserRating);
         editTextAge = (EditText) rootView.findViewById(R.id.editTextAge);
         buttonEditSave = (Button) rootView.findViewById(R.id.buttonEditSave);
 
         editTextName.setEnabled(false);
-        ratingBarUserRating.setEnabled(false);
+//        ratingBarUserRating.setEnabled(false);
         editTextAge.setEnabled(false);
 
 
-        ratingBarUserRating.setRating(4.3f);
+//        ratingBarUserRating.setRating(4.3f);
 
         buttonEditSave.setText("Edit");
         buttonEditSave.setOnClickListener(new View.OnClickListener() {
@@ -118,9 +118,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
-
-
 
         return rootView;
     }

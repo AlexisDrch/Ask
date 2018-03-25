@@ -1,5 +1,6 @@
 package com.ask.ask;
 
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ public class RequestActivity extends AppCompatActivity {
     private ArrayAdapter<CharSequence> itemsSpinnerAdapter;
     private int itemsSpinnerPosition = -1;
 
+    private int itemImageResource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -69,7 +72,7 @@ public class RequestActivity extends AppCompatActivity {
 //        });
 
 
-        //---------- Spinner
+        //Spinners ----------
         spinnerCategories.setEnabled(true);
 
         categoriesSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.categoriesArray, android.R.layout.simple_spinner_dropdown_item);
@@ -78,7 +81,6 @@ public class RequestActivity extends AppCompatActivity {
         spinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("spinner", "in");
                 switch (position){
                     case 0:
                         Log.d("spinner", "camping");
@@ -93,7 +95,7 @@ public class RequestActivity extends AppCompatActivity {
                         itemsSpinnerAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.itemsHikingArray, android.R.layout.simple_spinner_dropdown_item);
                         break;
                     default:
-                        Log.d("spinner", "else");
+                        Log.d("spinner", "default");
                         return;
                 }
 
@@ -113,39 +115,48 @@ public class RequestActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //TODO: automate this for changing number of categories
+
                 switch (categoriesSpinnerPosition) {
                     case 0:
                         String[] campingItemsArray = getResources().getStringArray(R.array.itemsCampingArray);
+                        Log.d("spinner", "camping - " + position);
                         textViewItemName.setText(campingItemsArray[position]);
+                        String imageStr = campingItemsArray[position].toLowerCase(); //lower case
+                        imageStr = imageStr.replaceAll("\\s", ""); //remove all whitespace
+                        itemImageResource = getResources().getIdentifier(getPackageName() + ":drawable/" + imageStr, null, null);
+                        imageViewItemImage.setImageResource(itemImageResource);
                         break;
                     case 1:
                         String[] beachItemsArray = getResources().getStringArray(R.array.itemsBeachArray);
+                        Log.d("spinner", "beach - " + position + " - " + beachItemsArray[position].toLowerCase());
                         textViewItemName.setText(beachItemsArray[position]);
+
+                        itemImageResource = R.drawable.ic_profile;
+                        imageViewItemImage.setImageResource(itemImageResource);
                         break;
                     case 2:
                         String[] itemsHikingArray = getResources().getStringArray(R.array.itemsHikingArray);
+                        Log.d("spinner", "beach - " + position + " - " + itemsHikingArray[position].toLowerCase());
                         textViewItemName.setText(itemsHikingArray[position]);
+
+                        itemImageResource = R.drawable.ic_home;
+                        imageViewItemImage.setImageResource(itemImageResource);
                         break;
                     default:
-
+                        Log.d("spinner", "default");
                 }
 
                 itemsSpinnerPosition = position;
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
         //----------
 
         buttonDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: date validation
-                //TODO: set end date to be day after the begin date to make it more concise
-                //TODO: merge into 1 calendar so user can see both dates at same time
                 showDateBeginPickerDialog(v, "Select Begin Date");
             }
         });
@@ -166,6 +177,7 @@ public class RequestActivity extends AppCompatActivity {
 
                     //for RequestConfirmationActivity display
                     Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
+                    intent.putExtra("itemImage", itemImageResource);
                     intent.putExtra("itemName", itemName);
                     intent.putExtra("beginDate", beginDate);
                     intent.putExtra("endDate", endDate);
@@ -173,13 +185,13 @@ public class RequestActivity extends AppCompatActivity {
                     intent.putExtra("description", description);
 
                     User user = new User("1", "Alex Fache", 19, -1, "+123456789", " 4 rue de Saint-tout,  Metz, France.");
-                    Item item = new Item("1", "1", itemName, null, price, null, -1, user);
+                    Item item = new Item("1", "1", itemName, null, price, null, itemImageResource, user);
                     com.ask.ask.Request request = new com.ask.ask.Request(user, item, beginDate, endDate, description);
 
                     //Volley POST
                     final String url = "https://ask-capa.herokuapp.com/api/requests";
-                    POSTData postData = new POSTData();
-                    postData.postRequest(url, request, getApplicationContext());
+//                    POSTData postData = new POSTData();
+//                    postData.postRequest(url, request, getApplicationContext());
 
                     startActivity(intent);
                 }

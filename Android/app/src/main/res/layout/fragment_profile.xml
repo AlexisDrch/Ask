@@ -32,19 +32,19 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <RatingBar
-            android:id="@+id/ratingBarUserRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="16dp"
-            android:numStars="5"
-            android:stepSize=".1"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/editTextAge"
-            app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+        <!--<RatingBar-->
+            <!--android:id="@+id/ratingBarUserRating"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="16dp"-->
+            <!--android:layout_marginRight="16dp"-->
+            <!--android:layout_marginTop="16dp"-->
+            <!--android:numStars="5"-->
+            <!--android:stepSize=".1"-->
+            <!--app:layout_constraintHorizontal_bias="0.1"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintRight_toLeftOf="@id/editTextAge"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/editTextName" />-->
 
         <EditText
             android:id="@+id/editTextAge"
@@ -56,10 +56,12 @@
             android:layout_marginRight="16dp"
             android:ems="10"
             android:text="Age"
-            app:layout_constraintHorizontal_bias=".9"
-            app:layout_constraintLeft_toRightOf="@id/ratingBarUserRating"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextName" />
+        <!--app:layout_constraintHorizontal_bias=".9"-->
+        <!--app:layout_constraintLeft_toRightOf="@id/ratingBarUserRating"-->
 
         <Button
             android:id="@+id/buttonEditSave"
