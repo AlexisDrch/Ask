@@ -3,6 +3,7 @@ package com.ask.ask;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -37,8 +38,6 @@ import java.util.List;
 
 public class FetchRequests extends AsyncTask<Void, Void, Void>  {
 
-    public static final HashMap<String, Request> requestHashMap = new HashMap<>();
-
     private String url;
     private Context myContext;
     private String data;
@@ -48,47 +47,24 @@ public class FetchRequests extends AsyncTask<Void, Void, Void>  {
         this.url = url;
     }
 
+    /*
+        Reads json stream and calls appropriate parser
+     */
+    public void requestJsonReader(final RequestsCallback requestsCallback) {
 
-    @Override
-    protected Void doInBackground(Void... voids) {
-        Log.d("background", "background has started");
-
-        jsonReader();
-        return null;
-    }
-
-
-    private void jsonReader() {
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+
             @Override
             public void onResponse(String response) {
-                try {
-
-                    Log.d("ON RESPONSE", "Inside on response");
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-//                    HashMap<String, Request> requestHashMap = new HashMap<>();
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jo = jsonArray.getJSONObject(i);
-
-                        Gson gson = new Gson();
-                        Request singleRequest = gson.fromJson(jo.toString(), Request.class);
-                        requestHashMap.put(singleRequest.getRequest_id()+"", singleRequest);
-                        Log.d("SINGLE REQUEST", singleRequest.toString());
-                        Log.d("HASHMAP SIZE", requestHashMap.size()+"");
-                    }
-                    for (String each : requestHashMap.keySet()) {
-                        Log.d("KEY", each);
-                    }
-
-                    Log.d("HASHMAP", requestHashMap.get("2").getDescription());
-
-
-//                    parseRequests(requests);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+            try {
+                Log.d("ON RESPONSE", "Inside on response");
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArray = jsonObject.getJSONArray("data");
+                // handle json response
+                requestsCallback.onSuccess(jsonArray);
+            } catch (JSONException e) {
+                e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
@@ -98,34 +74,18 @@ public class FetchRequests extends AsyncTask<Void, Void, Void>  {
                 // Anything you want
             }
         });
+
         RequestQueue requestQueue = Volley.newRequestQueue(myContext);
         requestQueue.add(stringRequest);
-
     }
-
 
     @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        Log.d("postExecute", "postExecute has started");
-
-        jsonReader();
-
-        if (requestHashMap.isEmpty()) {
-            Log.d("EMPTY", "hashmap is empty");
-
-            for (String each : requestHashMap.keySet()) {
-                Log.d("KEY", each);
-            }
-        }
-
-
-        ViewAllRequestsActivity.data.setText("hello");
+    protected Void doInBackground(Void... voids) {
+        return null;
     }
-
-    public HashMap<String, Request> getRequestHashMap() {
-        return requestHashMap;
-    }
-
 }
+
+
+
+
 

@@ -29,18 +29,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //
         View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
         return new MyViewHolder(listItem);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+        // fills the Adapter with a request object
+        //holder.itemName.setText(myValues[position].getItem().getName());
 
-//        holder.itemName.setText(myValues[position].getItem().getName());
-//        holder.profileName.setText(myValues[position].getRequester().getName());
+
+//       holder.profileName.setText(myValues[position].getRequester().getName());
 //        holder.profileIcon.setImageResource(myValues[position].getRequester().getProfileImage());
 //        holder.itemIcon.setImageResource(myValues[position].getItem().getIcon());
-////        holder.itemDescription.setText(myValues[position].getDescription());
+        holder.itemDescription.setText(myValues[position].getDescription());
 //
 //        String date = myValues[position].getBegin_date() + " to " + myValues[position].getEnd_date();
 //        holder.itemDate.setText(date);
@@ -97,15 +100,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             itemIcon = (ImageView) itemView.findViewById(R.id.itemPic);
             itemName = (TextView) itemView.findViewById(R.id.itemName);
             itemDate = (TextView) itemView.findViewById(R.id.itemDate);
-//            itemDescription = (TextView) itemView.findViewById(R.id.itemDescription);
+            itemDescription = (TextView) itemView.findViewById(R.id.itemDescription);
             profileName = (TextView) itemView.findViewById(R.id.profileName);
             itemPrice = (TextView) itemView.findViewById(R.id.itemPrice);
             itemPrice.setTextColor(Color.parseColor("#85bb65"));
             matchButton = (Button) itemView.findViewById(R.id.match_button);
-
             cardView = (CardView) itemView.findViewById(R.id.requestCard);
 
         }
     }
+
+
 
 }
