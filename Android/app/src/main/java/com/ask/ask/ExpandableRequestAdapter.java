@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -16,10 +17,10 @@ import java.util.List;
 public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<String> listHeaders;
-    private HashMap<String, List<String>> listHashMap;
+    private List<Integer> listHeaders;
+    private HashMap<Integer, List<String>> listHashMap;
 
-    public ExpandableRequestAdapter(Context context, List<String> listHeaders, HashMap<String, List<String>> listHashMap) {
+    public ExpandableRequestAdapter(Context context, List<Integer> listHeaders, HashMap<Integer, List<String>> listHashMap) {
         this.context = context;
         this.listHeaders = listHeaders;
         this.listHashMap = listHashMap;
@@ -62,14 +63,15 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int position, boolean isExpanded, View view, ViewGroup parent) {
-        String groupText = (String) getGroup(position);
+        int groupText = (Integer) getGroup(position);
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_request_header, null);
         }
 
-        TextView textViewHeader = (TextView) view.findViewById(R.id.textViewHeader);
-        textViewHeader.setText(groupText);
+        ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
+        imageViewHeader.setImageResource(groupText);
+
         return view;
     }
 
@@ -80,6 +82,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_request_item, null);
         }
+
         TextView textViewItem = (TextView) view.findViewById(R.id.textViewItem);
         textViewItem.setText(childText);
         return view;

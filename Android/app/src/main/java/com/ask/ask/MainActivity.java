@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity
     implements ProfileFragment.OnFragmentInteractionListener,
@@ -34,8 +35,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //----------
 
         //navigation bar "button"/slide
         Toolbar navigationToolbar = findViewById(R.id.navigation_toolbar);
@@ -58,9 +57,6 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
-        //----------
-
-        //TODO: replace the user_data, item_data, request_data arrays with actual database
         //Creating an array of users
 
         User user_data[] = new User[]
@@ -120,12 +116,11 @@ public class MainActivity extends AppCompatActivity
                                         " for one person")
                 };
 
-        RequestAdapter adapter = new RequestAdapter(this,
-                R.layout.listview_item_row, request_data);
-
+//        RequestAdapter adapter = new RequestAdapter(this,
+//                R.layout.listview_item_row, request_data);
+//
 //        listView1 = (ListView)findViewById(R.id.listView1);
 //        listView1.setAdapter(adapter);
-
 
         //creating Ask button and the intent
         ask = (Button) findViewById(R.id.askBtn);
@@ -137,8 +132,8 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-    }
 
+    }
 
     /**
      * Opens the navigation bar drawer when pressed or when left to right slide is made.
@@ -194,34 +189,25 @@ public class MainActivity extends AppCompatActivity
                 Log.d("selectDrawerItem", "2g");
         }
 
-        //make sure a valid fragment was selected, else just return
         try {
             requestedFragment = (Fragment) requestedFragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
-
+        
         //replace existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment);
         fragmentTransaction.addToBackStack(null); //TODO: press back to go to home immediately like Gmail
         fragmentTransaction.commit();
-        // set item as selected to persist highlight
-        menuItem.setChecked(true);
-        // close drawer when item is tapped
-        setTitle(menuItem.getTitle());
+        menuItem.setChecked(true); //set item as selected to persist highlight
+        setTitle(menuItem.getTitle()); //close drawer when item is tapped
         navigationDrawerLayout.closeDrawers();
     }
 
-    /**
-     *
-     */
     @Override
-    public void onFragmentInteraction(Uri uri){
-        //this is used to communicate with other fragments. Figure out how and if necessary
-        //send data I think
-    }
+    public void onFragmentInteraction(Uri uri){}
 
 }

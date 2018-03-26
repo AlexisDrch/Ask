@@ -46,9 +46,9 @@ public class OffersFragment extends Fragment {
     private ExpandableListView expandableListViewOffers;
     private ExpandableListAdapter expandableListViewAdapter;
     private List<Offer> listOffers;
-    private List<String> listItemNames;
+    private List<Integer> listItemHeaders;
     private List<String> listElements;
-    private HashMap<String, List<String>> hashMapOfferData;
+    private HashMap<Integer, List<String>> hashMapOfferData;
 
 
     public OffersFragment() {
@@ -90,59 +90,62 @@ public class OffersFragment extends Fragment {
 //        //https://ask-capa.herokuapp.com/api/offers/by/4
 //        HashMap<String, Offer> hashMapOfUserOffers = FetchRequest("https://ask-capa.herokuapp.com/api/offers/by/" + "4", getContext());
 //        listOffers = new ArrayList<Offer>(hashMapOfUserOffers.values()); //TODO: get Offers
-//        listItemNames = new ArrayList<>(listOffers.size());
+//        listItemHeaders = new ArrayList<>(listOffers.size());
 //        listElements = new ArrayList<>();
 //        hashMapOfferData = new HashMap<>(listOffers.size());
 //
 //        for (int i = 0; i < listOffers.size(); i++) {
-//            listItemNames.add(listOffers.get(i).getItemFulfilling().getName());
+////            listItemHeaders.add(listOffers.get(i).getItemFulfilling().);
+//            listItemHeaders.add(R.drawable.tent); //0000000000 TODO: set item ids locally
 //
 //            listElements.clear();
+//            listElements.add("Item: " + listOffers.get(i).getItemFulfilling().getName());
 //            listElements.add("Requester: " + listOffers.get(i).getRequester().getName());
 //            //date
-//            listElements.add("$" + listOffers.get(i).getItemFulfilling().getPrice());
+//            listElements.add("Price: $" + listOffers.get(i).getItemFulfilling().getPrice());
 //            //description
+//            listElements.add("Status: " + listOffers.get(i).getStatus()); //TODO: make these words instead of status numbers
 //
-//            hashMapOfferData.put(listItemNames.get(i), listElements);
+//            hashMapOfferData.put(listItemHeaders.get(i), listElements);
 //        }
 
-        listItemNames = new ArrayList<>(3);
+        //dummy data
+        listItemHeaders = new ArrayList<>(3);
         ArrayList<String> listElements1 = new ArrayList<>();
         ArrayList<String> listElements2 = new ArrayList<>();
         ArrayList<String> listElements3 = new ArrayList<>();
         hashMapOfferData = new HashMap<>(3);
 
-        listItemNames.add("tent");
+        listItemHeaders.add(R.drawable.tent);
+        listElements1.add("Item: Tent");
         listElements1.add("Requester: Alexis");
         listElements1.add("Date: 4/1/18 - 4/3/18");
         listElements1.add("Price: $15 per day");
         listElements1.add("Description: to go camping in Yosemite");
         listElements1.add("Status: Pending");
-        hashMapOfferData.put(listItemNames.get(0), listElements1);
+        hashMapOfferData.put(listItemHeaders.get(0), listElements1);
 
-        listItemNames.add("surfboard");
+        listItemHeaders.add(R.drawable.stove);
+        listElements2.add("Item: Surfboard");
         listElements2.add("Requester: Carolyn");
         listElements2.add("Date: 4/4/18 - 4/7/18");
         listElements2.add("Price: $5 per day");
         listElements2.add("Description: for beach weekend");
         listElements2.add("Status: Pending");
-        hashMapOfferData.put(listItemNames.get(1), listElements2);
+        hashMapOfferData.put(listItemHeaders.get(1), listElements2);
 
-        listItemNames.add("sleeping bag");
+        listItemHeaders.add(R.drawable.sleepingbag);
+        listElements3.add("Item: Sleeping Bag");
         listElements3.add("Requester: Pulak");
         listElements3.add("Date: 4/2/18 - 4/5/18");
         listElements3.add("Price: $10 per day");
         listElements3.add("Description: for hiking trip");
         listElements3.add("Status: Pending");
-        hashMapOfferData.put(listItemNames.get(2), listElements3);
-        Log.d("ELEMENTS", listItemNames.toString());
-        Log.d("HASHMAP", hashMapOfferData.toString());
-
-
-
+        hashMapOfferData.put(listItemHeaders.get(2), listElements3);
+        //dummy data
 
         expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
-        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapOfferData);
+        expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemHeaders, hashMapOfferData);
         expandableListViewOffers.setAdapter(expandableListViewAdapter);
         int[] color = {Color.BLACK, Color.BLACK};
         expandableListViewOffers.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));

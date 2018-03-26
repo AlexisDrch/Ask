@@ -52,9 +52,9 @@ public class RequestsFragment extends Fragment {
     private ExpandableListView expandableListViewRequests;
     private ExpandableListAdapter expandableListViewAdapter;
     private List<Request> listRequests;
-    private List<String> listItemNames;
+    private List<Integer> listItemHeaders;
     private List<String> listElements;
-    private HashMap<String, List<String>> hashMapRequestData;
+    private HashMap<Integer, List<String>> hashMapRequestData;
 
 
     public RequestsFragment() {
@@ -96,35 +96,37 @@ public class RequestsFragment extends Fragment {
 //        //https://ask-capa.herokuapp.com/api/requests/by/1
 //        HashMap<String, Request> hashMapOfUserRequests = FetchRequest("https://ask-capa.herokuapp.com/api/requests/by/" + "1", getContext());
 //        listRequests = new ArrayList<Request>(hashMapOfUserRequests.values()); //TODO: get Requests //these are the Requests
-//        listItemNames = new ArrayList<>(listRequests.size());
+//        listItemHeaders = new ArrayList<>(listRequests.size());
 //        listElements = new ArrayList<>();
 //        hashMapRequestData = new HashMap<>(listRequests.size());
 //
 //        for (int i = 0; i < listRequests.size(); i++) {
-//            listItemNames.add(listRequests.get(i).getItem().getName());
+////            listItemHeaders.add(listRequests.get(i).getItem().getIcon());
+//            listItemHeaders.add(R.drawable.tent); //0000000000 TODO: set item ids locally
 //
 //            listElements.clear();
-//            listElements.add(listRequests.get(i).getBeginDate() + " - " + listRequests.get(i).getEndDate());
-//            listElements.add("$" + listRequests.get(i).getItem().getPrice());
-//            listElements.add(listRequests.get(i).getDescription());
+//            listElements.add("Item: " + listRequests.get(i).getItem().getName());
+//            listElements.add("Date: " + listRequests.get(i).getBeginDate() + " - " + listRequests.get(i).getEndDate());
+//            listElements.add("Price: $" + listRequests.get(i).getItem().getPrice());
+//            listElements.add("Description: " + listRequests.get(i).getDescription());
+//            listElements.add("Status: " + listRequests.get(i).getStatus());
 //
-//            hashMapRequestData.put(listItemNames.get(i), listElements);
+//            hashMapRequestData.put(listItemHeaders.get(i), listElements);
 //        }
 //
 //        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
-//        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapRequestData);
+//        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemHeaders, hashMapRequestData);
 //        expandableListViewRequests.setAdapter(expandableListViewAdapter);
-//        int[] color = {Color.BLACK, Color.BLUE};
+//        int[] color = {Color.BLACK, Color.BLACK};
 //        expandableListViewRequests.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
-//        expandableListViewRequests.setDividerHeight(1);
+//        expandableListViewRequests.setDividerHeight(4);
 //
 //        Display display = getActivity().getWindowManager().getDefaultDisplay();
 //        Point size = new Point();
 //        display.getSize(size);
 //        int width = size.x;
-//        int height = size.y;
 //
-//        expandableListViewRequests.setIndicatorBounds(width - 50, width);
+//        expandableListViewRequests.setIndicatorBounds(width - 100, width);
 
         return rootView;
     }
