@@ -46,7 +46,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         // Request data
         String date = currentRequest.getBegin_date() + " to " + currentRequest.getEnd_date();
-        holder.itemDate.setText(date);
+        //holder.itemDate.setText(date);
 
 
         // Requester data
@@ -79,7 +79,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 FragmentTransaction ft = ((FragmentActivity)myContext).getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.expanded_container, mainFrag);
                 ft.addToBackStack(null);
-                ft.commit();            }
+                ft.commit();
+            }
         });
 
         Log.d("OOKOKOK", currentRequest.toString());
