@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -11,84 +12,175 @@
 
     <ImageView android:id="@+id/imageViewItemImage"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         xmlns:android="http://schemas.android.com/apk/res/android" />
 
-    <!--This would be the option to select an image from your device but instead we would just replace this with the different image options we provide-->
-    <Button
-        android:id="@+id/buttonLoadImage"
+    <!--<Button-->
+        <!--android:id="@+id/buttonLoadImage"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginLeft="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:layout_marginTop="8dp"-->
+        <!--android:layout_weight="0"-->
+        <!--android:text="Load Image"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage" />-->
+
+    <TextView
+        android:id="@+id/textViewItemName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:layout_weight="0"
-        android:text="Load Image"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage" />
 
-    <EditText
-        android:id="@+id/editTextItemName"
+    <Spinner
+        android:id="@+id/spinnerCategories"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:prompt="@string/category"
+        android:spinnerMode="dialog"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewItemName" />
+
+    <Spinner
+        android:id="@+id/spinnerItems"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:prompt="@string/item"
+        android:spinnerMode="dialog"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCategories" />
+
+    <Button
+        android:id="@+id/buttonDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Item Name"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:text="Select Date"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLoadImage" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerItems" />
 
-    <EditText
-        android:id="@+id/editTextBeginDate"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="Begin Date"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextItemName" />
-
-    <EditText
-        android:id="@+id/editTextEndDate"
-        android:layout_width="125dp"
+    <TextView
+        android:id="@+id/textViewBeginDateLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="End Date"
-        app:layout_constraintHorizontal_bias=".9"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/begin"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/textViewBeginDate"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDatePicker" />
+
+    <TextView
+        android:id="@+id/textViewBeginDate"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@+id/textViewBeginDateLabel"
+        app:layout_constraintRight_toLeftOf="@+id/textViewEndDateLabel"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDatePicker" />
+
+    <TextView
+        android:id="@+id/textViewEndDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/end"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@+id/textViewBeginDate"
+        app:layout_constraintRight_toLeftOf="@+id/textViewEndDate"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDatePicker" />
+
+    <TextView
+        android:id="@+id/textViewEndDate"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@+id/textViewEndDateLabel"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextItemName" />
+        app:layout_constraintStart_toEndOf="@+id/textViewEndDateLabel"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDatePicker" />
 
     <EditText
         android:id="@+id/editTextPrice"
-        android:layout_width="100dp"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
-        android:inputType="numberDecimal"
         android:hint="$ per day"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextBeginDate" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewBeginDate" />
 
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
+        android:hint="Description of Item Requesting"
         android:inputType="textMultiLine"
-        android:hint="Description"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:lines="2"
+        android:scrollbars="vertical"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPrice" />
@@ -97,13 +189,14 @@
         android:id="@+id/buttonAsk2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Ask"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescription"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
 
 </android.support.constraint.ConstraintLayout>
