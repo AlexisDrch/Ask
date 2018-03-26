@@ -47,14 +47,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
-    implements ProfileFragment.OnFragmentInteractionListener,
+    implements
+        HomeFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener,
         RequestsFragment.OnFragmentInteractionListener,
         OffersFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener,
         AboutFragment.OnFragmentInteractionListener {
 
-    private Button ask;
+    private Button askButton;
     private CollapsingToolbarLayout mToolbar;
+
 
 
     private CardView card;
@@ -63,16 +66,10 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout navigationDrawerLayout;
     private NavigationView navigationView;
 
-    // requests
-    public static HashMap<String, Request> requestHashMap;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //----------
 
         //navigation bar "button"/slide
         Toolbar navigationToolbar = findViewById(R.id.toolbarid);
@@ -100,122 +97,17 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
-        final Context mainContext = this.getApplicationContext();
-
-        FetchRequests process = new FetchRequests("https://ask-capa.herokuapp.com/api/requests", this.getApplicationContext());
-        process.requestJsonReader(new RequestsCallback() {
-            @Override
-            public void onSuccess(JSONArray jsonArrayRequests) {
-                // handle JSONOBJECT response
-                requestHashMap = JsonParser.JsonArrayRequestsToHashMapRequests(jsonArrayRequests);
-                for (String each : requestHashMap.keySet()) {
-                    Log.d("KEY", each);
-
-                    // display adapater
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(mainContext, requestHashMap);
-                    RecyclerView myView =  (RecyclerView)findViewById(R.id.recyclerview);
-                    myView.setHasFixedSize(true);
-                    myView.setAdapter(adapter);
-
-                    LinearLayoutManager llm = new LinearLayoutManager(mainContext);
-                    llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    myView.setLayoutManager(llm);
-                }
-            }
-        });
-        //----------
-
-        //TODO: replace the user_data, item_data, request_data arrays with actual database
-        //Creating an array of users
-
-//        User user_data[] = new User[]
-//                {
-//                        new User(5, "bob123", "password",
-//                                "bob@gmail.com", "Bob", "Builder",
-//                                "Construction worker looking for some stuff",
-//                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-//                                "678-456-9831", 25, 1, "711-2880 Nulla St." +
-//                                "Mankato, Mississippi 96522", R.drawable.bob_profile),
-//
-//                        new User(6, "jim123", "password",
-//                                "jim@gmail.com", "Jim", "Jimmy",
-//                                "Just a dude, doing dude things",
-//                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-//                                "770-783-2923", 29, 1, "606-3727 Ullamcorper. Street " +
-//                                "Roseville, NH 11523", R.drawable.jim_profile),
-//
-//                        new User(7, "nancy123", "password",
-//                                "nancy@gmail.com", "Nancy", "Yancy",
-//                                "Just a dudette, doing dudette things",
-//                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-//                                "404-719-3817", 26, 0, "Ap #867-859 Sit Rd. Azusa, New York 39531",
-//                                R.drawable.nancy_profile),
-//
-//                        new User(8, "karen123", "password",
-//                                "karen@gmail.com", "Karen", "Barron",
-//                                "Just a girl, doing girl things",
-//                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-//                                "678-820-8638", 29, 0, "7292 Dictum Av. San Antonio, MI 47096",
-//                                R.drawable.karen_profile),
-//
-//                        new User(9, "john123", "password",
-//                                "john@gmail.com", "John", "Smith",
-//                                "I'm confident in my password strength",
-//                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-//                                "770-293-3621", 31, 1, "191-103 Integer Rd. " +
-//                                "Corona, New Mexico 08219",
-//                                R.drawable.john_profile)
-//                };
-//
-        //Creating an array of items
-
-        Item item_data[] = new Item[]
-                {
-                        new Item(1, "Golf Club", null,
-                                5.00, null, R.mipmap.item_golfclub),
-                        new Item(6, "Pot", null,
-                                10.00, null, R.mipmap.item_pot),
-                        new Item(7, "Sleeping Bag", null,
-                                7.00, null, R.mipmap.item_sleepingbag),
-                        new Item(8, "Surfboard", null,
-                                12.00, null, R.mipmap.item_surfboard),
-                        new Item(9, "Tent", null,
-                                5.00, null, R.mipmap.item_tent)
-                };
-
-        //convert item_array into Hashmap
-
-        HashMap<String, Item> itemHashMap = new HashMap<String, Item>();
-
-        for (Item e : item_data) {
-            itemHashMap.put(""+e.getItem_id(), e);
+        //select the home fragment to display requests
+        try {
+            toggleMainFragment((Fragment) HomeFragment.class.newInstance());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-//
-//        //Creating an array of Requests
-//
-//        Request request_data[] = new Request[]
-//                {
-//                        new Request(user_data[0], item_data[0], "6/10/18", "6/12/18",
-//                                "I want a golf club for one weekend," +
-//                                        " price can be negotiable" ),
-//                        new Request(user_data[1], item_data[1], "7/05/18", "7/06/18",
-//                                "I am traveling for a day and " +
-//                                        "need a pot to cook some food" ),
-//                        new Request(user_data[2], item_data[2], "7/15/18", "7/18/18",
-//                                "I am camping for a couple of days and need" +
-//                                        " a sleeping bag"),
-//                        new Request(user_data[3], item_data[3], "6/12/18", "6/13/18",
-//                                "I want to go surfing for the day"),
-//                        new Request(user_data[4], item_data[4], "7/24/18", "7/26/18",
-//                                "I need a tent for the weekend, preferably" +
-//                                        " for one person")
-//                };
-//
-//
-//
 
         //creating Ask button and the intent
-        ask = (Button) findViewById(R.id.askBtn);
+        askButton = (Button) findViewById(R.id.askBtn);
 //
         //creating collapsing toolbar and adding title
         mToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
@@ -231,7 +123,7 @@ public class MainActivity extends AppCompatActivity
         //creating the card
         card = (CardView) findViewById(R.id.requestCard);
 
-        ask.setOnClickListener(new View.OnClickListener() {
+        askButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), RequestActivity.class);
@@ -239,7 +131,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
-
 
     /**
      * Opens the navigation bar drawer when pressed or when left to right slide is made.
@@ -267,10 +158,8 @@ public class MainActivity extends AppCompatActivity
         switch (menuItem.getItemId()) {
             case R.id.fragment_home:
                 Log.d("selectDrawerItem", "2a");
-//                requestedFragmentClass = HomeFragment.class;
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                return;
+                requestedFragmentClass = HomeFragment.class;
+                break;
             case R.id.fragment_profile:
                 Log.d("selectDrawerItem", "2b");
                 requestedFragmentClass = ProfileFragment.class;
@@ -283,10 +172,6 @@ public class MainActivity extends AppCompatActivity
                 Log.d("selectDrawerItem", "2d");
                 requestedFragmentClass = OffersFragment.class;
                 break;
-////            case R.id.fragment_items:
-////                Log.d("selectDrawerItem", "2e");
-////                requestedFragmentClass = ItemsFragment.class;
-////                break;
             case R.id.fragment_settings:
                 Log.d("selectDrawerItem", "2f");
                 requestedFragmentClass = SettingsFragment.class;
@@ -306,13 +191,7 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
             return;
         }
-
-        //replace existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment);
-        fragmentTransaction.addToBackStack(null); //TODO: press back to go to home immediately like Gmail
-        fragmentTransaction.commit();
+        toggleMainFragment(requestedFragment);
         // set item as selected to persist highlight
         menuItem.setChecked(true);
         // close drawer when item is tapped
@@ -320,6 +199,14 @@ public class MainActivity extends AppCompatActivity
         navigationDrawerLayout.closeDrawers();
     }
 
+    public void toggleMainFragment(Fragment requestedFragment){
+        //replace existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment);
+        fragmentTransaction.addToBackStack(null); //TODO: press back to go to home immediately like Gmail
+        fragmentTransaction.commit();
+    };
     /**
      *
      */
