@@ -14,13 +14,13 @@ public abstract class LocalData {
                 {
                         new Item(1, "Golf Club", null,
                                 5.00, null, R.mipmap.item_golfclub),
-                        new Item(6, "Pot", null,
+                        new Item(2, "Pot", null,
                                 10.00, null, R.mipmap.item_pot),
-                        new Item(7, "Sleeping Bag", null,
+                        new Item(3, "Sleeping Bag", null,
                                 7.00, null, R.mipmap.item_sleepingbag),
-                        new Item(8, "Surfboard", null,
+                        new Item(4, "Surfboard", null,
                                 12.00, null, R.mipmap.item_surfboard),
-                        new Item(9, "Tent", null,
+                        new Item(5, "Tent", null,
                                 5.00, null, R.mipmap.item_tent)
                 };
 

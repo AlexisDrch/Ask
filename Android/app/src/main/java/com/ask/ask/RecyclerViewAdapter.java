@@ -3,6 +3,8 @@ package com.ask.ask;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,50 +47,42 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // Request data
         String date = currentRequest.getBegin_date() + " to " + currentRequest.getEnd_date();
         holder.itemDate.setText(date);
-        String price = "$" + String.valueOf(myValues[position].getItem().getPrice()) + "0";
-        holder.itemPrice.setText(price);
+
 
         // Requester data
         holder.profileName.setText(currentRequest.getRequester_name());
-
-
         //holder.profileIcon.setImageResource(currentRequest.getRequester_ppicture_url()); @need to access internet / imageView from url
 
         // Items data
         Item currentItem = LocalData.getHashMapItems().get(currentRequest.getItem_id());
         holder.itemName.setText(currentItem.getName());
         holder.itemIcon.setImageResource(currentItem.getIcon());
+        String price = "$" + String.valueOf(currentItem.getPrice()) + "0";
+        holder.itemPrice.setText(price);
 
+        // Match button
+        holder.matchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), MatchConfirmationActivity.class);
+                myContext.startActivity(intent);
+            }
+        });
 
+        // Card view
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                MainMenuFragment mainFrag = new MainMenuFragment();
+
+                FragmentTransaction ft = ((FragmentActivity)myContext).getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.expanded_container, mainFrag);
+                ft.addToBackStack(null);
+                ft.commit();            }
+        });
 
         Log.d("OOKOKOK", currentRequest.toString());
-
-//
-//
-//
-//
-//        holder.matchButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(view.getContext(), MatchConfirmationActivity.class);
-//                myContext.startActivity(intent);
-//            }
-//        });
-
-
-
-//        holder.cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                MainMenuFragment mainFrag = new MainMenuFragment();
-//
-//                FragmentTransaction ft = ((FragmentActivity)myContext).getSupportFragmentManager().beginTransaction();
-//                ft.replace(R.id.expanded_container, mainFrag);
-//                ft.addToBackStack(null);
-//                ft.commit();            }
-//        });
-
     }
 
 
