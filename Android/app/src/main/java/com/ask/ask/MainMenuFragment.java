@@ -27,4 +27,6 @@ public class MainMenuFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_main_menu, container, false);
     }
 
+    // refresh(hash_map)
+
 }

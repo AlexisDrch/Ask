@@ -31,7 +31,7 @@ public class RequestConfirmationActivity extends AppCompatActivity {
             double price = extras.getDouble("price");
             String description = extras.getString("description");
 
-            textViewConfirmation.setText(itemName + " \n " + beginDate + " - " + endDate + " \n $" + price + " \n " + description);
+            textViewConfirmation.setText(itemName + " \n " + beginDate + " - " + endDate + "\n$" + price + " per day\n" + description);
         }
 
         new Thread(new Runnable() {

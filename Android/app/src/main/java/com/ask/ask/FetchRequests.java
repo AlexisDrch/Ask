@@ -1,7 +1,19 @@
 package com.ask.ask;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,96 +23,109 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by pulakazad on 3/19/18.
  */
 
-public class FetchRequests extends AsyncTask<Void, Void, Void> {
+public class FetchRequests extends AsyncTask<Void, Void, Void>  {
 
-    String data = "";
-    String dataParse = "";
-    String singleParsed = "";
+    public static final HashMap<String, Request> requestHashMap = new HashMap<>();
 
-    private static final String TAG_REQUEST_ID = "request_id";
-    private static final String TAG_ITEM_ID = "item_id";
-    private static final String TAG_REQUESTER_ID = "requester_id";
-    private static final String TAG_PROVIDER_ID = "provider_id";
-    private static final String TAG_BEGIN_DATE = "begin_date";
-    private static final String TAG_END_DATE = "end_date";
-    private static final String TAG_LON = "lon";
-    private static final String TAG_LAT = "lat";
-    private static final String TAG_DESCRIPTION = "description";
+    private String url;
+    private Context myContext;
+    private String data;
 
-
-
-
+    public FetchRequests(String url, Context myContext) {
+        this.myContext = myContext;
+        this.url = url;
+    }
 
 
     @Override
     protected Void doInBackground(Void... voids) {
+        Log.d("background", "background has started");
 
-        try {
-            URL url = new URL("https://ask-capa.herokuapp.com/api/requests");
-
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-
-            InputStream inputStream = httpURLConnection.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = "";
-
-
-            while (line != null) {
-                line = bufferedReader.readLine();
-                data = data + line;
-            }
-
-            JSONObject JsonObject = new JSONObject(data);
-
-            JSONArray jsonData = JsonObject.getJSONArray("data");
-            for (int i = 0; i < jsonData.length(); i++) {
-
-                JSONObject JO = (JSONObject) jsonData.get(i);
-                String request_id = JO.getString(TAG_REQUEST_ID);
-                String item_id = JO.getString(TAG_ITEM_ID);
-                String requester_id = JO.getString(TAG_REQUESTER_ID);
-                String provider_id = JO.getString(TAG_PROVIDER_ID);
-                String begin_date = JO.getString(TAG_BEGIN_DATE);
-                String end_date = JO.getString(TAG_END_DATE);
-                String lon = JO.getString(TAG_LON);
-                String lat = JO.getString(TAG_LAT);
-                String description = JO.getString(TAG_DESCRIPTION);
-
-
-                singleParsed = "request_id: " + request_id + "\n" + "item_id: " + item_id + "\n"
-                        + "requester_id: " + requester_id + "\n" +
-                        "provider_id: " + provider_id + "\n" + "begin_date: " + begin_date + "\n" +
-                        "end_date: " + end_date + "\n" + "lon: " + lon + "\n" + "lat: " + lat + "\n" +
-                        "description: " + description + "\n";
-
-                dataParse = dataParse + "\n" + singleParsed;
-            }
-
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        jsonReader();
         return null;
     }
+
+
+    private void jsonReader() {
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+
+                    Log.d("ON RESPONSE", "Inside on response");
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+//                    HashMap<String, Request> requestHashMap = new HashMap<>();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jo = jsonArray.getJSONObject(i);
+
+                        Gson gson = new Gson();
+                        Request singleRequest = gson.fromJson(jo.toString(), Request.class);
+                        requestHashMap.put(singleRequest.getRequest_id()+"", singleRequest);
+                        Log.d("SINGLE REQUEST", singleRequest.toString());
+                        Log.d("HASHMAP SIZE", requestHashMap.size()+"");
+                    }
+                    for (String each : requestHashMap.keySet()) {
+                        Log.d("KEY", each);
+                    }
+
+                    Log.d("HASHMAP", requestHashMap.get("2").getDescription());
+
+
+//                    parseRequests(requests);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("NOT WORKING", "Called an Error");
+                // Anything you want
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(myContext);
+        requestQueue.add(stringRequest);
+
+    }
+
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
+        Log.d("postExecute", "postExecute has started");
 
-        ViewAllRequestsActivity.data.setText(this.dataParse);
+        jsonReader();
+
+        if (requestHashMap.isEmpty()) {
+            Log.d("EMPTY", "hashmap is empty");
+
+            for (String each : requestHashMap.keySet()) {
+                Log.d("KEY", each);
+            }
+        }
+
+
+        ViewAllRequestsActivity.data.setText("hello");
     }
 
+    public HashMap<String, Request> getRequestHashMap() {
+        return requestHashMap;
+    }
 
 }
+

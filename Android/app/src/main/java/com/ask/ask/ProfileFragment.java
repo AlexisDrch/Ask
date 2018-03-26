@@ -1,12 +1,20 @@
 package com.ask.ask;
 
 import android.content.Context;
+import android.media.Rating;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 
 /**
@@ -28,6 +36,11 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Button buttonEditSave;
+    private EditText editTextName;
+    private RatingBar ratingBarUserRating;
+    private EditText editTextAge;
+    private boolean currentlyEditing;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -60,8 +73,7 @@ public class ProfileFragment extends Fragment {
         }
 
         //text views, edit texts, buttons, user info to add get R.id.
-
-
+        //when edit button is pressed, all fields should be set to editable, when save is pressed all fields should be set to view only
 
     }
 
@@ -69,7 +81,48 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+
+        currentlyEditing = false;
+
+        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        editTextName = (EditText) rootView.findViewById(R.id.editTextName);
+        ratingBarUserRating = (RatingBar) rootView.findViewById(R.id.ratingBarUserRating);
+        editTextAge = (EditText) rootView.findViewById(R.id.editTextAge);
+        buttonEditSave = (Button) rootView.findViewById(R.id.buttonEditSave);
+
+        editTextName.setEnabled(false);
+        ratingBarUserRating.setEnabled(false);
+        editTextAge.setEnabled(false);
+
+
+        ratingBarUserRating.setRating(4.3f);
+
+        buttonEditSave.setText("Edit");
+        buttonEditSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentlyEditing) { //save user's edit
+                    editTextName.setEnabled(false);
+                    editTextAge.setEnabled(false);
+                    buttonEditSave.setText("Edit");
+                    currentlyEditing = false;
+
+                    Toast.makeText(getContext(), "Changes Saved!", Toast.LENGTH_SHORT).show();
+                } else { //allow user to edit
+                    editTextName.setEnabled(true);
+                    editTextAge.setEnabled(true);
+                    buttonEditSave.setText("Save");
+                    currentlyEditing = true;
+                }
+
+            }
+        });
+
+
+
+
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

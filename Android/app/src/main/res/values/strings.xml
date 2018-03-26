@@ -7,8 +7,38 @@
     <string name="items">Items</string>
     <string name="settings">Settings</string>
     <string name="home">Home</string>
+    <string name="end">End:</string>
+    <string name="begin">Begin:</string>
+    <string name="camping">Camping</string>
+    <string name="beach">Beach</string>
+    <string name="hiking">Hiking</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_match_confirmation">MatchConfirmationActivity</string>
+    <string name="category">Category</string>
+    <string name="item">Item</string>
+
+    <string-array name="categoriesArray">
+        <item>Camping</item>
+        <item>Beach</item>
+        <item>Hiking</item>
+    </string-array>
+    <string-array name="itemsCampingArray">
+        <item>Tent</item>
+        <item>Chair</item>
+        <item>Stove</item>
+        <item>Sleeping Bag</item>
+        <item>Flashlight</item>
+        <item>Cooler</item>
+    </string-array>
+    <string-array name="itemsBeachArray">
+        <item>Towel</item>
+        <item>Beach Blanket</item>
+        <item>Surfboard</item>
+        <item>Boogie Board</item>
+        <item>Paddleboard</item>
+    </string-array>
+    <string-array name="itemsHikingArray">
+        <item>Backpack</item>
+        <item>Walking Stick</item>
+    </string-array>
+
 </resources>

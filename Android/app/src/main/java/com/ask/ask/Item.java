@@ -12,12 +12,13 @@ import java.util.LinkedList;
 
 public class Item {
 
-    private int item_id;
+    private String categoryUuid;
     private String name;
     private LinkedList<String> tags;
     private double price;
     private URL itemImage;
     public char[] title;
+    private int item_id;
 
     //TODO: connect icon with database pictures
     //temporary
@@ -25,6 +26,7 @@ public class Item {
 
     public Item(int item_id, String name, LinkedList<String> tags, double price, URL itemImage, int icon) {
         this.item_id = item_id;
+        this.categoryUuid = categoryUuid;
         this.name = name;
         this.tags = tags;
         this.price = price;
@@ -34,6 +36,10 @@ public class Item {
 
     public int getItem_id() {
         return item_id;
+    }
+
+    public String getCategoryUuid() {
+        return categoryUuid;
     }
 
     public String getName() {
@@ -84,6 +90,7 @@ public class Item {
     public String toString() {
         return "Item{" +
                 "item_id='" + item_id + '\'' +
+                ", categoryUuid='" + categoryUuid + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }
