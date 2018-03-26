@@ -186,11 +186,19 @@ public class RequestActivity extends AppCompatActivity {
                     intent.putExtra("description", description);
 
                     //would pass in current user info who is logged in
-                    User user = new User("3", "alexanderthe1st", 19, -1, "+123456789", " 4 rue de Saint-tout,  Metz, France.");
+                    User user = new User(9, "john123", "password",
+                                "john@gmail.com", "John", "Smith",
+                                "I'm confident in my password strength",
+                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
+                                "770-293-3621", 31, 1, "191-103 Integer Rd. " +
+                                "Corona, New Mexico 08219",
+                                R.drawable.john_profile);
 
-                    Item item = new Item("1", "1", itemName, null, price, null, itemImageResource, user);
-                    com.ask.ask.Request request = new com.ask.ask.Request(user, item, beginDate, endDate, description);
+                    Item item = new Item(7, "Sleeping Bag", null,
+                            7.00, null, R.mipmap.item_sleepingbag);
 
+
+                    com.ask.ask.Request request = new com.ask.ask.Request("" + user.getUser_id(), "14", "" + item.getItem_id(), beginDate, endDate, description);
                     //Volley POST
                     final String url = "https://ask-capa.herokuapp.com/api/requests";
                     POSTData postData = new POSTData();

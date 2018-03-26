@@ -112,10 +112,10 @@ public class POSTData {
 
     private Map<String, String> getRequestParams() {
         Map<String, String> requestParams = new HashMap<>();
-        requestParams.put("item_id", request.getItem().getUuid());
-        requestParams.put("requester_id", request.getRequester().getUuid());
-        requestParams.put("begin_date", request.getBeginDate());
-        requestParams.put("end_date", request.getEndDate());
+        requestParams.put("item_id", request.getItem_id());
+        requestParams.put("requester_id", request.getRequester_id());
+        requestParams.put("begin_date", request.getBegin_date());
+        requestParams.put("end_date", request.getEnd_date());
         requestParams.put("lon", "-1"); //TODO: would ask user to set location as temporary variables
         requestParams.put("lat", "-1");
         requestParams.put("description", request.getDescription());
@@ -125,9 +125,9 @@ public class POSTData {
 
     private Map<String, String> getOfferParams() {
         Map<String, String> offerParams = new HashMap<>();
-        offerParams.put("belonging_id", offer.getItemProviding().getUuid());
-        offerParams.put("request_id", offer.getRequester().getUuid());
-        offerParams.put("provider_id", offer.getProvider().getUuid());
+        offerParams.put("belonging_id", "" + offer.getItemProviding().getItem_id());
+        offerParams.put("request_id", "" + offer.getRequester().getUser_id());
+        offerParams.put("provider_id", "" + offer.getProvider().getUser_id());
         offerParams.put("begin_date", offer.getBeginDate());
         offerParams.put("end_date", offer.getEndDate());
         offerParams.put("lon", "-1"); //TODO: would ask user to set location as temporary variables

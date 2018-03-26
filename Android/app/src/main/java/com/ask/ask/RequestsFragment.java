@@ -131,38 +131,6 @@ public class RequestsFragment extends Fragment {
         return rootView;
     }
 
-    //not necessary anymore, use Volley
-//    //----------
-//    public List<Request> getUsersRequests() {
-//        List<Request> parsedRequests = new ArrayList<>();
-//
-//        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-//
-//        final String url = "https://ask-capa.herokuapp.com/api/requests/by/1";
-//
-//        JsonObjectRequest getRequest = new JsonObjectRequest(com.android.volley.Request.Method.GET, url, null,
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        Log.d("RESPONSE", response.toString());
-////                        parsedRequests = parseJSONObject(response.toString());
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        //TODO: trycatch for error types
-//                        Log.d("Error.Response", error.getMessage());
-//                    }
-//                }
-//            );
-//
-//        requestQueue.add(getRequest);
-//
-//        return parsedRequests;
-//    }
-//    //----------
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
