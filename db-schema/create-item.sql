@@ -6,4 +6,3 @@ CREATE TABLE IF NOT EXISTS "item" (
 );
 
 --items are stored by default in Ask database
---@todo : ON DELETE CASCADE necessary / dangerous ?

@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS "request" (
 );
 
 --requests are made by requesters. They correspond to one item requested.
---@todo : ON DELETE CASCADE necessary / dangerous ?
+
