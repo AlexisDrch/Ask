@@ -47,7 +47,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
-    implements ProfileFragment.OnFragmentInteractionListener,
+    implements
+        HomeFragment.OnFragmentInteractionListener,
+        ProfileFragment.OnFragmentInteractionListener,
         RequestsFragment.OnFragmentInteractionListener,
         OffersFragment.OnFragmentInteractionListener,
         SettingsFragment.OnFragmentInteractionListener,
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity
 
     private Button askButton;
     private CollapsingToolbarLayout mToolbar;
-    protected Context mainContext;
+
 
 
     private CardView card;
@@ -64,16 +66,11 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout navigationDrawerLayout;
     private NavigationView navigationView;
 
-    // requests
-    public static HashMap<String, Request> requestHashMap;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainContext = this.getApplicationContext();
         //navigation bar "button"/slide
         Toolbar navigationToolbar = findViewById(R.id.toolbarid);
         setSupportActionBar(navigationToolbar);
@@ -100,8 +97,14 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
-        //refresh requests cards in recycle view adapter
-        this.refreshRecyclerViewAdapter();
+        //select the home fragment to display requests
+        try {
+            toggleMainFragment((Fragment) HomeFragment.class.newInstance());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
         //creating Ask button and the intent
         askButton = (Button) findViewById(R.id.askBtn);
@@ -129,35 +132,6 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    /*
-        * Refresh the requests card with new data from POST request
-     */
-    public void refreshRecyclerViewAdapter() {
-        FetchRequests process = new FetchRequests("https://ask-capa.herokuapp.com/api/requests", this.getApplicationContext());
-        process.requestJsonReader(new RequestsCallback() {
-            @Override
-            public void onSuccess(JSONArray jsonArrayRequests) {
-                // handle JSONOBJECT response
-                requestHashMap = JsonParser.JsonArrayRequestsToHashMapRequests(jsonArrayRequests);
-                for (String each : requestHashMap.keySet()) {
-                    Log.d("KEY", each);
-
-                    // display adapater
-                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(mainContext, requestHashMap);
-                    RecyclerView myView = (RecyclerView) findViewById(R.id.recyclerview);
-                    myView.setHasFixedSize(true);
-                    myView.setAdapter(adapter);
-
-                    LinearLayoutManager llm = new LinearLayoutManager(mainContext);
-                    llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-                    myView.setLayoutManager(llm);
-
-                }
-            }
-        });
-    }
-
-
     /**
      * Opens the navigation bar drawer when pressed or when left to right slide is made.
      *
@@ -184,10 +158,8 @@ public class MainActivity extends AppCompatActivity
         switch (menuItem.getItemId()) {
             case R.id.fragment_home:
                 Log.d("selectDrawerItem", "2a");
-//                requestedFragmentClass = HomeFragment.class;
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                return;
+                requestedFragmentClass = HomeFragment.class;
+                break;
             case R.id.fragment_profile:
                 Log.d("selectDrawerItem", "2b");
                 requestedFragmentClass = ProfileFragment.class;
@@ -200,10 +172,6 @@ public class MainActivity extends AppCompatActivity
                 Log.d("selectDrawerItem", "2d");
                 requestedFragmentClass = OffersFragment.class;
                 break;
-////            case R.id.fragment_items:
-////                Log.d("selectDrawerItem", "2e");
-////                requestedFragmentClass = ItemsFragment.class;
-////                break;
             case R.id.fragment_settings:
                 Log.d("selectDrawerItem", "2f");
                 requestedFragmentClass = SettingsFragment.class;
@@ -223,13 +191,7 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
             return;
         }
-
-        //replace existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment);
-        fragmentTransaction.addToBackStack(null); //TODO: press back to go to home immediately like Gmail
-        fragmentTransaction.commit();
+        toggleMainFragment(requestedFragment);
         // set item as selected to persist highlight
         menuItem.setChecked(true);
         // close drawer when item is tapped
@@ -237,6 +199,14 @@ public class MainActivity extends AppCompatActivity
         navigationDrawerLayout.closeDrawers();
     }
 
+    public void toggleMainFragment(Fragment requestedFragment){
+        //replace existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment);
+        fragmentTransaction.addToBackStack(null); //TODO: press back to go to home immediately like Gmail
+        fragmentTransaction.commit();
+    };
     /**
      *
      */
