@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -104,7 +105,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO: save all change and log out user
-                Log.d("Settings", "buttonLogout");
+                Toast.makeText(getContext(), "Logging out.", Toast.LENGTH_SHORT).show();
             }
         });
 

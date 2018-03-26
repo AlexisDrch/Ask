@@ -80,7 +80,6 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_request_item, null);
         }
-
         TextView textViewItem = (TextView) view.findViewById(R.id.textViewItem);
         textViewItem.setText(childText);
         return view;
@@ -90,45 +89,5 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
-
-//    @Override
-//    public View getGroupView(int position, boolean isExpanded, View convertView, ViewGroup parent) {
-//        Log.d("getView", "in");
-//        View row = convertView;
-//        RequestHolder requestHolder;
-//
-//        if (row == null) {
-//            LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-//            row = inflater.inflate(layoutResourceId, parent, false);
-//
-//            requestHolder = new RequestHolder();
-//            requestHolder.requestImage = (ImageView) row.findViewById(R.id.imageViewItemImage);
-//            requestHolder.requestItemName = (TextView) row.findViewById(R.id.textViewItemName);
-//            requestHolder.requestDate = (TextView) row.findViewById(R.id.textViewDate);
-//            requestHolder.requestPrice = (TextView) row.findViewById(R.id.textViewPrice);
-//            requestHolder.requestDescription = (TextView) row.findViewById(R.id.textViewDescription);
-//
-//            row.setTag(requestHolder);
-//        } else {
-//            requestHolder = (RequestHolder) row.getTag();
-//        }
-//
-//        Request request = requestsArr[position];
-//        requestHolder.requestImage.setImageResource(request.getItem().getIcon());
-//        requestHolder.requestItemName.setText(request.getItem().getName());
-//        requestHolder.requestDate.setText(request.getBeginDate() + " - " + request.getEndDate());
-//        requestHolder.requestPrice.setText("$" + String.valueOf(request.getItem().getPrice()) + "0");
-//        requestHolder.requestDescription.setText(request.getDescription());
-//
-//        return row;
-//    }
-//
-//    static class RequestHolder {
-//        ImageView requestImage;
-//        TextView requestItemName;
-//        TextView requestDate;
-//        TextView requestPrice;
-//        TextView requestDescription;
-//    }
 
 }

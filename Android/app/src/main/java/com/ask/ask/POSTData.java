@@ -88,26 +88,27 @@ public class POSTData {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
+                        Log.d("Error.Response", "Error: " + error.getMessage());
                     }
                 }
         ) {
             @Override
             protected Map<String, String> getParams() {
                 if (STATUS == POST_REQUEST) {
+                    Log.d("POST", "POST_REQUEST");
                     return getRequestParams();
                 } else if (STATUS == POST_MATCH) {
+                    Log.d("POST", "POST_MATCH");
                     return getOfferParams();
                 } else {
-                    return null; //TODO: error checking
+                    Log.d("POST", "NULL");
+                    return null;
                 }
             }
         };
 
         postQueue.add(postRequest);
-        setStatus(COMPLETE);
     }
-
 
     private Map<String, String> getRequestParams() {
         Map<String, String> requestParams = new HashMap<>();
@@ -115,7 +116,7 @@ public class POSTData {
         requestParams.put("requester_id", request.getRequester().getUuid());
         requestParams.put("begin_date", request.getBeginDate());
         requestParams.put("end_date", request.getEndDate());
-        requestParams.put("lon", "-1");
+        requestParams.put("lon", "-1"); //TODO: would ask user to set location as temporary variables
         requestParams.put("lat", "-1");
         requestParams.put("description", request.getDescription());
 
@@ -124,7 +125,15 @@ public class POSTData {
 
     private Map<String, String> getOfferParams() {
         Map<String, String> offerParams = new HashMap<>();
-
+        offerParams.put("belonging_id", offer.getItemProviding().getUuid());
+        offerParams.put("request_id", offer.getRequester().getUuid());
+        offerParams.put("provider_id", offer.getProvider().getUuid());
+        offerParams.put("begin_date", offer.getBeginDate());
+        offerParams.put("end_date", offer.getEndDate());
+        offerParams.put("lon", "-1"); //TODO: would ask user to set location as temporary variables
+        offerParams.put("lat", "-1");
+        offerParams.put("description", offer.getDescription());
+        offerParams.put("message", offer.getMessage());
 
         return offerParams;
     }

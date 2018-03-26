@@ -1,10 +1,14 @@
 package com.ask.ask;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,31 +93,43 @@ public class RequestsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_requests, container, false);
 
-        //https://ask-capa.herokuapp.com/api/requests/by/1
-        listRequests = ; //TODO: use Pulak's FetchRequests method
-        listItemNames = new ArrayList<>(listRequests.size());
-        listElements = new ArrayList<>();
-        hashMapRequestData = new HashMap<>(listRequests.size());
-
-        for (int i = 0; i < listRequests.size(); i++) {
-            listItemNames.add(listRequests.get(i).getItem().getName());
-
-            listElements.clear();
-            listElements.add(listRequests.get(i).getBeginDate() + " - " + listRequests.get(i).getEndDate());
-            listElements.add("$" + listRequests.get(i).getItem().getPrice());
-            listElements.add(listRequests.get(i).getDescription());
-
-            hashMapRequestData.put(listItemNames.get(i), listElements);
-        }
-
-        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
-        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapRequestData);
-        expandableListViewRequests.setAdapter(expandableListViewAdapter);
+//        //https://ask-capa.herokuapp.com/api/requests/by/1
+//        HashMap<String, Request> hashMapOfUserRequests = FetchRequest("https://ask-capa.herokuapp.com/api/requests/by/" + "1", getContext());
+//        listRequests = new ArrayList<Request>(hashMapOfUserRequests.values()); //TODO: get Requests //these are the Requests
+//        listItemNames = new ArrayList<>(listRequests.size());
+//        listElements = new ArrayList<>();
+//        hashMapRequestData = new HashMap<>(listRequests.size());
+//
+//        for (int i = 0; i < listRequests.size(); i++) {
+//            listItemNames.add(listRequests.get(i).getItem().getName());
+//
+//            listElements.clear();
+//            listElements.add(listRequests.get(i).getBeginDate() + " - " + listRequests.get(i).getEndDate());
+//            listElements.add("$" + listRequests.get(i).getItem().getPrice());
+//            listElements.add(listRequests.get(i).getDescription());
+//
+//            hashMapRequestData.put(listItemNames.get(i), listElements);
+//        }
+//
+//        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
+//        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapRequestData);
+//        expandableListViewRequests.setAdapter(expandableListViewAdapter);
+//        int[] color = {Color.BLACK, Color.BLUE};
+//        expandableListViewRequests.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
+//        expandableListViewRequests.setDividerHeight(1);
+//
+//        Display display = getActivity().getWindowManager().getDefaultDisplay();
+//        Point size = new Point();
+//        display.getSize(size);
+//        int width = size.x;
+//        int height = size.y;
+//
+//        expandableListViewRequests.setIndicatorBounds(width - 50, width);
 
         return rootView;
     }
 
-    //not necessary anymore
+    //not necessary anymore, use Volley
 //    //----------
 //    public List<Request> getUsersRequests() {
 //        List<Request> parsedRequests = new ArrayList<>();

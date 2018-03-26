@@ -1,9 +1,16 @@
 package com.ask.ask;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,32 +83,77 @@ public class OffersFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
 
-        https://ask-capa.herokuapp.com/api/offers/by/4
-        listOffers = ; //TODO: get offers
-        listOffers = new ArrayList<>();
-        listItemNames = new ArrayList<>(listOffers.size());
-        listElements = new ArrayList<>();
-        hashMapOfferData = new HashMap<>(listOffers.size());
+//        //https://ask-capa.herokuapp.com/api/offers/by/4
+//        HashMap<String, Offer> hashMapOfUserOffers = FetchRequest("https://ask-capa.herokuapp.com/api/offers/by/" + "4", getContext());
+//        listOffers = new ArrayList<Offer>(hashMapOfUserOffers.values()); //TODO: get Offers
+//        listItemNames = new ArrayList<>(listOffers.size());
+//        listElements = new ArrayList<>();
+//        hashMapOfferData = new HashMap<>(listOffers.size());
+//
+//        for (int i = 0; i < listOffers.size(); i++) {
+//            listItemNames.add(listOffers.get(i).getItemFulfilling().getName());
+//
+//            listElements.clear();
+//            listElements.add("Requester: " + listOffers.get(i).getRequester().getName());
+//            //date
+//            listElements.add("$" + listOffers.get(i).getItemFulfilling().getPrice());
+//            //description
+//
+//            hashMapOfferData.put(listItemNames.get(i), listElements);
+//        }
 
-        for (int i = 0; i < listOffers.size(); i++) {
-            listItemNames.add(listOffers.get(i).getItemFulfilling().getName());
+        listItemNames = new ArrayList<>(3);
+        ArrayList<String> listElements1 = new ArrayList<>();
+        ArrayList<String> listElements2 = new ArrayList<>();
+        ArrayList<String> listElements3 = new ArrayList<>();
+        hashMapOfferData = new HashMap<>(3);
 
-            listElements.clear();
-            listElements.add(listOffers.get(i).getRequester().getName());
-            //date
-            listElements.add("$" + listOffers.get(i).getItemFulfilling().getPrice());
-            //description
+        listItemNames.add("tent");
+        listElements1.add("Requester: Alexis");
+        listElements1.add("Date: 4/1/18 - 4/3/18");
+        listElements1.add("Price: $15 per day");
+        listElements1.add("Description: to go camping in Yosemite");
+        listElements1.add("Status: Pending");
+        hashMapOfferData.put(listItemNames.get(0), listElements1);
 
-            hashMapOfferData.put(listItemNames.get(i), listElements);
-        }
+        listItemNames.add("surfboard");
+        listElements2.add("Requester: Carolyn");
+        listElements2.add("Date: 4/4/18 - 4/7/18");
+        listElements2.add("Price: $5 per day");
+        listElements2.add("Description: for beach weekend");
+        listElements2.add("Status: Pending");
+        hashMapOfferData.put(listItemNames.get(1), listElements2);
+
+        listItemNames.add("sleeping bag");
+        listElements3.add("Requester: Pulak");
+        listElements3.add("Date: 4/2/18 - 4/5/18");
+        listElements3.add("Price: $10 per day");
+        listElements3.add("Description: for hiking trip");
+        listElements3.add("Status: Pending");
+        hashMapOfferData.put(listItemNames.get(2), listElements3);
+        Log.d("ELEMENTS", listItemNames.toString());
+        Log.d("HASHMAP", hashMapOfferData.toString());
+
+
+
 
         expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
         expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemNames, hashMapOfferData);
         expandableListViewOffers.setAdapter(expandableListViewAdapter);
+        int[] color = {Color.BLACK, Color.BLACK};
+        expandableListViewOffers.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
+        expandableListViewOffers.setDividerHeight(4);
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+
+        expandableListViewOffers.setIndicatorBounds(width - 100, width);
 
         return rootView;
     }

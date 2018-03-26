@@ -169,6 +169,7 @@ public class RequestActivity extends AppCompatActivity {
                         || TextUtils.isEmpty(editTextDescription.getText())) {
                     Toast.makeText(RequestActivity.this, "All fields require an input.", Toast.LENGTH_SHORT).show();
                 } else {
+                    int itemImage = itemImageResource;
                     String itemName = textViewItemName.getText().toString();
                     String beginDate = textViewBeginDate.getText().toString();
                     String endDate = textViewEndDate.getText().toString();
@@ -177,21 +178,23 @@ public class RequestActivity extends AppCompatActivity {
 
                     //for RequestConfirmationActivity display
                     Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
-                    intent.putExtra("itemImage", itemImageResource);
+                    intent.putExtra("itemImage", itemImage);
                     intent.putExtra("itemName", itemName);
                     intent.putExtra("beginDate", beginDate);
                     intent.putExtra("endDate", endDate);
                     intent.putExtra("price", price);
                     intent.putExtra("description", description);
 
-                    User user = new User("1", "Alex Fache", 19, -1, "+123456789", " 4 rue de Saint-tout,  Metz, France.");
+                    //would pass in current user info who is logged in
+                    User user = new User("3", "alexanderthe1st", 19, -1, "+123456789", " 4 rue de Saint-tout,  Metz, France.");
+
                     Item item = new Item("1", "1", itemName, null, price, null, itemImageResource, user);
                     com.ask.ask.Request request = new com.ask.ask.Request(user, item, beginDate, endDate, description);
 
                     //Volley POST
                     final String url = "https://ask-capa.herokuapp.com/api/requests";
-//                    POSTData postData = new POSTData();
-//                    postData.postRequest(url, request, getApplicationContext());
+                    POSTData postData = new POSTData();
+                    postData.postRequest(url, request, getApplicationContext());
 
                     startActivity(intent);
                 }

@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment {
         editTextName.setEnabled(false);
 //        ratingBarUserRating.setEnabled(false);
         editTextEmail.setEnabled(false);
-
+        editTextPhone.setEnabled(false);
 
 //        ratingBarUserRating.setRating(4.3f);
 
