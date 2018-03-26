@@ -1,5 +1,6 @@
 package com.ask.ask;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -38,6 +39,10 @@ import android.support.v7.widget.Toolbar;
 import com.elmargomez.typer.Font;
 import com.elmargomez.typer.Typer;
 
+import org.json.JSONArray;
+
+import java.util.HashMap;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -53,11 +58,14 @@ public class MainActivity extends AppCompatActivity
 
 
     private CardView card;
-
     private Toolbar tb;
 
     private DrawerLayout navigationDrawerLayout;
     private NavigationView navigationView;
+
+    // requests
+    public static HashMap<String, Request> requestHashMap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +100,29 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
+        final Context mainContext = this.getApplicationContext();
 
+        FetchRequests process = new FetchRequests("https://ask-capa.herokuapp.com/api/requests", this.getApplicationContext());
+        process.requestJsonReader(new RequestsCallback() {
+            @Override
+            public void onSuccess(JSONArray jsonArrayRequests) {
+                // handle JSONOBJECT response
+                requestHashMap = JsonParser.JsonArrayRequestsToHashMapRequests(jsonArrayRequests);
+                for (String each : requestHashMap.keySet()) {
+                    Log.d("KEY", each);
 
+                    // display adapater
+                    RecyclerViewAdapter adapter = new RecyclerViewAdapter(mainContext, requestHashMap);
+                    RecyclerView myView =  (RecyclerView)findViewById(R.id.recyclerview);
+                    myView.setHasFixedSize(true);
+                    myView.setAdapter(adapter);
+
+                    LinearLayoutManager llm = new LinearLayoutManager(mainContext);
+                    llm.setOrientation(LinearLayoutManager.HORIZONTAL);
+                    myView.setLayoutManager(llm);
+                }
+            }
+        });
         //----------
 
         //TODO: replace the user_data, item_data, request_data arrays with actual database
@@ -176,13 +205,6 @@ public class MainActivity extends AppCompatActivity
 //
 //
 //
-//        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,request_data);
-//        RecyclerView myView =  (RecyclerView)findViewById(R.id.recyclerview);
-//        myView.setHasFixedSize(true);
-//        myView.setAdapter(adapter);
-//        LinearLayoutManager llm = new LinearLayoutManager(this);
-//        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
-//        myView.setLayoutManager(llm);
 
         //creating Ask button and the intent
         ask = (Button) findViewById(R.id.askBtn);

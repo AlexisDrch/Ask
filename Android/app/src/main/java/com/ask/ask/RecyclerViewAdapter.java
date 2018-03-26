@@ -5,12 +5,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.HashMap;
 
 /**
  * Created by pulakazad on 3/11/18.
@@ -19,11 +22,11 @@ import android.widget.TextView;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
 
-    public Request[] myValues;
+    private HashMap<String, Request> requestsHashMap;
     private Context myContext;
 
-    public RecyclerViewAdapter (Context myContext, Request[] myValues){
-        this.myValues= myValues;
+    public RecyclerViewAdapter (Context myContext, HashMap<String, Request> requestsHashMap){
+        this.requestsHashMap = requestsHashMap;
         this.myContext = myContext;
     }
 
@@ -36,14 +39,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+        //create a new card using request data
+        Request currentRequest = (Request) requestsHashMap.values().toArray()[position];
+
+
+        holder.itemName.setText(currentRequest.getDescription());
+        Log.d("OOKOKOK", currentRequest.toString());
+
+
         // fills the Adapter with a request object
         //holder.itemName.setText(myValues[position].getItem().getName());
 
 
 //       holder.profileName.setText(myValues[position].getRequester().getName());
 //        holder.profileIcon.setImageResource(myValues[position].getRequester().getProfileImage());
-//        holder.itemIcon.setImageResource(myValues[position].getItem().getIcon());
-        holder.itemDescription.setText(myValues[position].getDescription());
+//        holder.itemIcon.setImageResource(myValues[position].getItem().getIcon())
 //
 //        String date = myValues[position].getBegin_date() + " to " + myValues[position].getEnd_date();
 //        holder.itemDate.setText(date);
@@ -78,7 +88,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return myValues.length;
+        if (requestsHashMap == null) {
+            return 0;
+        }
+        return requestsHashMap.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -109,7 +122,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         }
     }
-
-
-
 }
