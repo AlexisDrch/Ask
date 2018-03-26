@@ -42,24 +42,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //create a new card using request data
         Request currentRequest = (Request) requestsHashMap.values().toArray()[position];
 
+        // Request data
+        String date = currentRequest.getBegin_date() + " to " + currentRequest.getEnd_date();
+        holder.itemDate.setText(date);
+        String price = "$" + String.valueOf(myValues[position].getItem().getPrice()) + "0";
+        holder.itemPrice.setText(price);
 
-        holder.itemName.setText(currentRequest.getDescription());
+        // Requester data
+        holder.profileName.setText(currentRequest.getRequester_name());
+
+
+        //holder.profileIcon.setImageResource(currentRequest.getRequester_ppicture_url()); @need to access internet / imageView from url
+
+        // Items data
+        Item currentItem = LocalData.getHashMapItems().get(currentRequest.getItem_id());
+        holder.itemName.setText(currentItem.getName());
+        holder.itemIcon.setImageResource(currentItem.getIcon());
+
+
+
         Log.d("OOKOKOK", currentRequest.toString());
 
-
-        // fills the Adapter with a request object
-        //holder.itemName.setText(myValues[position].getItem().getName());
-
-
-//       holder.profileName.setText(myValues[position].getRequester().getName());
-//        holder.profileIcon.setImageResource(myValues[position].getRequester().getProfileImage());
-//        holder.itemIcon.setImageResource(myValues[position].getItem().getIcon())
 //
-//        String date = myValues[position].getBegin_date() + " to " + myValues[position].getEnd_date();
-//        holder.itemDate.setText(date);
 //
-//        String price = "$" + String.valueOf(myValues[position].getItem().getPrice()) + "0";
-//        holder.itemPrice.setText(price);
+//
 //
 //        holder.matchButton.setOnClickListener(new View.OnClickListener() {
 //            @Override

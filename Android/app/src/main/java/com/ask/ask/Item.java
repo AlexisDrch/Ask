@@ -1,6 +1,7 @@
 package com.ask.ask;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /**
@@ -19,6 +20,7 @@ public class Item {
     private URL itemImage;
     public char[] title;
     private int item_id;
+
 
     //TODO: connect icon with database pictures
     //temporary
