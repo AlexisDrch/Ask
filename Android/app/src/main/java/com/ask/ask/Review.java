@@ -1,3 +1,5 @@
+package com.ask.ask;
+
 /**
  * Created by alexander on 2/26/2018.
  *
@@ -33,6 +35,15 @@ public class Review {
 
     public String getMessage() {
         return message;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "userGivingReview=" + userGivingReview +
+                ", userReceivingReview=" + userReceivingReview +
+                ", rating=" + rating +
+                '}';
     }
 
 }

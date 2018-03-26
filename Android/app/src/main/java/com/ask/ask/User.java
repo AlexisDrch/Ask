@@ -1,3 +1,5 @@
+package com.ask.ask;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -5,7 +7,7 @@ import java.util.LinkedList;
 /**
  * Created by alexander on 2/26/2018.
  *
- * User class to describe the profile of each person and their actions.
+ * com.ask.ask.User class to describe the profile of each person and their actions.
  *
  */
 
@@ -14,7 +16,9 @@ public class User {
     private String uuid;
     private String name;
     private int age;
-    private URL profileImage;
+
+    //changed from URL to int
+    private int profileImage;
     private String phoneNumber;
     private String address;
     private int rating;
@@ -25,7 +29,7 @@ public class User {
 
     private LinkedList<Review> reviews;
 
-    public User(String uuid, String name, int age, URL profileImage, String phoneNumber, String address) {
+    public User(String uuid, String name, int age, int profileImage, String phoneNumber, String address) {
         this.uuid = uuid;
         this.name = name;
         this.age = age;
@@ -58,11 +62,12 @@ public class User {
         this.age = age;
     }
 
-    public URL getProfileImage() {
+    public int getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(URL profileImage) {
+    //changed URL to int
+    public void setProfileImage(int profileImage) {
         this.profileImage = profileImage;
     }
 
@@ -118,7 +123,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "com.ask.ask.User{" +
                 "uuid='" + uuid + '\'' +
                 ", name='" + name + '\'' +
                 ", rating=" + rating +
