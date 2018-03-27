@@ -9,8 +9,9 @@ import java.util.HashMap;
 
 public abstract class LocalData {
 
-    protected static User UserRequester = null;
-    protected static User UserProvider = null;
+    protected static User userRequester = null;
+    protected static User userProvider = null;
+    protected static User currentUser = null;
     protected static HashMap<String, Item> itemHashMapById = null;
     protected static HashMap<String, Item> itemHashMapByName = null;
 
@@ -66,8 +67,8 @@ public abstract class LocalData {
 
     // return unique instance of requester
     public static User geUserRequesterInstance() {
-        if (UserRequester == null) {
-            UserRequester = new User(9, "john123", "password",
+        if (userRequester == null) {
+            userRequester = new User(9, "john123", "password",
                     "john@gmail.com", "John", "Smith",
                     "I'm confident in my password strength",
                     "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
@@ -75,8 +76,21 @@ public abstract class LocalData {
                     "Corona, New Mexico 08219",
                     R.drawable.john_profile);
         }
+        return userRequester;
+    }
 
-        return UserRequester;
+    // return unique instance of current User
+    public static User geCurrentUserInstance() {
+        if (currentUser == null) {
+            currentUser = new User(9, "john123", "password",
+                    "john@gmail.com", "John", "Smith",
+                    "I'm confident in my password strength",
+                    "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
+                    "770-293-3621", 31, 1, "191-103 Integer Rd. " +
+                    "Corona, New Mexico 08219",
+                    R.drawable.john_profile);
+        }
+        return currentUser;
     }
 
 
