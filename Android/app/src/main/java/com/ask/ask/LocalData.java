@@ -14,6 +14,7 @@ public abstract class LocalData {
     protected static User currentUser = null;
     protected static HashMap<String, Item> itemHashMapById = null;
     protected static HashMap<String, Item> itemHashMapByName = null;
+    public static Boolean currentUserIsLoggedin = false;
 
     public static HashMap<String, Item>  getHashMapItemsById(){
 
@@ -57,7 +58,6 @@ public abstract class LocalData {
                                     5.00, null, R.mipmap.item_tent)
                     };
             itemHashMapByName = new HashMap<String, Item>();
-
             for (Item e : item_data) {
                 itemHashMapByName.put(""+e.getName(), e);
             }
@@ -65,22 +65,15 @@ public abstract class LocalData {
         return itemHashMapByName;
     }
 
-    // return unique instance of requester
-    public static User geUserRequesterInstance() {
-        if (userRequester == null) {
-            userRequester = new User(1, "shi.carolyn", "askisd@best",
-                    "cs947@cornell.edu", "Carolyn", "Shi",
-                    "college student looking for outdoor equipment for her weekend adventures!",
-                    "https://res.cloudinary.com/campus-job/image/upload/t_student-public-page/v1/profile_pictures/Qooxf0yZAH_20151129.jpeg",
-                    "33767968976", 89, 0, "2 rue marconi",
-                    R.drawable.nancy_profile);
-        }
-        return userRequester;
+    public static void logInCurrentUser(User user){
+        currentUserIsLoggedin = true;
+        currentUser = user;
     }
 
     // return unique instance of current User
-    public static User geCurrentUserInstance() {
+    public static User getCurrentUserInstance() {
         if (currentUser == null) {
+            // that should not happen after the login
             currentUser = new User(1, "shi.carolyn", "askisd@best",
                     "cs947@cornell.edu", "Carolyn", "Shi",
                     "college student looking for outdoor equipment for her weekend adventures!",

@@ -9,6 +9,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,46 +74,54 @@ public class POSTData {
         return STATUS;
     }
 
-    public void postRequest(String url, Request request, Context context) {
+    public void postRequest(String url, Request request, Context context, final VolleyCallback volleyCallback) {
         setStatus(POST_REQUEST);
         setUrl(url);
         setRequest(request);
         Log.d("NEW REQ", request.toDescriptiveString());
         setContext(context);
-        createPOST();
+        createPOST(volleyCallback);
     }
 
-    public void postOffer(String url, Offer offer) {
+    public void postOffer(String url, Offer offer, final VolleyCallback volleyCallback) {
         setStatus(POST_MATCH);
         setUrl(url);
         setOffer(offer);
         setContext(context);
-        createPOST();
+        createPOST(volleyCallback);
     }
 
-    public void postlogin(String url, String mEmail, String mPassword, Context context) {
+    public void postlogin(String url, String mEmail, String mPassword, Context context, final VolleyCallback volleyCallback) {
         setStatus(POST_LOGIN);
         setUrl(url);
         setMEmail(mEmail);
         setMPassword(mPassword);
         setContext(context);
-        createPOST();
+        createPOST(volleyCallback);
     }
 
-    private void createPOST() {
+    private void createPOST(final VolleyCallback volleyCallback) {
         RequestQueue postQueue = Volley.newRequestQueue(context);
 
         StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Response", response);
+                        try {
+                            Log.d("POST response : ", response);
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray jsonArray = jsonObject.getJSONArray("data");
+                            volleyCallback.onSuccess(jsonArray);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Error.Response", "Error: " + error.getMessage());
+                        volleyCallback.onFailure();
                     }
                 }
         ) {

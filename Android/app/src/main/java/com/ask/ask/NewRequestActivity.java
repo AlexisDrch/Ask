@@ -16,6 +16,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -86,35 +88,43 @@ public class NewRequestActivity extends AppCompatActivity {
 
         askNewRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-            // toast message if a field is not set
-            if (TextUtils.isEmpty(textViewItemName.getText()) || TextUtils.isEmpty(textViewBeginDate.getText())
-                    || TextUtils.isEmpty(textViewEndDate.getText()) || TextUtils.isEmpty(editTextDescription.getText())) {
-                Toast.makeText(NewRequestActivity.this, "All fields require an input.", Toast.LENGTH_SHORT).show();
-            } else {
-                // create new request object
-                String itemName = textViewItemName.getText().toString();
-                String beginDate = textViewBeginDate.getText().toString();
-                String endDate = textViewEndDate.getText().toString();
-                //double price = Double.parseDouble(editTextPrice.getText().toString()); @todo add request price in database
-                String description = editTextDescription.getText().toString();
+            public void onClick(final View view) {
+                // toast message if a field is not set
+                if (TextUtils.isEmpty(textViewItemName.getText()) || TextUtils.isEmpty(textViewBeginDate.getText())
+                        || TextUtils.isEmpty(textViewEndDate.getText()) || TextUtils.isEmpty(editTextDescription.getText())) {
+                    Toast.makeText(NewRequestActivity.this, "All fields require an input.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // create new request object
+                    String itemName = textViewItemName.getText().toString();
+                    String beginDate = textViewBeginDate.getText().toString();
+                    String endDate = textViewEndDate.getText().toString();
+                    //double price = Double.parseDouble(editTextPrice.getText().toString()); @todo add request price in database
+                    String description = editTextDescription.getText().toString();
 
-                // create corresponding request object
-                Request newRequest = new Request(
-                        ""+LocalData.geUserRequesterInstance().getUser_id(), ""+-1,
-                        ""+currentItem.getItem_id(),""+beginDate,
-                        ""+endDate, description);
+                    // create corresponding request object
+                    final Request newRequest = new Request(
+                            ""+LocalData.getCurrentUserInstance().getUser_id(), ""+-1,
+                            ""+currentItem.getItem_id(),""+beginDate,
+                            ""+endDate, description);
 
-                //post new request json object
-                final String url = "https://ask-capa.herokuapp.com/api/requests";
-                POSTData postData = new POSTData();
-                postData.postRequest(url, newRequest, getApplicationContext());
+                    //post new request json object
+                    final String url = "https://ask-capa.herokuapp.com/api/requests";
+                    POSTData postData = new POSTData();
+                    postData.postRequest(url, newRequest, getApplicationContext(), new VolleyCallback() {
+                        @Override
+                        public void onSuccess(JSONArray jsonArray) {
+                            //pass request oject for RequestConfirmationActivity display
+                            Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
+                            intent.putExtra("Request", (Serializable) newRequest);
+                            startActivity(intent);
+                        }
 
-                //pass request oject for RequestConfirmationActivity display
-                Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
-                intent.putExtra("Request", (Serializable) newRequest);
-                startActivity(intent);
-            }
+                        @Override
+                        public void onFailure() {
+                            // handle failure on posting request
+                        }
+                    });
+                }
             }
         });
 
@@ -131,7 +141,7 @@ public class NewRequestActivity extends AppCompatActivity {
         // set a lambda description for the request
         String description = "Hey !" +
                 "I am looking for a " + currentItem.getName() + "." +
-                "Would be glad to hear from you, thanks !" + LocalData.geCurrentUserInstance().getName();
+                "Would be glad to hear from you, thanks !" + LocalData.getCurrentUserInstance().getName();
         editTextDescription.setText(description);
     }
 

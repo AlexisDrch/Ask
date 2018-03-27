@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +29,11 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +50,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 1;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -92,6 +91,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        // for dev gain of time : login automatic with meta params
+        mEmailView.setText(getIntent().getStringExtra("mEmail"));
+        mPasswordView.setText(getIntent().getStringExtra("mPassword"));
     }
 
     private void populateAutoComplete() {
@@ -298,36 +301,57 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private Boolean userDataRetrived;
+        private int waitedEpoch;
+        private int MAX_EPOCH = 10;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
+            userDataRetrived = false;
+            waitedEpoch = 0;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+
+            // post request with credentials (email/password)
             final String url = "https://ask-capa.herokuapp.com/login";
             POSTData postData = new POSTData();
-            postData.postlogin(url, mEmail, mPassword, getApplicationContext());
-            //this.onPostExecute();
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+            postData.postlogin(url, mEmail, mPassword, getApplicationContext(), new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONArray jsonArray) {
+                    if (jsonArray.length() > 0) {
+                        try {
+                            // parse user data and set it in LocalData
+                            Gson gson = new Gson();
+                            User currentUser = gson.fromJson(jsonArray.getJSONObject(0).toString(), User.class);
+                            LocalData.logInCurrentUser(currentUser);
+                            userDataRetrived = true;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        waitedEpoch = MAX_EPOCH;
+                    }
                 }
-            }
+                @Override
+                public void onFailure() {
+                    // login failure is handled
+                    waitedEpoch = MAX_EPOCH;
+                }
+            });
 
-            // TODO: register the new account here.
-            return true;
+            while (userDataRetrived == false & waitedEpoch < MAX_EPOCH) {
+                try {
+                    // Simulate network access
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                    return false;
+                }
+                waitedEpoch +=1;
+            }
+            return userDataRetrived;
         }
 
         @Override
@@ -335,7 +359,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
+            if (success == true) {
+                Log.d("ENDOFLOGIN", LocalData.getCurrentUserInstance().toString());
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
