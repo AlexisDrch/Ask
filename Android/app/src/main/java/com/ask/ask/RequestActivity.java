@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 /** Created by pulakazad on 2/28/18.
  *
  * Request activity to collect information for each user request.
@@ -25,9 +27,7 @@ import android.widget.Toast;
 public class RequestActivity extends AppCompatActivity {
 
     private ImageView imageViewItemImage;
-    private Button buttonLoadImage;
-    private Spinner spinnerCategories;
-    private Spinner spinnerItems;
+    private Spinner spinnerLocalItems;
     private TextView textViewItemName;
     private TextView textViewBeginDate;
     private TextView textViewEndDate;
@@ -35,12 +35,10 @@ public class RequestActivity extends AppCompatActivity {
     private EditText editTextDescription;
     private Button buttonDatePicker;
     private Button buttonAsk2;
+    private Item currentItem;
 
-    private ArrayAdapter<CharSequence> categoriesSpinnerAdapter;
-    private int categoriesSpinnerPosition = -1;
-    private ArrayAdapter<CharSequence> itemsSpinnerAdapter;
-    private int itemsSpinnerPosition = -1;
-
+    private ArrayAdapter<CharSequence> spinnerLocalItemsAdapter;
+    private int localItemsSpinnerPosition = -1;
     private int itemImageResource;
 
     @Override
@@ -50,9 +48,7 @@ public class RequestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request);
 
         imageViewItemImage = (ImageView) findViewById(R.id.imageViewItemImage);
-//        buttonLoadImage = (Button) findViewById(R.id.buttonLoadImage);
-        spinnerCategories = (Spinner) findViewById(R.id.spinnerCategories);
-        spinnerItems = (Spinner) findViewById(R.id.spinnerItems);
+        spinnerLocalItems = (Spinner) findViewById(R.id.spinnerItems);
         textViewItemName = (TextView) findViewById(R.id.textViewItemName);
         textViewBeginDate = (TextView) findViewById(R.id.textViewBeginDate);
         textViewEndDate = (TextView) findViewById(R.id.textViewEndDate);
@@ -61,98 +57,30 @@ public class RequestActivity extends AppCompatActivity {
         buttonDatePicker = (Button) findViewById(R.id.buttonDatePicker);
         buttonAsk2 = (Button) findViewById(R.id.buttonAsk2);
 
-//        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View arg0) {
-////                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-////                startActivityForResult(i, RESULT_LOAD_IMAGE);
-////
-////                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-//            }
-//        });
+        // get local item data
+        final HashMap<String, Item> localItems = LocalData.getHashMapItemsById();
 
+        // prepare the local items spinner
+        spinnerLocalItems.setEnabled(true);
+        spinnerLocalItemsAdapter = ArrayAdapter.createFromResource(this,  R.array.localItemsArray,
+                android.R.layout.simple_spinner_dropdown_item);
+        spinnerLocalItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerLocalItems.setAdapter(spinnerLocalItemsAdapter);
 
-        //Spinners ----------
-        spinnerCategories.setEnabled(true);
-
-        categoriesSpinnerAdapter = ArrayAdapter.createFromResource(this, R.array.categoriesArray, android.R.layout.simple_spinner_dropdown_item);
-        categoriesSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategories.setAdapter(categoriesSpinnerAdapter);
-        spinnerCategories.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        /*
+            * handle event on local items spinner
+            * i.e when a local item is selected, should fill the appropriate fields
+          */
+        spinnerLocalItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 0:
-                        Log.d("spinner", "camping");
-                        itemsSpinnerAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.itemsCampingArray, android.R.layout.simple_spinner_dropdown_item);
-                        break;
-                    case 1:
-                        Log.d("spinner", "beach");
-                        itemsSpinnerAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.itemsBeachArray, android.R.layout.simple_spinner_dropdown_item);
-                        break;
-                    case 2:
-                        Log.d("spinner", "hiking");
-                        itemsSpinnerAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.itemsHikingArray, android.R.layout.simple_spinner_dropdown_item);
-                        break;
-                    default:
-                        Log.d("spinner", "default");
-                        return;
-                }
-
-                categoriesSpinnerPosition = position;
-
-                itemsSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerItems.setAdapter(itemsSpinnerAdapter);
-                spinnerItems.setEnabled(true);
+                currentItem = (Item) LocalData.getHashMapItemsById().values().toArray()[position];
+                updateItemFields(currentItem);
+                localItemsSpinnerPosition = position;
             }
-
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                spinnerItems.setEnabled(false);
-            }
-        });
-
-        spinnerItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: automate this for changing number of categories
-
-                switch (categoriesSpinnerPosition) {
-                    case 0:
-                        String[] campingItemsArray = getResources().getStringArray(R.array.itemsCampingArray);
-                        Log.d("spinner", "camping - " + position);
-                        textViewItemName.setText(campingItemsArray[position]);
-                        String imageStr = campingItemsArray[position].toLowerCase(); //lower case
-                        imageStr = imageStr.replaceAll("\\s", ""); //remove all whitespace
-                        itemImageResource = getResources().getIdentifier(getPackageName() + ":drawable/" + imageStr, null, null);
-                        imageViewItemImage.setImageResource(itemImageResource);
-                        break;
-                    case 1:
-                        String[] beachItemsArray = getResources().getStringArray(R.array.itemsBeachArray);
-                        Log.d("spinner", "beach - " + position + " - " + beachItemsArray[position].toLowerCase());
-                        textViewItemName.setText(beachItemsArray[position]);
-
-                        itemImageResource = R.drawable.ic_profile;
-                        imageViewItemImage.setImageResource(itemImageResource);
-                        break;
-                    case 2:
-                        String[] itemsHikingArray = getResources().getStringArray(R.array.itemsHikingArray);
-                        Log.d("spinner", "beach - " + position + " - " + itemsHikingArray[position].toLowerCase());
-                        textViewItemName.setText(itemsHikingArray[position]);
-
-                        itemImageResource = R.drawable.ic_home;
-                        imageViewItemImage.setImageResource(itemImageResource);
-                        break;
-                    default:
-                        Log.d("spinner", "default");
-                }
-
-                itemsSpinnerPosition = position;
-            }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-        //----------
 
         buttonDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,13 +114,7 @@ public class RequestActivity extends AppCompatActivity {
                     intent.putExtra("description", description);
 
                     //would pass in current user info who is logged in
-                    User user = new User(9, "john123", "password",
-                                "john@gmail.com", "John", "Smith",
-                                "I'm confident in my password strength",
-                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-                                "770-293-3621", 31, 1, "191-103 Integer Rd. " +
-                                "Corona, New Mexico 08219",
-                                R.drawable.john_profile);
+                    User user = LocalData.geUserRequesterInstance();
 
                     Item item = new Item(7, "Sleeping Bag", null,
                             7.00, null, R.mipmap.item_sleepingbag);
@@ -213,8 +135,16 @@ public class RequestActivity extends AppCompatActivity {
     }
 
     /*
-    * Used to pick date.
-     */
+      * Use the item selected from LocalData to update the field
+    */
+    public void updateItemFields(Item currentItem){
+        textViewItemName.setText(currentItem.getName());
+        imageViewItemImage.setImageResource(currentItem.getIcon());
+    }
+
+    /*
+      * Used to pick date.
+    */
     public void showDateBeginPickerDialog(View view, String message) {
         Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);

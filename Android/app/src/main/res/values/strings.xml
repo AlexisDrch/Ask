@@ -16,6 +16,14 @@
     <string name="category">Category</string>
     <string name="item">Item</string>
 
+    <string-array name="localItemsArray">
+        <item>Golf Club</item>
+        <item>Pot</item>
+        <item>Sleeping Bag</item>
+        <item>Surfboard</item>
+        <item>Tent</item>
+    </string-array>
+
     <string-array name="categoriesArray">
         <item>Camping</item>
         <item>Beach</item>
