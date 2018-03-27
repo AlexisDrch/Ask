@@ -26,6 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private HashMap<String, Request> requestsHashMap;
     private Context myContext;
+    private int previousPosition = 0;
 
     public RecyclerViewAdapter (Context myContext, HashMap<String, Request> requestsHashMap){
         this.requestsHashMap = requestsHashMap;
@@ -82,6 +83,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 ft.commit();
             }
         });
+
+        if (position > previousPosition) { // we are scrolling right
+
+            AnimationUtil.animate(holder, true);
+
+        } else { //we are scrolling left
+
+            AnimationUtil.animate(holder, false);
+
+        }
+
+        previousPosition = position;
 
         Log.d("OOKOKOK", currentRequest.toString());
     }
