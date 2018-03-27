@@ -330,6 +330,11 @@ COPY offer (belonging_id, request_id, provider_id, provider_name, provider_surna
 
 COPY request (request_id, item_id, requester_id, requester_name, requester_surname, requester_ppicture_url, status, begin_date, end_date, lon, lat, description) FROM stdin;
 1	1	1	Mark	Sanders	http://rnoc.gatech.edu/sites/default/files/Matt%20Sanders-01_0.jpg	1	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for a board 6.8 near SF. Can move to pick up !
+2	1	1	Carolyn	Shi	https://res.cloudinary.com/campus-job/image/upload/t_student-public-page/v1/profile_pictures/Qooxf0yZAH_20151129.jpeg	0	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for a golf-club. Can move to pick up !
+3	3	3	Alexander	Fache	https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/light-B195YGl9M.png	0	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for this item! Please
+4	2	3	Alexander	Fache	https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/light-B195YGl9M.png	0	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for this item also ehe! Please
+5	1	3	Alexander	Fache	https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/light-B195YGl9M.png	0	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for this item also ehe ! It's urgent
+6	4	4	Alexis	Durocher	https://media-exp2.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAd1AAAAJDg2NTUyM2Y1LWJlZDktNDA0ZS04M2Q5LWU5MGUyODdiYzlhYQ.jpg	0	2018-12-17	2018-12-31	-122.431297000000001	37.7739720000000005	Looking for this item ! Thanks 
 \.
 
 
@@ -370,7 +375,7 @@ SELECT pg_catalog.setval('item_item_id_seq', 8, true);
 -- Name: request_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('request_request_id_seq', 1, true);
+SELECT pg_catalog.setval('request_request_id_seq', 6, true);
 
 
 --

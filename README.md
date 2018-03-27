@@ -52,7 +52,7 @@ Note that you need to be in the folder where the .dump is
 
 heroku config:get DATABASE_URL -a ask-capa
 
-Populate 
+Populate - do it locally
 
 . csv files : careful with type of data and coma
 . use copy-csv files to copy them directly in tables
