@@ -14,6 +14,7 @@ public abstract class LocalData {
     protected static User currentUser = null;
     protected static HashMap<String, Item> itemHashMapById = null;
     protected static HashMap<String, Item> itemHashMapByName = null;
+    public static Boolean currentUserIsLoggedin = false;
 
     public static HashMap<String, Item>  getHashMapItemsById(){
 
@@ -64,7 +65,8 @@ public abstract class LocalData {
         return itemHashMapByName;
     }
 
-    public static void setCurrentUser(User user){
+    public static void logInCurrentUser(User user){
+        currentUserIsLoggedin = true;
         currentUser = user;
     }
 

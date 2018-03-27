@@ -326,7 +326,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             // parse user data and set it in LocalData
                             Gson gson = new Gson();
                             User currentUser = gson.fromJson(jsonArray.getJSONObject(0).toString(), User.class);
-                            LocalData.setCurrentUser(currentUser);
+                            LocalData.logInCurrentUser(currentUser);
                             userDataRetrived = true;
                         } catch (JSONException e) {
                             e.printStackTrace();

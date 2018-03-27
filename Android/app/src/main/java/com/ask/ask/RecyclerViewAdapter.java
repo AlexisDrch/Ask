@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ask.ask.Utils.DownloadImageTask;
+
 import java.io.InputStream;
 import java.util.HashMap;
 
@@ -88,20 +90,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
-        // we are scrolling right
         if (position > previousPosition) {
-
+            // we are scrolling right
             AnimationUtil.animate(holder, true);
-
-            //we are scrolling left
         } else {
-
+            //we are scrolling left
             AnimationUtil.animate(holder, false);
 
         }
         previousPosition = position;
-
-        Log.d("OOKOKOK", currentRequest.toString());
     }
 
 
@@ -111,33 +108,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             return 0;
         }
         return requestsHashMap.size();
-    }
-
-
-    // downloads the profile image from url and sets that image into an imageview
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

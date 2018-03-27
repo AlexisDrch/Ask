@@ -1,7 +1,9 @@
 package com.ask.ask;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
@@ -16,12 +18,20 @@ import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.ask.ask.Utils.DownloadImageTask;
 import com.elmargomez.typer.Font;
 import com.elmargomez.typer.Typer;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
     implements
@@ -34,15 +44,22 @@ public class MainActivity extends AppCompatActivity
 
     private String DEFAULT_USER_EMAIL = "cs947@cornell.edu";
     private String DEFAULT_USER_PASSWORD = "askisd@best";
-    private Button askButton;
+
+    //toolbars
     private CollapsingToolbarLayout mToolbar;
 
+    // side menu views
+    private DrawerLayout navigationDrawerLayout;
+    private NavigationView navigationView;
+    private ImageView sideMenuUserImage;
+    private TextView sideMenuUserNameSurname;
+    private TextView sideMenuUserEmail;
+
+    // others
     private CardView card;
     private Toolbar tb;
+    private Button askButton;
 
-    private DrawerLayout navigationDrawerLayout;
-    private DrawerLayout navigationDrawerHeader;
-    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,23 +67,17 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         //trigger login activity
-        Intent loginIntent = new Intent(this.getApplicationContext(), LoginActivity.class);
-        loginIntent.putExtra("mEmail", DEFAULT_USER_EMAIL);
-        loginIntent.putExtra("mPassword", DEFAULT_USER_PASSWORD);
-        startActivity(loginIntent);
+        if (!LocalData.currentUserIsLoggedin){
+            Intent loginIntent = new Intent(this.getApplicationContext(), LoginActivity.class);
+            loginIntent.putExtra("mEmail", DEFAULT_USER_EMAIL);
+            loginIntent.putExtra("mPassword", DEFAULT_USER_PASSWORD);
+            startActivity(loginIntent);
+        }
 
-        //navigation bar "button"/slide
-        Toolbar navigationToolbar = findViewById(R.id.toolbarid);
-        setSupportActionBar(navigationToolbar);
-
-        ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_navigation_menu);
-
-        //for navigation bar
+        // side-menu general views
         navigationDrawerLayout = findViewById(R.id.navigation_drawer_layout);
-
         navigationView = findViewById(R.id.navigation_view);
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -81,6 +92,50 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
+        // event handler on side menu
+        navigationDrawerLayout.addDrawerListener(
+                new DrawerLayout.DrawerListener() {
+
+                    @Override
+                    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+                        //side menu header with current user info when menu clicked
+                        sideMenuUserImage = findViewById(R.id.sideMenuUserImage);
+                        sideMenuUserNameSurname = (TextView) findViewById(R.id.sideMenuUserNameSurname);
+                        sideMenuUserEmail = (TextView) findViewById(R.id.sideMenuUserEmail);
+
+                        new DownloadImageTask((ImageView) sideMenuUserImage)
+                                .execute(LocalData.getCurrentUserInstance().getPpicture_url());
+                        sideMenuUserNameSurname.setText(LocalData.getCurrentUserInstance().getName() +
+                                LocalData.getCurrentUserInstance().getSurname());
+                        sideMenuUserEmail.setText(LocalData.getCurrentUserInstance().getEmail());
+                    }
+
+                    @Override
+                    public void onDrawerOpened(@NonNull View drawerView) {
+
+                    }
+
+                    @Override
+                    public void onDrawerClosed(@NonNull View drawerView) {
+
+                    }
+
+                    @Override
+                    public void onDrawerStateChanged(int newState) {
+
+                    }
+                }
+        );
+
+
+        //navigation bar "button"/slide
+        Toolbar navigationToolbar = findViewById(R.id.toolbarid);
+        setSupportActionBar(navigationToolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_navigation_menu);
+
         //select the home fragment to display requests
         try {
             toggleMainFragment((Fragment) HomeFragment.class.newInstance());
@@ -92,7 +147,7 @@ public class MainActivity extends AppCompatActivity
 
         //creating Ask button and the intent
         askButton = (Button) findViewById(R.id.askBtn);
-//
+
         //creating collapsing toolbar and adding title
         mToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
         mToolbar.setTitle(getTitle());
@@ -126,11 +181,23 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                //side menu header with current user info when menu clicked
+                sideMenuUserImage = findViewById(R.id.sideMenuUserImage);
+                sideMenuUserNameSurname = (TextView) findViewById(R.id.sideMenuUserNameSurname);
+                sideMenuUserEmail = (TextView) findViewById(R.id.sideMenuUserEmail);
+
+                new DownloadImageTask((ImageView) sideMenuUserImage)
+                        .execute(LocalData.getCurrentUserInstance().getPpicture_url());
+                sideMenuUserNameSurname.setText(LocalData.getCurrentUserInstance().getName() +
+                        LocalData.getCurrentUserInstance().getSurname());
+                sideMenuUserEmail.setText(LocalData.getCurrentUserInstance().getEmail());
                 navigationDrawerLayout.openDrawer(GravityCompat.START); //for animation
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     /**
      * Determines the menuItem that was selected and goes to the corresponding fragments.
