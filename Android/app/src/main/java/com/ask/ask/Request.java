@@ -1,5 +1,6 @@
 package com.ask.ask;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 
@@ -10,7 +11,7 @@ import java.util.LinkedList;
  *
  */
 
-public class Request {
+public class Request implements Serializable{
 //
 //    private int request_id;
 //    private int item_id;
@@ -272,6 +273,15 @@ public class Request {
     public String toString()
     {
         return "ClassPojo [lon = "+lon+", end_date = "+end_date+", requester_ppicture_url = "+requester_ppicture_url+", request_id = "+request_id+", status = "+status+", description = "+description+", item_id = "+item_id+", begin_date = "+begin_date+", requester_name = "+requester_name+", requester_surname = "+requester_surname+", lat = "+lat+", requester_id = "+requester_id+"]";
+    }
+
+    public String toDescriptiveString(){
+        Item requestedItem = LocalData.getHashMapItemsById().get(this.item_id);
+
+        return "A " + requestedItem.getName() +
+                " from " + this.getBegin_date() + " to " + this.getEnd_date() +
+                " for " + requestedItem.getPrice() + " $/day";
+
     }
 
 }

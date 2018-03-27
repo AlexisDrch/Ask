@@ -1,17 +1,8 @@
 package com.ask.ask;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.net.Uri;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -24,27 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MenuItem;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
 import com.elmargomez.typer.Font;
 import com.elmargomez.typer.Typer;
-
-import org.json.JSONArray;
-
-import java.util.HashMap;
-
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
     implements
@@ -126,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         askButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), RequestActivity.class);
+                Intent intent = new Intent(view.getContext(), NewRequestActivity.class);
                 startActivity(intent);
             }
         });

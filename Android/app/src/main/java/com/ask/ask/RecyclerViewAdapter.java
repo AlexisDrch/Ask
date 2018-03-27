@@ -53,7 +53,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String date = currentRequest.getBegin_date() + " to " + currentRequest.getEnd_date();
         //holder.itemDate.setText(date);
 
-
         // Requester data
         holder.profileName.setText(currentRequest.getRequester_name());
         //holder.profileIcon.setImageResource(currentRequest.getRequester_ppicture_url()); @need to access internet / imageView from url
@@ -63,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .execute(currentRequest.getRequester_ppicture_url());
 
         // Items data
-        Item currentItem = LocalData.getHashMapItems().get(currentRequest.getItem_id());
+        Item currentItem = LocalData.getHashMapItemsById().get(currentRequest.getItem_id());
         holder.itemName.setText(currentItem.getName());
         holder.itemIcon.setImageResource(currentItem.getIcon());
         String price = "$" + String.valueOf(currentItem.getPrice()) + "0";
