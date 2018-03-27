@@ -14,6 +14,7 @@ public class AnimationUtil {
 
         AnimatorSet animatorSet = new AnimatorSet();
 
+        //moves each card to the right or left
         ObjectAnimator animatorTranslateX = ObjectAnimator.ofFloat(holder.itemView, "translationX", goesRight==true ? 200 : -200, 0);
                 animatorTranslateX.setDuration(1000);
 

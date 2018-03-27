@@ -84,16 +84,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
-        if (position > previousPosition) { // we are scrolling right
+        // we are scrolling right
+        if (position > previousPosition) {
 
             AnimationUtil.animate(holder, true);
 
-        } else { //we are scrolling left
+            //we are scrolling left
+        } else {
 
             AnimationUtil.animate(holder, false);
 
         }
-
         previousPosition = position;
 
         Log.d("OOKOKOK", currentRequest.toString());
