@@ -1,12 +1,10 @@
 package com.ask.ask;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,13 +16,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /** Created by pulakazad on 2/28/18.
  *
  * Request activity to collect information for each user request.
  */
-public class RequestActivity extends AppCompatActivity {
+public class NewRequestActivity extends AppCompatActivity {
 
     private ImageView imageViewItemImage;
     private Spinner spinnerLocalItems;
@@ -33,8 +32,8 @@ public class RequestActivity extends AppCompatActivity {
     private TextView textViewEndDate;
     private EditText editTextPrice;
     private EditText editTextDescription;
-    private Button buttonDatePicker;
-    private Button buttonAsk2;
+    private Button datePickerButton;
+    private Button askNewRequestButton;
     private Item currentItem;
 
     private ArrayAdapter<CharSequence> spinnerLocalItemsAdapter;
@@ -54,11 +53,8 @@ public class RequestActivity extends AppCompatActivity {
         textViewEndDate = (TextView) findViewById(R.id.textViewEndDate);
         editTextPrice = (EditText) findViewById(R.id.editTextPrice);
         editTextDescription = (EditText) findViewById(R.id.editTextDescription);
-        buttonDatePicker = (Button) findViewById(R.id.buttonDatePicker);
-        buttonAsk2 = (Button) findViewById(R.id.buttonAsk2);
-
-        // get local item data
-        final HashMap<String, Item> localItems = LocalData.getHashMapItemsById();
+        datePickerButton = (Button) findViewById(R.id.buttonDatePicker);
+        askNewRequestButton = (Button) findViewById(R.id.buttonAsk2);
 
         // prepare the local items spinner
         spinnerLocalItems.setEnabled(true);
@@ -67,10 +63,8 @@ public class RequestActivity extends AppCompatActivity {
         spinnerLocalItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLocalItems.setAdapter(spinnerLocalItemsAdapter);
 
-        /*
-            * handle event on local items spinner
-            * i.e when a local item is selected, should fill the appropriate fields
-          */
+
+        //handle event on local items spinner: i.e when a local item is selected, should fill the appropriate fields
         spinnerLocalItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -82,68 +76,67 @@ public class RequestActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        buttonDatePicker.setOnClickListener(new View.OnClickListener() {
+        datePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDateBeginPickerDialog(v, "Select Begin Date");
             }
         });
 
-        buttonAsk2.setOnClickListener(new View.OnClickListener() {
+
+        askNewRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(textViewItemName.getText()) || TextUtils.isEmpty(textViewBeginDate.getText())
-                        || TextUtils.isEmpty(textViewEndDate.getText()) || TextUtils.isEmpty(editTextPrice.getText())
-                        || TextUtils.isEmpty(editTextDescription.getText())) {
-                    Toast.makeText(RequestActivity.this, "All fields require an input.", Toast.LENGTH_SHORT).show();
-                } else {
-                    int itemImage = itemImageResource;
-                    String itemName = textViewItemName.getText().toString();
-                    String beginDate = textViewBeginDate.getText().toString();
-                    String endDate = textViewEndDate.getText().toString();
-                    double price = Double.parseDouble(editTextPrice.getText().toString());
-                    String description = editTextDescription.getText().toString();
+            // toast message if a field is not set
+            if (TextUtils.isEmpty(textViewItemName.getText()) || TextUtils.isEmpty(textViewBeginDate.getText())
+                    || TextUtils.isEmpty(textViewEndDate.getText()) || TextUtils.isEmpty(editTextDescription.getText())) {
+                Toast.makeText(NewRequestActivity.this, "All fields require an input.", Toast.LENGTH_SHORT).show();
+            } else {
+                // create new request object
+                String itemName = textViewItemName.getText().toString();
+                String beginDate = textViewBeginDate.getText().toString();
+                String endDate = textViewEndDate.getText().toString();
+                //double price = Double.parseDouble(editTextPrice.getText().toString()); @todo add request price in database
+                String description = editTextDescription.getText().toString();
 
-                    //for RequestConfirmationActivity display
-                    Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
-                    intent.putExtra("itemImage", itemImage);
-                    intent.putExtra("itemName", itemName);
-                    intent.putExtra("beginDate", beginDate);
-                    intent.putExtra("endDate", endDate);
-                    intent.putExtra("price", price);
-                    intent.putExtra("description", description);
+                // create corresponding request object
+                Request newRequest = new Request(
+                        ""+LocalData.geUserRequesterInstance().getUser_id(), ""+-1,
+                        ""+currentItem.getItem_id(),""+beginDate,
+                        ""+endDate, description);
 
-                    //would pass in current user info who is logged in
-                    User user = LocalData.geUserRequesterInstance();
+                //post new request json object
+                final String url = "https://ask-capa.herokuapp.com/api/requests";
+                POSTData postData = new POSTData();
+                postData.postRequest(url, newRequest, getApplicationContext());
 
-                    Item item = new Item(7, "Sleeping Bag", null,
-                            7.00, null, R.mipmap.item_sleepingbag);
-
-
-                    com.ask.ask.Request request = new com.ask.ask.Request("" + user.getUser_id(), "14", "" + item.getItem_id(), beginDate, endDate, description);
-                    //Volley POST
-                    final String url = "https://ask-capa.herokuapp.com/api/requests";
-                    POSTData postData = new POSTData();
-                    postData.postRequest(url, request, getApplicationContext());
-
-                    startActivity(intent);
-                }
-
+                //pass request oject for RequestConfirmationActivity display
+                Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
+                intent.putExtra("Request", (Serializable) newRequest);
+                startActivity(intent);
+            }
             }
         });
 
     }
 
     /*
-      * Use the item selected from LocalData to update the field
+      * Update the layout with selected item
     */
     public void updateItemFields(Item currentItem){
         textViewItemName.setText(currentItem.getName());
         imageViewItemImage.setImageResource(currentItem.getIcon());
+        editTextPrice.setText(""+currentItem.getPrice());
+
+        // set a lambda description for the request
+        String description = "Hey !\n" +
+                "I am looking for a " + currentItem.getName() + ".\n" +
+                "Would be glad to hear from you, thanks !\n" + LocalData.geCurrentUserInstance().getName();
+        editTextDescription.setText(description);
     }
 
     /*
-      * Used to pick date.
+      * pick Data in calendar.
     */
     public void showDateBeginPickerDialog(View view, String message) {
         Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);

@@ -3,10 +3,8 @@ package com.ask.ask;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by alexander on 2/28/2018.
@@ -15,7 +13,7 @@ import android.widget.Toast;
 public class RequestConfirmationActivity extends AppCompatActivity {
 
     private TextView textViewConfirmation;
-    private ImageView imageViewItemImage;
+    private ImageView imageViewItemIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,20 +22,23 @@ public class RequestConfirmationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_request_confirmation);
 
         textViewConfirmation = (TextView) findViewById(R.id.textViewConfirmation);
-        imageViewItemImage = (ImageView) findViewById(R.id.imageViewItemImage);
+        imageViewItemIcon = (ImageView) findViewById(R.id.imageViewItemImage);
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            int itemImage = extras.getInt("itemImage");
-            Log.d("itemImage", "" + itemImage);
-            String itemName = extras.getString("itemName");
-            String beginDate = extras.getString("beginDate");
-            String endDate = extras.getString("endDate");
-            double price = extras.getDouble("price");
-            String description = extras.getString("description");
+        // To retrieve object in second Activity
+        Request newRequest = (Request) getIntent().getSerializableExtra("Request");
 
-            imageViewItemImage.setImageResource(itemImage);
-            textViewConfirmation.setText(itemName + " \n " + beginDate + " - " + endDate + "\n$" + price + " per day\n" + description);
+        if (newRequest != null) {
+            String itemId = newRequest.getItem_id();
+            Item requestedItem = LocalData.getHashMapItemsById().get(itemId);
+
+            // create a confirmation string with request information
+            String confirmationString = "Your request is confirmed.\n"+
+                    newRequest.toDescriptiveString()+"\n"+
+                    "Cheers from the @Ask team";
+
+            // layout
+            imageViewItemIcon.setImageResource(requestedItem.getIcon());
+            textViewConfirmation.setText(confirmationString);
         }
 
         new Thread(new Runnable() {
