@@ -55,9 +55,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         // Requester data
         holder.profileName.setText(currentRequest.getRequester_name());
-        //holder.profileIcon.setImageResource(currentRequest.getRequester_ppicture_url()); @need to access internet / imageView from url
-
-        // Requester profile image
         new DownloadImageTask((ImageView) holder.profileIcon)
                 .execute(currentRequest.getRequester_ppicture_url());
 
