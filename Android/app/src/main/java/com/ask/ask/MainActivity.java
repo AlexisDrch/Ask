@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity
         SettingsFragment.OnFragmentInteractionListener,
         AboutFragment.OnFragmentInteractionListener {
 
+    private String DEFAULT_USER_EMAIL = "cs947@cornell.edu";
+    private String DEFAULT_USER_PASSWORD = "askisd@best";
     private Button askButton;
     private CollapsingToolbarLayout mToolbar;
 
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar tb;
 
     private DrawerLayout navigationDrawerLayout;
+    private DrawerLayout navigationDrawerHeader;
     private NavigationView navigationView;
 
     @Override
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity
 
         //trigger login activity
         Intent loginIntent = new Intent(this.getApplicationContext(), LoginActivity.class);
+        loginIntent.putExtra("mEmail", DEFAULT_USER_EMAIL);
+        loginIntent.putExtra("mPassword", DEFAULT_USER_PASSWORD);
         startActivity(loginIntent);
 
         //navigation bar "button"/slide

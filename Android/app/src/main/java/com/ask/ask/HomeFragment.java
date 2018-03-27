@@ -6,7 +6,6 @@ package com.ask.ask;
 
 
         import android.content.Context;
-        import android.media.Rating;
         import android.net.Uri;
         import android.os.Bundle;
         import android.support.v4.app.Fragment;
@@ -16,14 +15,8 @@ package com.ask.ask;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
-        import android.widget.Button;
-        import android.widget.EditText;
-        import android.widget.RatingBar;
-        import android.widget.TextView;
-        import android.widget.Toast;
 
         import org.json.JSONArray;
-        import org.w3c.dom.Text;
 
         import java.util.HashMap;
 
@@ -99,15 +92,14 @@ public class HomeFragment extends Fragment {
         * Refresh the requests card with new data from POST request
      */
     public void refreshRecyclerViewAdapter(final View rootView) {
-        FetchRequests process = new FetchRequests("https://ask-capa.herokuapp.com/api/requests", fragmentContext);
-        process.requestJsonReader(new RequestsCallback() {
+        VolleyFetcher fetcher = new VolleyFetcher("https://ask-capa.herokuapp.com/api/requests", fragmentContext);
+        fetcher.jsonReader(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray jsonArrayRequests) {
                 // handle JSONOBJECT response
                 requestHashMap = JsonParser.JsonArrayRequestsToHashMapRequests(jsonArrayRequests);
                 for (String each : requestHashMap.keySet()) {
-                    Log.d("KEY", each);
-
+                    Log.d("ITEM KEY", each);
                     // display adapater
                     RecyclerViewAdapter adapter = new RecyclerViewAdapter(fragmentContext, requestHashMap);
                     RecyclerView myView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
@@ -119,6 +111,10 @@ public class HomeFragment extends Fragment {
                     myView.setLayoutManager(llm);
 
                 }
+            }
+            @Override
+            public void onFailure() {
+                // handle failure ?
             }
         });
     }

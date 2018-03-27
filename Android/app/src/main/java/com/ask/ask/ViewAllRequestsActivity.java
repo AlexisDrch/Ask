@@ -40,8 +40,8 @@ public class ViewAllRequestsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                FetchRequests process = new FetchRequests("https://ask-capa.herokuapp.com/api/requests", myContext);
-                process.requestJsonReader(new RequestsCallback() {
+                VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/requests", myContext);
+                process.jsonReader(new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONArray jsonArrayRequests) {
                         // handle JSONOBJECT response
@@ -49,6 +49,11 @@ public class ViewAllRequestsActivity extends AppCompatActivity {
                         for (String each : requestHashMap.keySet()) {
                             Log.d("KEY", each);
                         }
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        // in case
                     }
                 });
             }

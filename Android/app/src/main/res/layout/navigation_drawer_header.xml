@@ -8,11 +8,14 @@
     android:orientation="vertical"
     android:gravity="bottom">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Profile Image"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+    <ImageView
+        android:id="@+id/sideMenuUserImage"
+        android:layout_width="100dp"
+        android:layout_height="110dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"/>
 
     <!--<ImageView-->
         <!--android:layout_width="match_parent"-->
@@ -20,15 +23,17 @@
         <!--android:src="@mipmap/alex_profile"/>-->
 
     <TextView
+        android:id="@+id/sideMenuUserNameSurname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Alex Fache"
+        android:text="your name is not provided."
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
+        android:id="@+id/sideMenuUserEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="alexander.fache@gmail.com"
+        android:text="your email is not provided."
         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
 
