@@ -307,7 +307,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
+            final String url = "https://ask-capa.herokuapp.com/login";
+            POSTData postData = new POSTData();
+            postData.postlogin(url, mEmail, mPassword, getApplicationContext());
+            //this.onPostExecute();
             try {
                 // Simulate network access.
                 Thread.sleep(2000);

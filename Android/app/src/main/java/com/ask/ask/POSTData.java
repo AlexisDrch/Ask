@@ -30,6 +30,9 @@ public class POSTData {
     private int COMPLETE = 1;
     private int POST_REQUEST = 2;
     private int POST_MATCH = 3;
+    private int POST_LOGIN = 4;
+    private String mEmail = "";
+    private String mPassword = "";
 
     public POSTData() {
         STATUS = BEGIN;
@@ -55,6 +58,14 @@ public class POSTData {
         this.STATUS = status;
     }
 
+    private void setMEmail(String email) {
+        this.mEmail = email;
+    }
+
+    private void setMPassword(String password) {
+        this.mPassword = password;
+    }
+
     public int getStatus() {
         return STATUS;
     }
@@ -76,6 +87,15 @@ public class POSTData {
         createPOST();
     }
 
+    public void postlogin(String url, String mEmail, String mPassword, Context context) {
+        setStatus(POST_LOGIN);
+        setUrl(url);
+        setMEmail(mEmail);
+        setMPassword(mPassword);
+        setContext(context);
+        createPOST();
+    }
+
     private void createPOST() {
         RequestQueue postQueue = Volley.newRequestQueue(context);
 
@@ -89,8 +109,7 @@ public class POSTData {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", "Error: " + error.getMessage() + error.getLocalizedMessage() + error.toString() +
-                                "\n" + request.getDescription() + " vs " + getRequestParams().get("description"));
+                        Log.d("Error.Response", "Error: " + error.getMessage());
                     }
                 }
         ) {
@@ -102,6 +121,9 @@ public class POSTData {
                 } else if (STATUS == POST_MATCH) {
                     Log.d("POST", "POST_MATCH");
                     return getOfferParams();
+                } else if (STATUS == POST_LOGIN) {
+                    Log.d("POST", "POST_LOGIN");
+                    return getLoginParams();
                 } else {
                     Log.d("POST", "NULL");
                     return null;
@@ -136,6 +158,14 @@ public class POSTData {
         offerParams.put("lat", "-1");
         offerParams.put("description", offer.getDescription());
         offerParams.put("message", offer.getMessage());
+
+        return offerParams;
+    }
+
+    private Map<String, String> getLoginParams() {
+        Map<String, String> offerParams = new HashMap<>();
+        offerParams.put("email", "" + mEmail);
+        offerParams.put("password", "" + mPassword);
 
         return offerParams;
     }
