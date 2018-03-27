@@ -129,9 +129,9 @@ public class NewRequestActivity extends AppCompatActivity {
         editTextPrice.setText(""+currentItem.getPrice());
 
         // set a lambda description for the request
-        String description = "Hey !\n" +
-                "I am looking for a " + currentItem.getName() + ".\n" +
-                "Would be glad to hear from you, thanks !\n" + LocalData.geCurrentUserInstance().getName();
+        String description = "Hey !" +
+                "I am looking for a " + currentItem.getName() + "." +
+                "Would be glad to hear from you, thanks !" + LocalData.geCurrentUserInstance().getName();
         editTextDescription.setText(description);
     }
 

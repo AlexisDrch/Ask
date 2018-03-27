@@ -63,6 +63,7 @@ public class POSTData {
         setStatus(POST_REQUEST);
         setUrl(url);
         setRequest(request);
+        Log.d("NEW REQ", request.toDescriptiveString());
         setContext(context);
         createPOST();
     }
@@ -88,7 +89,8 @@ public class POSTData {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", "Error: " + error.getMessage());
+                        Log.d("Error.Response", "Error: " + error.getMessage() + error.getLocalizedMessage() + error.toString() +
+                                "\n" + request.getDescription() + " vs " + getRequestParams().get("description"));
                     }
                 }
         ) {
