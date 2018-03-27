@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity
     private Button askButton;
     private CollapsingToolbarLayout mToolbar;
 
-
-
     private CardView card;
     private Toolbar tb;
 
@@ -47,6 +45,10 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //trigger login activity
+        Intent loginIntent = new Intent(this.getApplicationContext(), LoginActivity.class);
+        startActivity(loginIntent);
 
         //navigation bar "button"/slide
         Toolbar navigationToolbar = findViewById(R.id.toolbarid);
