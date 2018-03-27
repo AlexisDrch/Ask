@@ -49,7 +49,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String date = currentRequest.getBegin_date() + " to " + currentRequest.getEnd_date();
         //holder.itemDate.setText(date);
 
-
         // Requester data
         holder.profileName.setText(currentRequest.getRequester_name());
         //holder.profileIcon.setImageResource(currentRequest.getRequester_ppicture_url()); @need to access internet / imageView from url

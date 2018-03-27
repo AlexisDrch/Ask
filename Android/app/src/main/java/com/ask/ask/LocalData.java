@@ -68,13 +68,12 @@ public abstract class LocalData {
     // return unique instance of requester
     public static User geUserRequesterInstance() {
         if (userRequester == null) {
-            userRequester = new User(9, "john123", "password",
-                    "john@gmail.com", "John", "Smith",
-                    "I'm confident in my password strength",
-                    "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-                    "770-293-3621", 31, 1, "191-103 Integer Rd. " +
-                    "Corona, New Mexico 08219",
-                    R.drawable.john_profile);
+            userRequester = new User(1, "shi.carolyn", "askisd@best",
+                    "cs947@cornell.edu", "Carolyn", "Shi",
+                    "college student looking for outdoor equipment for her weekend adventures!",
+                    "https://res.cloudinary.com/campus-job/image/upload/t_student-public-page/v1/profile_pictures/Qooxf0yZAH_20151129.jpeg",
+                    "33767968976", 89, 0, "2 rue marconi",
+                    R.drawable.nancy_profile);
         }
         return userRequester;
     }
@@ -82,13 +81,12 @@ public abstract class LocalData {
     // return unique instance of current User
     public static User geCurrentUserInstance() {
         if (currentUser == null) {
-            currentUser = new User(9, "john123", "password",
-                    "john@gmail.com", "John", "Smith",
-                    "I'm confident in my password strength",
-                    "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-                    "770-293-3621", 31, 1, "191-103 Integer Rd. " +
-                    "Corona, New Mexico 08219",
-                    R.drawable.john_profile);
+            currentUser = new User(1, "shi.carolyn", "askisd@best",
+                    "cs947@cornell.edu", "Carolyn", "Shi",
+                    "college student looking for outdoor equipment for her weekend adventures!",
+                    "https://res.cloudinary.com/campus-job/image/upload/t_student-public-page/v1/profile_pictures/Qooxf0yZAH_20151129.jpeg",
+                    "33767968976", 89, 0, "2 rue marconi",
+                    R.drawable.nancy_profile);
         }
         return currentUser;
     }
