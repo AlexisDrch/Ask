@@ -2,7 +2,10 @@ package com.ask.ask;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.InputStream;
 import java.util.HashMap;
 
 /**
@@ -53,6 +57,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // Requester data
         holder.profileName.setText(currentRequest.getRequester_name());
         //holder.profileIcon.setImageResource(currentRequest.getRequester_ppicture_url()); @need to access internet / imageView from url
+
+        // Requester profile image
+        new DownloadImageTask((ImageView) holder.profileIcon)
+                .execute(currentRequest.getRequester_ppicture_url());
 
         // Items data
         Item currentItem = LocalData.getHashMapItems().get(currentRequest.getItem_id());
@@ -107,6 +115,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             return 0;
         }
         return requestsHashMap.size();
+    }
+
+
+    // downloads the profile image from url and sets that image into an imageview
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
