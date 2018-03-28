@@ -1,10 +1,34 @@
-item,avg_price,img,description
-stove,10,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/bbq-rybIdtI9M.png,Stove used for backyard BBQs or portable ones for camping
-fireman's hat,3,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/fire%20man%20protection-SkstdFLqf.png,Hardhat that firemen use
-flashlight,2,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/light-B195YGl9M.png,All-purpose flashlight used to light the way
-tent,20,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/camping-BJfNS5Iqf.png,Tent used for camping and backpacking
-radio,10,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/-BkPWtYLcG.png,FM Radio that can be used for communicating
-monitor,5,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/Video-ryT9Ft85M.png,Monitor for a computer
-backpack,15,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/school%20bag-H1T4YY8cM.png,Backpack used for backpacking in the wilderness
-bike,10,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/travel-By_yqKIcf.png,"Bicycle used for casual transportation, cycling long distances, or mountain biking"
-hardware,40,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/computer-Syn3FtL5z.png,Computer hardware that can be applied to many uses
+item,avg_price,img,description,,,,,,,,
+hiking backpack,15,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/backpackingbag.png,Backpack used for backpacking in the wilderness,,,,,,,,
+beach umbrella ,7,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/beachumbrella.png,Umbrella that can be used on the beach for shade,,,,,,,,
+bike,7,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/bike.png,"Bicycle used for casual transportation, cycling long distances, or mountain biking",,,,,,,,
+binoculars,5,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/binoculars.png,Binoculars for wildlife watching or other adventures,,,,,,,,
+fireman,3,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/fireman.png,Fireman's hat,,,,,,,,
+flashlight,3,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/flashlight.png,Flashlight to light the way,,,,,,,,
+grill,15,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/grill.png,Grill for those backyard bbqs,,,,,,,,
+school bag,10,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/schoolbag.png,"Backpack for school, usually with a laptop compartment",,,,,,,,
+telescope,35,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/telescope.png,A telescope for star gazing,,,,,,,,
+tent,10,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/outdoor/tent.png,A tent to live in while camping,,,,,,,,
+camaccessories,5,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/camaccessories.png,Accessories for your camera,,,,,,,,
+camcorder,10,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/camcorder.png,Camcorder to remember your adventures,,,,,,,,
+camera,12,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/camera.png,Camera to take pictures with,,,,,,,,
+hardware,40,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/computerr.png,Computer hardware that can be applied to many uses,,,,,,,,
+microphone,5,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/microphone.png,Microphone for recording audio or video,,,,,,,,
+monitor,5,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/monitor.png,Monitor for a computer,,,,,,,,
+mouse,2,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/mouse.png,Mouse for your laptop or computer,,,,,,,,
+overearheadphones,3,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/overearheadphones.png,Headphones,,,,,,,,
+printer,15,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/printer.png,Printer,,,,,,,,
+radio,10,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/radio.png,FM Radio that can be used for communicating,,,,,,,,
+tablet,15,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/tablet.png,tablet,,,,,,,,board games
+tripod,5,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/tripod.png,tripod for photo or video,,,,,,,,photo
+usbdrive,1,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/usbdrive.png,usb drive to store stuff,,,,,,,,video
+videogames,5,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/electronics/videogames.png,video games to share!,,,,,,,,arts n crafts
+arteasel,5,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/art/arteasel.png,easel,,,,,,,,
+artpalette,1,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/art/artpalette.png,palette,,,,,,,,
+artspraypaint,1,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/art/artspraypaint.png,spraypaint,,,,,,,,
+arttablet,15,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/art/arttablet.png,tablet for art digital,,,,,,,,
+costume,10,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/art/costume.png,costume,,,,,,,,
+paintbrush,1,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/art/paintbrush.png,brush,,,,,,,,
+rounded paintbrush,1,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/art/paintbrush-t.png,thin brush,,,,,,,,
+wide paintbrush,1,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/art/paintbrush-w.png,wide brush,,,,,,,,
+paint roller,2,https://raw.githubusercontent.com/AlexisDrch/Ask/carolyn/crawler/art/paintroller.png,Paint roller for painting,,,,,,,,
