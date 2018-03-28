@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#00695c</color>
     <color name="colorAccent">#00695c</color>
     <color name="white">#ffff</color>
+    <color name="requestWithOffer">#c57fff</color>
+    <color name="requestWithOutOffer">#5cc8f9</color>
 </resources>

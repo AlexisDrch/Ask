@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/navigation_drawer_view"
+        app:menu="@menu/navigation_drawer_view_items"
         android:background="@color/colorAccent"
         app:headerLayout="@layout/navigation_drawer_header"/>
 

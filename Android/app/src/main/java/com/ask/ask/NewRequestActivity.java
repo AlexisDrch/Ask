@@ -104,7 +104,7 @@ public class NewRequestActivity extends AppCompatActivity {
                             ""+currentItem.getItem_id(),""+beginDate,
                             ""+endDate, description);
 
-                    //post new request json object
+                    //POST
                     final String url = "https://ask-capa.herokuapp.com/api/requests";
                     POSTData postData = new POSTData();
                     postData.postRequest(url, newRequest, getApplicationContext(), new VolleyCallback() {
@@ -118,10 +118,11 @@ public class NewRequestActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure() {
-                            Log.d("NewRequestActivity", "failure posting request!");
+                            Log.d("NewRequestActivity", "failure posting request");
                             // handle failure on posting request
                         }
                     });
+
                 }
             }
         });
@@ -137,9 +138,9 @@ public class NewRequestActivity extends AppCompatActivity {
         editTextPrice.setText(""+currentItem.getPrice());
 
         // set a lambda description for the request
-        String description = "Hey! " +
+        String description = "Hey!" +
                 "I am looking for a " + currentItem.getName() + "." +
-                " Would be glad to hear from you, thanks. !" + LocalData.getCurrentUserInstance().getName();
+                "Would be glad to hear from you, thanks !" + LocalData.getCurrentUserInstance().getName();
         editTextDescription.setText(description);
     }
 

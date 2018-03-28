@@ -47,12 +47,12 @@ public class OffersFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public static HashMap<String, Offer> offerHashMap;
     private ExpandableListView expandableListViewOffers;
     private ExpandableListAdapter expandableListViewAdapter;
-    private List<Integer> listItemImages;
+    public static HashMap<String, Offer> offerHashMap;
+    private List<String> listItemImages;
     private List<String> listElements;
-    private HashMap<Integer, List<String>> hashMapOfferData;
+    private HashMap<String, List<String>> hashMapOfferData;
 
     public OffersFragment() {
         // Required empty public constructor
@@ -137,23 +137,28 @@ public class OffersFragment extends Fragment {
             public void onSuccess(JSONArray jsonArrayOffers) {
                 offerHashMap = JsonParser.JsonArrayOffersToHashMapOffers(jsonArrayOffers);
 
+                hashMapOfferData = new HashMap<>();
                 listItemImages = new ArrayList<>();
                 listElements = null;
 
+                int imageCount = 0;
                 for (Offer currentOffer : offerHashMap.values()) {
-                    final Item currentItem = LocalData.getHashMapItemsById().get(currentOffer.getItemFulfilling_id());
+                    Log.d("CURRENT OFFER", currentOffer.toString());
 
-                    listItemImages.add(currentItem.getIcon());
+//                    final Item currentItem = LocalData.getHashMapItemsById().get(currentOffer.getBelonging_id());
+
+                    listItemImages.add(imageCount + "#" + R.drawable.tent); //need to make this
                     listElements = new ArrayList<>();
 
-                    listElements.add("Item: " + currentItem.getName());
-                    listElements.add("Requester: " + "Name of Requester");
-                    listElements.add("Date: " + currentOffer.getBeginDate() + " - " + currentOffer.getEndDate());
-                    listElements.add("Price: " + currentItem.getPrice());
+//                    listElements.add("Item: " + currentOffer);
+                    listElements.add("Requester: " + "Requester's Name"); //TODO:
+                    listElements.add("Date: " + currentOffer.getBegin_date() + " - " + currentOffer.getEnd_date());
+//                    listElements.add("Price: " + currentOffer.get);
                     listElements.add("Description: " + currentOffer.getDescription());
                     listElements.add("Status: " + currentOffer.getStatus());
 
-                    hashMapOfferData.put(currentItem.getIcon(), listElements);
+                    hashMapOfferData.put(imageCount + "#" + R.drawable.tent, listElements);
+                    imageCount++;
                 }
 
                 expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);

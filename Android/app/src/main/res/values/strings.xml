@@ -2,9 +2,8 @@
     <string name="app_name">Ask</string>
     <string name="about">About</string>
     <string name="profile">Profile</string>
-    <string name="requests">Requests</string>
-    <string name="offers">Offers</string>
-    <string name="items">Items</string>
+    <string name="requests">My Requests</string>
+    <string name="offers">My Offers</string>
     <string name="settings">Settings</string>
     <string name="home">Home</string>
     <string name="end">End:</string>
@@ -45,6 +44,7 @@
         <item>Walking Stick</item>
     </string-array>
     <string name="title_activity_login">Sign in</string>
+
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

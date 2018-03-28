@@ -1,6 +1,5 @@
 package com.ask.ask;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -11,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,20 +18,16 @@ import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.DragEvent;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ask.ask.Utils.DownloadImageTask;
 import com.elmargomez.typer.Font;
 import com.elmargomez.typer.Typer;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity
     implements
@@ -60,7 +56,6 @@ public class MainActivity extends AppCompatActivity
     private Toolbar tb;
     private Button askButton;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +73,7 @@ public class MainActivity extends AppCompatActivity
         navigationDrawerLayout = findViewById(R.id.navigation_drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
 
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -92,7 +88,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
 
-        // event handler on side menu
+                // event handler on side menu
         navigationDrawerLayout.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
 
@@ -257,7 +253,8 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment);
         fragmentTransaction.addToBackStack(null); //TODO: press back to go to home immediately like Gmail
         fragmentTransaction.commit();
-    };
+    }
+
     /**
      *
      */
