@@ -9,14 +9,26 @@
     android:orientation="vertical"
     android:gravity="bottom">
 
-    <ImageView
+    <!--<ImageView-->
+        <!--android:id="@+id/sideMenuUserImage"-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="110dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:layout_marginStart="8dp"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginTop="8dp"/>-->
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sideMenuUserImage"
-        android:layout_width="100dp"
-        android:layout_height="110dp"
+        android:layout_width="95dp"
+        android:layout_height="95dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#FFFF"/>
 
     <TextView
         android:id="@+id/sideMenuUserNameSurname"

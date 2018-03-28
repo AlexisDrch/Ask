@@ -39,6 +39,8 @@ dependencies {
     compile 'com.elmargomez.typer:typerlib:1.0.0'
 
     compile 'com.android.volley:volley:1.0.0'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+
 
 
 

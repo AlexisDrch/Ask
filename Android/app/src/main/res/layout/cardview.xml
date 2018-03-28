@@ -29,10 +29,9 @@
             card_view:layout_constraintTop_toTopOf="parent"
             card_view:srcCompat="@drawable/item_golfclub" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/profilePic"
-            android:layout_width="66dp"
-            android:layout_height="64dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
@@ -40,7 +39,10 @@
             card_view:layout_constraintHorizontal_bias="0.06"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:srcCompat="@drawable/jim_profile" />
+            android:layout_width="66dp"
+            android:layout_height="64dp"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FFFF"/>
 
         <TextView
             android:id="@+id/itemName"
@@ -66,6 +68,7 @@
             android:layout_marginStart="30sp"
             android:layout_marginTop="4dp"
             android:text="TextView"
+            android:textAlignment="center"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/profilePic" />
 
