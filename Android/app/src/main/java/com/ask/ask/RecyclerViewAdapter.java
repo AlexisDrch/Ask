@@ -73,10 +73,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
+                String[] nameArr = currentUser.getName().split(" ");
+                String provider_name = nameArr[0];
+                String provider_surname = nameArr[1];
 
-                final Offer newOffer = new Offer(currentRequest.getRequester_id(), "" + currentUser.getUser_id(),
-                        currentRequest.getItem_id(), ""+-1,"ITEM_PROVIDING_ID", currentRequest.getBegin_date(), currentRequest.getEnd_date(),
-                        currentRequest.getDescription(), "MESSAGE");
+                final Offer newOffer = new Offer("" + currentUser.getUser_id(), currentRequest.getRequest_id(), currentRequest.getItem_id(),
+                        currentRequest.getBegin_date(), currentRequest.getEnd_date(),
+                        currentRequest.getDescription(), "MESSAGE", provider_name, provider_surname, "-1", "-1");
 
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object

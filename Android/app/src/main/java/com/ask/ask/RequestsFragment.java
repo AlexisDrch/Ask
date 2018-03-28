@@ -7,9 +7,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,20 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,9 +42,9 @@ public class RequestsFragment extends Fragment {
     private ExpandableListView expandableListViewRequests;
     private ExpandableListAdapter expandableListViewAdapter;
     public static HashMap<String, Request> requestHashMap;
-    private List<Integer> listItemImages;
+    private List<String> listItemImages;
     private List<String> listElements;
-    private HashMap<Integer, List<String>> hashMapRequestData;
+    private HashMap<String, List<String>> hashMapRequestData;
 
     public RequestsFragment() {
         // Required empty public constructor
@@ -110,20 +97,31 @@ public class RequestsFragment extends Fragment {
                 listItemImages = new ArrayList<>();
                 listElements = null;
 
+                int imageCount = 0;
+                int numOffersForCurrentRequest = 0;
                 for (Request currentRequest : requestHashMap.values()) {
                     final Item currentItem = LocalData.getHashMapItemsById().get(currentRequest.getItem_id());
 
-                    listItemImages.add(currentItem.getIcon());
+                    //TODO: get num offers for current request and set in numOffersForCurrentRequest
+
+                    int color = (numOffersForCurrentRequest == 0) ? R.color.requestWithOutOffer : R.color.requestWithOffer;
+                    String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Date: " + currentRequest.getBegin_date() + " - "
+                            + currentRequest.getEnd_date() + "#" + color + "#" + currentItem.getIcon();
+
+                    listItemImages.add(imageHeaderStr);
                     listElements = new ArrayList<>();
 
-                    listElements.add("Item: " + currentItem.getName());
-                    listElements.add("Requester: " + currentRequest.getRequester_name());
-                    listElements.add("Date: " + currentRequest.getBegin_date() + " - " + currentRequest.getEnd_date());
-                    listElements.add("Price: " + currentItem.getPrice());
-                    listElements.add("Description: " + currentRequest.getDescription());
-                    listElements.add("Status: " + currentRequest.getStatus());
+                    //TODO: loop through all offers
+                    if (numOffersForCurrentRequest != 0) {
+                        //TODO: these will be replaced by the offer information
+//                    listElements.add("Item: " + currentItem.getName());
+//                    listElements.add("Date: " + currentRequest.getBegin_date() + " - " + currentRequest.getEnd_date());
+                        listElements.add("Price: $" + currentItem.getPrice());
+                    }
 
-                    hashMapRequestData.put(currentItem.getIcon(), listElements);
+                    hashMapRequestData.put(imageHeaderStr, listElements);
+                    imageCount++;
+                    numOffersForCurrentRequest++;
                 }
 
                 expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);

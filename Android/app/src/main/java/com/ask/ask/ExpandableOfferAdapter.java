@@ -1,7 +1,6 @@
 package com.ask.ask;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,10 +17,10 @@ import java.util.List;
 public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<Integer> listHeaders;
-    private HashMap<Integer, List<String>> listHashMap;
+    private List<String> listHeaders;
+    private HashMap<String, List<String>> listHashMap;
 
-    public ExpandableOfferAdapter(Context context, List<Integer> listHeaders, HashMap<Integer, List<String>> listHashMap) {
+    public ExpandableOfferAdapter(Context context, List<String> listHeaders, HashMap<String, List<String>> listHashMap) {
         this.context = context;
         this.listHeaders = listHeaders;
         this.listHashMap = listHashMap;
@@ -65,7 +63,11 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int position, boolean isExpanded, View view, ViewGroup parent) {
-        int groupText = (Integer) getGroup(position);
+        String imageStr = (String) getGroup(position);
+        int index = imageStr.indexOf('#');
+        imageStr = imageStr.substring(index + 1);
+        int groupText = Integer.parseInt(imageStr);
+
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_offer_header, null);

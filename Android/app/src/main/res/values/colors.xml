@@ -8,7 +8,6 @@
     <color name="snowWhite">#FEFEFE</color>
     <color name="lightGray">#FBFCFA</color>
     <color name="milkWhite">#FBFCFA</color>
-
-
-
+    <color name="requestWithOffer">#c57fff</color>
+    <color name="requestWithOutOffer">#5cc8f9</color>
 </resources>

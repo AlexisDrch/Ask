@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +19,10 @@ import java.util.List;
 public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    private List<Integer> listHeaders;
-    private HashMap<Integer, List<String>> listHashMap;
+    private List<String> listHeaders;
+    private HashMap<String, List<String>> listHashMap;
 
-    public ExpandableRequestAdapter(Context context, List<Integer> listHeaders, HashMap<Integer, List<String>> listHashMap) {
+    public ExpandableRequestAdapter(Context context, List<String> listHeaders, HashMap<String, List<String>> listHashMap) {
         this.context = context;
         this.listHeaders = listHeaders;
         this.listHashMap = listHashMap;
@@ -63,14 +65,40 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int position, boolean isExpanded, View view, ViewGroup parent) {
-        int groupText = (Integer) getGroup(position);
+        String imageStr = (String) getGroup(position);
+        int index = imageStr.indexOf('#');
+
+        imageStr = imageStr.substring(index + 1);
+        index = imageStr.indexOf('#');
+        String numOffersForCurrentRequest = imageStr.substring(0, index);
+
+        imageStr = imageStr.substring(index + 1);
+        index = imageStr.indexOf('#');
+        String date =imageStr.substring(0, index);
+
+        imageStr = imageStr.substring(index + 1);
+        index = imageStr.indexOf('#');
+        int color = Integer.parseInt(imageStr.substring(0, index));
+
+        imageStr = imageStr.substring(index + 1);
+        int groupText = Integer.parseInt(imageStr);
+
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_request_header, null);
         }
 
+        TextView textViewNumOffersForRequest = (TextView) view.findViewById(R.id.textViewNumOffersForRequest);
+        textViewNumOffersForRequest.setText(numOffersForCurrentRequest);
+        textViewNumOffersForRequest.setBackgroundResource(color);
+
+        TextView textViewDate = (TextView) view.findViewById(R.id.textViewDate);
+        textViewDate.setText(date);
+        textViewDate.setBackgroundResource(color);
+
         ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
         imageViewHeader.setImageResource(groupText);
+        imageViewHeader.setBackgroundResource(color);
 
         return view;
     }
@@ -80,11 +108,40 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         String childText = (String) getChild(groupPosition, childPosition);
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.listview_request_item, null);
+            view = inflater.inflate(R.layout.listview_request_item_offers, null);
         }
 
         TextView textViewItem = (TextView) view.findViewById(R.id.textViewItem);
         textViewItem.setText(childText);
+
+        Button buttonAcceptOffer = (Button) view.findViewById(R.id.buttonAcceptOffer);
+        buttonAcceptOffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: send update to database
+
+
+
+
+
+
+                Toast.makeText(v.getContext(), "Offer Accepted.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button buttonDenyOffer = (Button) view.findViewById(R.id.buttonDenyOffer);
+        buttonDenyOffer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: send update to database
+
+
+
+
+                Toast.makeText(v.getContext(), "Offer Denied.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
