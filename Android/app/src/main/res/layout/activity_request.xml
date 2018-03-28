@@ -70,6 +70,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewItemName" />
 
+
     <Spinner
         android:id="@+id/spinnerItems"
         android:layout_width="fill_parent"
