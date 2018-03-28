@@ -20,7 +20,9 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -42,8 +44,8 @@ public class MainActivity extends AppCompatActivity
         SettingsFragment.OnFragmentInteractionListener,
         AboutFragment.OnFragmentInteractionListener {
 
-    private String DEFAULT_USER_EMAIL = "cs947@cornell.edu";
-    private String DEFAULT_USER_PASSWORD = "askisd@best";
+    private String DEFAULT_USER_EMAIL = "pulakazad28@gmail.com";
+    private String DEFAULT_USER_PASSWORD = "logs4daze";
 
     //toolbars
     private CollapsingToolbarLayout mToolbar;
@@ -54,12 +56,11 @@ public class MainActivity extends AppCompatActivity
     private ImageView sideMenuUserImage;
     private TextView sideMenuUserNameSurname;
     private TextView sideMenuUserEmail;
+    private Boolean NewRequestFragmentIsSet = false;
 
     // others
     private CardView card;
     private Toolbar tb;
-    private Button askButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,8 +146,6 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        //creating Ask button and the intent
-        askButton = (Button) findViewById(R.id.askBtn);
 
         //creating collapsing toolbar and adding title
         mToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
@@ -154,21 +153,34 @@ public class MainActivity extends AppCompatActivity
         mToolbar.setExpandedTitleTextAppearance(R.style.expandingToolbar);
         mToolbar.setCollapsedTitleTextAppearance(R.style.collapsingToolbar);
 
+
         //changing title font
         Typeface font = Typer.set(this).getFont(Font.ROBOTO_THIN);
         mToolbar.setExpandedTitleTypeface(font);
         mToolbar.setCollapsedTitleTypeface(font);
+        // display new request fragment
+
+        // add focus on spinner when toolbar dragged to ask new request
+        mToolbar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                try {
+                    if (!NewRequestFragmentIsSet) {
+                        toggleNewRequestFragment((Fragment) NewRequestFragment.class.newInstance());
+                        NewRequestFragmentIsSet = true;
+                    }
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+        });
 
         //creating the card
         card = (CardView) findViewById(R.id.requestCard);
-
-        askButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), NewRequestActivity.class);
-                startActivity(intent);
-            }
-        });
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     /**
@@ -255,6 +267,15 @@ public class MainActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.main_frame_layout, requestedFragment);
+        fragmentTransaction.addToBackStack(null); //TODO: press back to go to home immediately like Gmail
+        fragmentTransaction.commit();
+    };
+
+    public void toggleNewRequestFragment(Fragment requestedFragment){
+        //replace existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.ask_frame_layout, requestedFragment);
         fragmentTransaction.addToBackStack(null); //TODO: press back to go to home immediately like Gmail
         fragmentTransaction.commit();
     };

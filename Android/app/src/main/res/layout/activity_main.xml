@@ -26,11 +26,14 @@
         android:background="#FcFcFc"
         android:id="@+id/container">
 
+
+
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:expanded="false">
+
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsingToolbar"
@@ -46,6 +49,11 @@
                 app:collapsedTitleGravity="bottom|center_horizontal"
                 app:title="@string/app_name">
 
+                <!-- Fragment where user can  -->
+                <FrameLayout
+                    android:id="@+id/ask_frame_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbarid"
@@ -59,17 +67,6 @@
 
         </android.support.design.widget.AppBarLayout>
 
-
-        <Button
-            android:id="@+id/askBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/app_name" />
 
         <!-- used for fragments in the side-menu -->
         <FrameLayout
