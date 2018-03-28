@@ -8,6 +8,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -16,6 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,14 +47,12 @@ public class OffersFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-
+    public static HashMap<String, Offer> offerHashMap;
     private ExpandableListView expandableListViewOffers;
     private ExpandableListAdapter expandableListViewAdapter;
-    private List<Offer> listOffers;
-    private List<Integer> listItemHeaders;
+    private List<Integer> listItemImages;
     private List<String> listElements;
     private HashMap<Integer, List<String>> hashMapOfferData;
-
 
     public OffersFragment() {
         // Required empty public constructor
@@ -84,81 +87,96 @@ public class OffersFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
+        refreshOffersFragment(rootView);
 
-//        //https://ask-capa.herokuapp.com/api/offers/by/4
-//        HashMap<String, Offer> hashMapOfUserOffers = FetchRequest("https://ask-capa.herokuapp.com/api/offers/by/" + "4", getContext());
-//        listOffers = new ArrayList<Offer>(hashMapOfUserOffers.values()); //TODO: get Offers
-//        listItemHeaders = new ArrayList<>(listOffers.size());
-//        listElements = new ArrayList<>();
-//        hashMapOfferData = new HashMap<>(listOffers.size());
+//        //dummy data
+//        listItemHeaders = new ArrayList<>(3);
+//        ArrayList<String> listElements1 = new ArrayList<>();
+//        ArrayList<String> listElements2 = new ArrayList<>();
+//        ArrayList<String> listElements3 = new ArrayList<>();
+//        hashMapOfferData = new HashMap<>(3);
 //
-//        for (int i = 0; i < listOffers.size(); i++) {
-////            listItemHeaders.add(listOffers.get(i).getItemFulfilling().);
-//            listItemHeaders.add(R.drawable.tent); //0000000000 TODO: set item ids locally
+//        listItemHeaders.add(R.drawable.tent);
+//        listElements1.add("Item: Tent");
+//        listElements1.add("Requester: Alexis");
+//        listElements1.add("Date: 4/1/18 - 4/3/18");
+//        listElements1.add("Price: $15 per day");
+//        listElements1.add("Description: to go camping in Yosemite");
+//        listElements1.add("Status: Pending");
+//        hashMapOfferData.put(listItemHeaders.get(0), listElements1);
 //
-//            listElements.clear();
-//            listElements.add("Item: " + listOffers.get(i).getItemFulfilling().getName());
-//            listElements.add("Requester: " + listOffers.get(i).getRequester().getName());
-//            //date
-//            listElements.add("Price: $" + listOffers.get(i).getItemFulfilling().getPrice());
-//            //description
-//            listElements.add("Status: " + listOffers.get(i).getStatus()); //TODO: make these words instead of status numbers
+//        listItemHeaders.add(R.drawable.stove);
+//        listElements2.add("Item: Surfboard");
+//        listElements2.add("Requester: Carolyn");
+//        listElements2.add("Date: 4/4/18 - 4/7/18");
+//        listElements2.add("Price: $5 per day");
+//        listElements2.add("Description: for beach weekend");
+//        listElements2.add("Status: Pending");
+//        hashMapOfferData.put(listItemHeaders.get(1), listElements2);
 //
-//            hashMapOfferData.put(listItemHeaders.get(i), listElements);
-//        }
-
-        //dummy data
-        listItemHeaders = new ArrayList<>(3);
-        ArrayList<String> listElements1 = new ArrayList<>();
-        ArrayList<String> listElements2 = new ArrayList<>();
-        ArrayList<String> listElements3 = new ArrayList<>();
-        hashMapOfferData = new HashMap<>(3);
-
-        listItemHeaders.add(R.drawable.tent);
-        listElements1.add("Item: Tent");
-        listElements1.add("Requester: Alexis");
-        listElements1.add("Date: 4/1/18 - 4/3/18");
-        listElements1.add("Price: $15 per day");
-        listElements1.add("Description: to go camping in Yosemite");
-        listElements1.add("Status: Pending");
-        hashMapOfferData.put(listItemHeaders.get(0), listElements1);
-
-        listItemHeaders.add(R.drawable.stove);
-        listElements2.add("Item: Surfboard");
-        listElements2.add("Requester: Carolyn");
-        listElements2.add("Date: 4/4/18 - 4/7/18");
-        listElements2.add("Price: $5 per day");
-        listElements2.add("Description: for beach weekend");
-        listElements2.add("Status: Pending");
-        hashMapOfferData.put(listItemHeaders.get(1), listElements2);
-
-        listItemHeaders.add(R.drawable.sleepingbag);
-        listElements3.add("Item: Sleeping Bag");
-        listElements3.add("Requester: Pulak");
-        listElements3.add("Date: 4/2/18 - 4/5/18");
-        listElements3.add("Price: $10 per day");
-        listElements3.add("Description: for hiking trip");
-        listElements3.add("Status: Pending");
-        hashMapOfferData.put(listItemHeaders.get(2), listElements3);
-        //dummy data
-
-        expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
-        expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemHeaders, hashMapOfferData);
-        expandableListViewOffers.setAdapter(expandableListViewAdapter);
-        int[] color = {Color.BLACK, Color.BLACK};
-        expandableListViewOffers.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
-        expandableListViewOffers.setDividerHeight(4);
-
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-
-        expandableListViewOffers.setIndicatorBounds(width - 100, width);
+//        listItemHeaders.add(R.drawable.sleepingbag);
+//        listElements3.add("Item: Sleeping Bag");
+//        listElements3.add("Requester: Pulak");
+//        listElements3.add("Date: 4/2/18 - 4/5/18");
+//        listElements3.add("Price: $10 per day");
+//        listElements3.add("Description: for hiking trip");
+//        listElements3.add("Status: Pending");
+//        hashMapOfferData.put(listItemHeaders.get(2), listElements3);
+//        //dummy data
 
         return rootView;
+    }
+
+    public void refreshOffersFragment(final View rootView) {
+        User currentUser = LocalData.getCurrentUserInstance();
+
+        VolleyFetcher fetcher = new VolleyFetcher("https://ask-capa.herokuapp.com/api/offers/by/" + currentUser.getUser_id(), getContext());
+        fetcher.jsonReader(new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONArray jsonArrayOffers) {
+                offerHashMap = JsonParser.JsonArrayOffersToHashMapOffers(jsonArrayOffers);
+
+                listItemImages = new ArrayList<>();
+                listElements = null;
+
+                for (Offer currentOffer : offerHashMap.values()) {
+                    final Item currentItem = LocalData.getHashMapItemsById().get(currentOffer.getItemFulfilling_id());
+
+                    listItemImages.add(currentItem.getIcon());
+                    listElements = new ArrayList<>();
+
+                    listElements.add("Item: " + currentItem.getName());
+                    listElements.add("Requester: " + "Name of Requester");
+                    listElements.add("Date: " + currentOffer.getBeginDate() + " - " + currentOffer.getEndDate());
+                    listElements.add("Price: " + currentItem.getPrice());
+                    listElements.add("Description: " + currentOffer.getDescription());
+                    listElements.add("Status: " + currentOffer.getStatus());
+
+                    hashMapOfferData.put(currentItem.getIcon(), listElements);
+                }
+
+                expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
+                expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemImages, hashMapOfferData);
+                expandableListViewOffers.setAdapter(expandableListViewAdapter);
+                int[] color = {Color.BLACK, Color.BLACK};
+                expandableListViewOffers.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
+                expandableListViewOffers.setDividerHeight(4);
+
+                Display display = getActivity().getWindowManager().getDefaultDisplay();
+                Point size = new Point();
+                display.getSize(size);
+                int width = size.x;
+
+                expandableListViewOffers.setIndicatorBounds(width - 100, width);
+
+            }
+            @Override
+            public void onFailure() {
+                Toast.makeText(getContext(), "Failure to receive your Offers.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

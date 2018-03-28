@@ -13,6 +13,7 @@ public class Offer implements Serializable {
 
     private String requester_id;
     private String provider_id;
+    private String offer_id;
     private String itemFulfilling_id;
     private String itemProviding_id;
     private String begin_date;
@@ -26,9 +27,10 @@ public class Offer implements Serializable {
     private int MATCHED = 2;
     private int status;
 
-    public Offer(String requester_id, String provider_id, String itemFulfilling_id, String itemProviding_id, String begin_date, String end_Date, String description, String message) {
+    public Offer(String requester_id, String provider_id, String offer_id, String itemFulfilling_id, String itemProviding_id, String begin_date, String end_Date, String description, String message) {
         this.requester_id = requester_id;
         this.provider_id = provider_id;
+        this.offer_id = offer_id;
         this.itemFulfilling_id = itemFulfilling_id;
         this.itemProviding_id = itemProviding_id;
         this.begin_date = begin_date;
@@ -44,6 +46,10 @@ public class Offer implements Serializable {
 
     public String getProvider_id() {
         return provider_id;
+    }
+
+    public String getOffer_id() {
+        return offer_id;
     }
 
     public String getItemFulfilling_id() {
@@ -87,6 +93,7 @@ public class Offer implements Serializable {
         return "Offer{" +
                 "requester_id='" + requester_id + '\'' +
                 ", provider_id='" + provider_id + '\'' +
+                ", offer_id='" + offer_id + '\'' +
                 ", itemFulfilling_id='" + itemFulfilling_id + '\'' +
                 ", itemProviding_id='" + itemProviding_id + '\'' +
                 ", begin_date='" + begin_date + '\'' +

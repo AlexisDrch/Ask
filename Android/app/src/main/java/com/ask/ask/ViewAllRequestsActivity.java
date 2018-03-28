@@ -89,4 +89,29 @@ class JsonParser {
         return requestHashMap;
     };
 
+    /*
+        Parse a JSON array of offers into a HashMap
+        - HashMap are key / value with offer_id as key
+    */
+    public static HashMap<String, Offer> JsonArrayOffersToHashMapOffers(JSONArray jsonArrayOffers){
+
+        HashMap<String, Offer> offerHashMap = new HashMap<>();
+
+        for (int i = 0; i < jsonArrayOffers.length(); i++) {
+            JSONObject jo = null;
+            try {
+                jo = jsonArrayOffers.getJSONObject(i);
+                Gson gson = new Gson();
+                Offer newOffer = gson.fromJson(jo.toString(), Offer.class);
+                offerHashMap.put("" + newOffer.getOffer_id(), newOffer);
+
+                Log.d("#OFFER", newOffer.toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return offerHashMap;
+    };
+
 }

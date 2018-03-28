@@ -78,9 +78,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
 
                 final Offer newOffer = new Offer(currentRequest.getRequester_id(), "" + currentUser.getUser_id(),
-                        currentRequest.getItem_id(), "ITEM_PROVIDING_ID", currentRequest.getBegin_date(), currentRequest.getEnd_date(),
+                        currentRequest.getItem_id(), ""+-1,"ITEM_PROVIDING_ID", currentRequest.getBegin_date(), currentRequest.getEnd_date(),
                         currentRequest.getDescription(), "MESSAGE");
-
 
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object
