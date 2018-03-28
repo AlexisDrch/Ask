@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 /**
  * Created by alexander on 2/28/2018.
+ *
+ * Confirmation page for new requests that have been made.
  */
 
 public class RequestConfirmationActivity extends AppCompatActivity {
@@ -34,13 +36,14 @@ public class RequestConfirmationActivity extends AppCompatActivity {
             // create a confirmation string with request information
             String confirmationString = "Your request is confirmed.\n"+
                     newRequest.toDescriptiveString()+"\n"+
-                    "Cheers from the @Ask team";
+                    "Cheers from the @Ask team.";
 
             // layout
             imageViewItemIcon.setImageResource(requestedItem.getIcon());
             textViewConfirmation.setText(confirmationString);
         }
 
+        //wait for several seconds for user to review information, then go back to MainActivity
         new Thread(new Runnable() {
             @Override
             public void run() {

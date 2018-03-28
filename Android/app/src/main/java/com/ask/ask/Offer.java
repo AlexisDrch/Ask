@@ -1,5 +1,7 @@
 package com.ask.ask;
 
+import java.io.Serializable;
+
 /**
  * Created by alexander on 2/26/2018.
  *
@@ -7,14 +9,14 @@ package com.ask.ask;
  *
  */
 
-public class Offer {
+public class Offer implements Serializable {
 
-    private User requester;
-    private User provider;
-    private Item itemFulfilling;
-    private Item itemProviding;
-    private String beginDate;
-    private String endDate;
+    private String requester_id;
+    private String provider_id;
+    private String itemFulfilling_id;
+    private String itemProviding_id;
+    private String begin_date;
+    private String end_Date;
     private String description;
     private String message;
 
@@ -24,41 +26,40 @@ public class Offer {
     private int MATCHED = 2;
     private int status;
 
-    public Offer(User requester, User provider, Item itemFulfilling, Item itemProviding, String beginDate, String endDate, String description, String message) {
-        this.requester = requester;
-        this.provider = provider;
-        this.itemFulfilling = itemFulfilling;
-        this.itemProviding = itemProviding;
-        this.beginDate = beginDate;
-        this.endDate = endDate;
+    public Offer(String requester_id, String provider_id, String itemFulfilling_id, String itemProviding_id, String begin_date, String end_Date, String description, String message) {
+        this.requester_id = requester_id;
+        this.provider_id = provider_id;
+        this.itemFulfilling_id = itemFulfilling_id;
+        this.itemProviding_id = itemProviding_id;
+        this.begin_date = begin_date;
+        this.end_Date = end_Date;
         this.description = description;
         this.message = message;
         this.status = IN_PROGRESS;
-        this.requester = null;
     }
 
-    public User getRequester() {
-        return requester;
+    public String getRequester_id() {
+        return requester_id;
     }
 
-    public User getProvider() {
-        return provider;
+    public String getProvider_id() {
+        return provider_id;
     }
 
-    public Item getItemFulfilling() {
-        return itemFulfilling;
+    public String getItemFulfilling_id() {
+        return itemFulfilling_id;
     }
 
-    public Item getItemProviding() {
-        return itemProviding;
+    public String getItemProviding_id() {
+        return itemProviding_id;
     }
 
     public String getBeginDate() {
-        return beginDate;
+        return begin_date;
     }
 
     public String getEndDate() {
-        return endDate;
+        return end_Date;
     }
 
     public String getDescription() {
@@ -84,12 +85,23 @@ public class Offer {
     @Override
     public String toString() {
         return "Offer{" +
-                "provider=" + provider +
-                ", itemFulfilling=" + itemFulfilling +
-                ", itemProviding=" + itemProviding +
-                ", message='" + message + '\'' +
+                "requester_id='" + requester_id + '\'' +
+                ", provider_id='" + provider_id + '\'' +
+                ", itemFulfilling_id='" + itemFulfilling_id + '\'' +
+                ", itemProviding_id='" + itemProviding_id + '\'' +
+                ", begin_date='" + begin_date + '\'' +
+                ", end_Date='" + end_Date + '\'' +
+                ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    public String toDescriptiveString(){
+        Item fulfillingItem = LocalData.getHashMapItemsById().get(this.getItemFulfilling_id());
+
+        return "You are fulfilling a " + fulfillingItem.getName() +
+                " from " + this.getBeginDate() + " to " + this.getEndDate() +
+                " for $" + fulfillingItem.getPrice() + " per day.";
     }
 
 }

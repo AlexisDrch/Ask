@@ -17,10 +17,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ask.ask.Utils.DownloadImageTask;
 
+import org.json.JSONArray;
+
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -49,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         //create a new card using request data
-        Request currentRequest = (Request) requestsHashMap.values().toArray()[position];
+        final Request currentRequest = (Request) requestsHashMap.values().toArray()[position];
 
         // Request data
         String date = currentRequest.getBegin_date() + " to " + currentRequest.getEnd_date();
@@ -61,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .execute(currentRequest.getRequester_ppicture_url());
 
         // Items data
-        Item currentItem = LocalData.getHashMapItemsById().get(currentRequest.getItem_id());
+        final Item currentItem = LocalData.getHashMapItemsById().get(currentRequest.getItem_id());
         holder.itemName.setText(currentItem.getName());
         holder.itemIcon.setImageResource(currentItem.getIcon());
         String price = "$" + String.valueOf(currentItem.getPrice()) + "0";
@@ -71,8 +75,33 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.matchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MatchConfirmationActivity.class);
-                myContext.startActivity(intent);
+                final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
+
+                final Offer newOffer = new Offer(currentRequest.getRequester_id(), "" + currentUser.getUser_id(),
+                        currentRequest.getItem_id(), "ITEM_PROVIDING_ID", currentRequest.getBegin_date(), currentRequest.getEnd_date(),
+                        currentRequest.getDescription(), "MESSAGE");
+
+
+                Log.d("POSTING OFFER", newOffer.toString());
+                //post new offer json object
+                final String url = "https://ask-capa.herokuapp.com/api/offers";
+                POSTData postData = new POSTData();
+                postData.postOffer(url, newOffer, myContext, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONArray jsonArray) {
+                        //pass request object for RequestConfirmationActivity display
+                        Intent intent = new Intent(myContext, MatchConfirmationActivity.class);
+                        intent.putExtra("Offer", (Serializable) newOffer);
+                        myContext.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        Log.d("RecyclerViewAdapter", "failure posting offer!");
+                        Toast.makeText(myContext, "Unable to send Offer.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
         });
 
@@ -137,5 +166,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             cardView = (CardView) itemView.findViewById(R.id.requestCard);
 
         }
+
     }
+
 }

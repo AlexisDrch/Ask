@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -65,7 +66,6 @@ public class NewRequestActivity extends AppCompatActivity {
         spinnerLocalItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLocalItems.setAdapter(spinnerLocalItemsAdapter);
 
-
         //handle event on local items spinner: i.e when a local item is selected, should fill the appropriate fields
         spinnerLocalItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -85,7 +85,6 @@ public class NewRequestActivity extends AppCompatActivity {
             }
         });
 
-
         askNewRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -95,10 +94,8 @@ public class NewRequestActivity extends AppCompatActivity {
                     Toast.makeText(NewRequestActivity.this, "All fields require an input.", Toast.LENGTH_SHORT).show();
                 } else {
                     // create new request object
-                    String itemName = textViewItemName.getText().toString();
                     String beginDate = textViewBeginDate.getText().toString();
                     String endDate = textViewEndDate.getText().toString();
-                    //double price = Double.parseDouble(editTextPrice.getText().toString()); @todo add request price in database
                     String description = editTextDescription.getText().toString();
 
                     // create corresponding request object
@@ -113,7 +110,7 @@ public class NewRequestActivity extends AppCompatActivity {
                     postData.postRequest(url, newRequest, getApplicationContext(), new VolleyCallback() {
                         @Override
                         public void onSuccess(JSONArray jsonArray) {
-                            //pass request oject for RequestConfirmationActivity display
+                            //pass request object for RequestConfirmationActivity display
                             Intent intent = new Intent(view.getContext(), RequestConfirmationActivity.class);
                             intent.putExtra("Request", (Serializable) newRequest);
                             startActivity(intent);
@@ -121,6 +118,7 @@ public class NewRequestActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure() {
+                            Log.d("NewRequestActivity", "failure posting request!");
                             // handle failure on posting request
                         }
                     });
@@ -139,9 +137,9 @@ public class NewRequestActivity extends AppCompatActivity {
         editTextPrice.setText(""+currentItem.getPrice());
 
         // set a lambda description for the request
-        String description = "Hey !" +
+        String description = "Hey! " +
                 "I am looking for a " + currentItem.getName() + "." +
-                "Would be glad to hear from you, thanks !" + LocalData.getCurrentUserInstance().getName();
+                " Would be glad to hear from you, thanks. !" + LocalData.getCurrentUserInstance().getName();
         editTextDescription.setText(description);
     }
 

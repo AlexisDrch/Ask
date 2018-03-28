@@ -33,7 +33,7 @@ public class POSTData {
     private int BEGIN = 0;
     private int COMPLETE = 1;
     private int POST_REQUEST = 2;
-    private int POST_MATCH = 3;
+    private int POST_OFFER = 3;
     private int POST_LOGIN = 4;
     private String mEmail = "";
     private String mPassword = "";
@@ -78,13 +78,13 @@ public class POSTData {
         setStatus(POST_REQUEST);
         setUrl(url);
         setRequest(request);
-        Log.d("NEW REQ", request.toDescriptiveString());
+        Log.d("NEW REQUEST", request.toDescriptiveString());
         setContext(context);
         createPOST(volleyCallback);
     }
 
-    public void postOffer(String url, Offer offer, final VolleyCallback volleyCallback) {
-        setStatus(POST_MATCH);
+    public void postOffer(String url, Offer offer, Context context, final VolleyCallback volleyCallback) {
+        setStatus(POST_OFFER);
         setUrl(url);
         setOffer(offer);
         setContext(context);
@@ -101,6 +101,7 @@ public class POSTData {
     }
 
     private void createPOST(final VolleyCallback volleyCallback) {
+        Log.d("TEST", "5");
         RequestQueue postQueue = Volley.newRequestQueue(context);
 
         StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.POST, url,
@@ -127,11 +128,12 @@ public class POSTData {
         ) {
             @Override
             protected Map<String, String> getParams() {
+                Log.d("TEST", "6");
                 if (STATUS == POST_REQUEST) {
                     Log.d("POST", "POST_REQUEST");
                     return getRequestParams();
-                } else if (STATUS == POST_MATCH) {
-                    Log.d("POST", "POST_MATCH");
+                } else if (STATUS == POST_OFFER) {
+                    Log.d("POST", "POST_OFFER");
                     return getOfferParams();
                 } else if (STATUS == POST_LOGIN) {
                     Log.d("POST", "POST_LOGIN");
@@ -143,7 +145,9 @@ public class POSTData {
             }
         };
 
+        Log.d("TEST", "9");
         postQueue.add(postRequest);
+        Log.d("TEST", "10");
     }
 
     private Map<String, String> getRequestParams() {
@@ -160,16 +164,18 @@ public class POSTData {
     }
 
     private Map<String, String> getOfferParams() {
+        Log.d("TEST", "7");
         Map<String, String> offerParams = new HashMap<>();
-        offerParams.put("belonging_id", "" + offer.getItemProviding().getItem_id());
-        offerParams.put("request_id", "" + offer.getRequester().getUser_id());
-        offerParams.put("provider_id", "" + offer.getProvider().getUser_id());
+        offerParams.put("belonging_id", "-1");
+        offerParams.put("request_id", "" + offer.getRequester_id());
+        offerParams.put("provider_id", "" + offer.getProvider_id());
         offerParams.put("begin_date", offer.getBeginDate());
         offerParams.put("end_date", offer.getEndDate());
         offerParams.put("lon", "-1"); //TODO: would ask user to set location as temporary variables
         offerParams.put("lat", "-1");
         offerParams.put("description", offer.getDescription());
         offerParams.put("message", offer.getMessage());
+        Log.d("TEST", "8");
 
         return offerParams;
     }

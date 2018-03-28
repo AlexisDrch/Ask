@@ -11,110 +11,7 @@ import java.util.LinkedList;
  *
  */
 
-public class Request implements Serializable{
-//
-//    private int request_id;
-//    private int item_id;
-//    private int requester_id;
-//    private String requester_name;
-//    private String requester_surname;
-//    private String requester_ppicture_url;
-//    private int status;
-//    private String begin_date;
-//    private String end_date;
-//    private String lon;
-//    private String lat;
-//    private String description;
-//
-//    private User requester;
-//    private Item itemRequesting;
-//    private int DELETED = -1;
-//    private int IN_PROGRESS = 0;
-//    private int OFFERS_PENDING = 1;
-//    private int MATCHED = 2;
-//
-//    private LinkedList<Offer> offers;
-//    private User matcher;
-//
-//    public Request(){}
-//
-//    public Request(User requester, Item itemRequesting, String begin_date, String end_date, String description) {
-//        this.requester = requester;
-//        requester_id = requester.getUser_id();
-//
-//        this.itemRequesting = itemRequesting;
-//        item_id = itemRequesting.getItem_id();
-//
-//        this.begin_date = begin_date;
-//        this.end_date = end_date;
-//        this.description = description;
-//
-//        this.status = IN_PROGRESS;
-//        this.offers = new LinkedList<>();
-//        this.matcher = null;
-//    }
-//
-//    public User getRequester() {
-//        return requester;
-//    }
-//
-//    public int getRequest_id() {
-//        return request_id;
-//    }
-//
-//    public Item getItem() {
-//        return itemRequesting;
-//    }
-//
-//    public String getBegin_date() {
-//        return begin_date;
-//    }
-//
-//    public String getEnd_date() {
-//        return end_date;
-//    }
-//
-//    public String getDescription() {
-//        return description;
-//    }
-//
-//    public int getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(int status) {
-//        this.status = status;
-//    }
-//
-//    public LinkedList<Offer> getOffers() {
-//        return offers;
-//    }
-//
-//    public User getMatcher() {
-//        return matcher;
-//    }
-//
-//    public boolean addOfferToRequest(Offer newOffer) {
-//        return offers.add(newOffer);
-//    }
-//
-//    public boolean confirmMatch(Offer offerConfirmed) {
-//
-//
-//        return false;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "com.ask.ask.Request{" +
-//                "requester=" + requester +
-//                ", item=" + itemRequesting +
-//                ", begin_date='" + begin_date + '\'' +
-//                ", end_date='" + end_date + '\'' +
-//                ", status='" + status + '\'' +
-//                '}';
-//    }
-
+public class Request implements Serializable {
 
     public Request(String requester_id, String request_id, String item_id, String begin_date, String end_date, String description) {
         this.end_date = end_date;
@@ -244,8 +141,7 @@ public class Request implements Serializable{
         return requester_surname;
     }
 
-    public void setRequester_surname (String requester_surname)
-    {
+    public void setRequester_surname (String requester_surname) {
         this.requester_surname = requester_surname;
     }
 
@@ -270,8 +166,7 @@ public class Request implements Serializable{
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "ClassPojo [lon = "+lon+", end_date = "+end_date+", requester_ppicture_url = "+requester_ppicture_url+", request_id = "+request_id+", status = "+status+", description = "+description+", item_id = "+item_id+", begin_date = "+begin_date+", requester_name = "+requester_name+", requester_surname = "+requester_surname+", lat = "+lat+", requester_id = "+requester_id+"]";
     }
 
@@ -280,8 +175,7 @@ public class Request implements Serializable{
 
         return "A " + requestedItem.getName() +
                 " from " + this.getBegin_date() + " to " + this.getEnd_date() +
-                " for " + requestedItem.getPrice() + " $/day";
-
+                " for " + requestedItem.getPrice() + " $ per day";
     }
 
 }
