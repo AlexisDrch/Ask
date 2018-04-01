@@ -147,7 +147,7 @@ public class NewRequestFragment extends Fragment {
     public void updateItemFields(Item currentItem){
         textViewItemName.setText(currentItem.getName());
         imageViewItemImage.setImageResource(currentItem.getIcon());
-        editTextPrice.setText(""+currentItem.getPrice());
+        editTextPrice.setText(""+currentItem.getPrice() +"0");
         // set a lambda description for the request
         String description = "Hey !\n" +
                 "I am looking for a " + currentItem.getName() + ".\n" +

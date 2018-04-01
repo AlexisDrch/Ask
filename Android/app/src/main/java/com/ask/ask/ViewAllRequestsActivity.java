@@ -112,6 +112,31 @@ class JsonParser {
             }
         }
         return offerHashMap;
-    };
+    }
+
+    /*
+        Parse a JSON array of Users into a HashMap
+        - HashMap are key / value with offer_id as key
+    */
+    public static HashMap<String, User> JsonArrayUsersToHashMapUsers(JSONArray jsonArrayUsers){
+
+        HashMap<String, User> offerHashMap = new HashMap<>();
+
+        for (int i = 0; i < jsonArrayUsers.length(); i++) {
+            JSONObject jo = null;
+            try {
+                jo = jsonArrayUsers.getJSONObject(i);
+                Gson gson = new Gson();
+                User newUser = gson.fromJson(jo.toString(), User.class);
+                offerHashMap.put("" + newUser.getUser_id(), newUser);
+
+                Log.d("#USER", newUser.toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return offerHashMap;
+    }
 
 }

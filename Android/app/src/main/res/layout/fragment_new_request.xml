@@ -89,6 +89,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="From"
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -113,6 +114,7 @@
                 android:id="@+id/textViewEndDateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
@@ -173,6 +175,32 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextPrice" />
+
+            <TextView
+                android:id="@+id/dollarSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:text="$"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
+                app:layout_constraintEnd_toStartOf="@+id/editTextPrice"
+                app:layout_constraintHorizontal_bias="0.92"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/perDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="per day"
+                app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toEndOf="@+id/editTextPrice" />
 
         </android.support.constraint.ConstraintLayout>
         <Button

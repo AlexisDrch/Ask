@@ -1,5 +1,6 @@
 package com.ask.ask;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,7 +12,7 @@ import java.util.LinkedList;
  *
  */
 
-public class User {
+public class User implements Serializable{
 
     private int user_id;
     private String user_name;

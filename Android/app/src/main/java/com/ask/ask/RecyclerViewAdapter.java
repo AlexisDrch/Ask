@@ -2,10 +2,7 @@ package com.ask.ask;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -23,7 +20,6 @@ import com.ask.ask.Utils.DownloadImageTask;
 
 import org.json.JSONArray;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -35,6 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     private HashMap<String, Request> requestsHashMap;
+    private static HashMap<String, User> userHashMap;
     private Context myContext;
     private int previousPosition = 0;
 
@@ -104,6 +101,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
+        // Handles when the profile icon is clicked
+        holder.profileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent intent = new Intent(myContext, ProfileActivity.class);
+
+
+                VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users", myContext);
+                process.jsonReader(new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONArray jsonArrayRequests) {
+                        // handle JSONOBJECT response
+                        userHashMap = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
+                        for (String each : userHashMap.keySet()) {
+                            Log.d("USER KEY", each);
+                        }
+                        User profile = userHashMap.get(currentRequest.getRequester_id());
+                        Log.d("PROFILE#", profile.toString());
+                        intent.putExtra("profileUser", (Serializable) profile);
+                        myContext.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        // in case
+                    }
+                });
+            }
+        });
+
         // Card view
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +180,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            profileIcon = (ImageView) itemView.findViewById(R.id.profilePic);
+            profileIcon = (ImageView) itemView.findViewById(R.id.pA_profilePic);
             itemIcon = (ImageView) itemView.findViewById(R.id.itemPic);
             itemName = (TextView) itemView.findViewById(R.id.itemName);
             itemDate = (TextView) itemView.findViewById(R.id.itemDate);
