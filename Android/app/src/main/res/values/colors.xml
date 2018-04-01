@@ -10,4 +10,5 @@
     <color name="milkWhite">#FBFCFA</color>
     <color name="requestWithOffer">#c57fff</color>
     <color name="requestWithOutOffer">#5cc8f9</color>
+    <color name="offerDropdown">#b55bff</color>
 </resources>

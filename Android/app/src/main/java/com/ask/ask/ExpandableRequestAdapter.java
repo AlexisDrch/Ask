@@ -1,6 +1,8 @@
 package com.ask.ask;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,7 +40,11 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return listHashMap.get(listHeaders.get(groupPosition)).size();
+        if (listHashMap.get(listHeaders.get(groupPosition)) == null) {
+            return 0; //this Request has no Offers
+        } else {
+            return listHashMap.get(listHeaders.get(groupPosition)).size();
+        }
     }
 
     @Override
@@ -65,28 +74,17 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int position, boolean isExpanded, View view, ViewGroup parent) {
-        String imageStr = (String) getGroup(position);
-        int index = imageStr.indexOf('#');
-
-        imageStr = imageStr.substring(index + 1);
-        index = imageStr.indexOf('#');
-        String numOffersForCurrentRequest = imageStr.substring(0, index);
-
-        imageStr = imageStr.substring(index + 1);
-        index = imageStr.indexOf('#');
-        String date =imageStr.substring(0, index);
-
-        imageStr = imageStr.substring(index + 1);
-        index = imageStr.indexOf('#');
-        int color = Integer.parseInt(imageStr.substring(0, index));
-
-        imageStr = imageStr.substring(index + 1);
-        int groupText = Integer.parseInt(imageStr);
-
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_request_header, null);
         }
+
+        String headerStr = (String) getGroup(position);
+        String[] headerArr = headerStr.split("#");
+        String numOffersForCurrentRequest = headerArr[1];
+        String date = headerArr[2];
+        int color = Integer.parseInt(headerArr[3]);
+        int imageIcon = Integer.parseInt(headerArr[4]);
 
         TextView textViewNumOffersForRequest = (TextView) view.findViewById(R.id.textViewNumOffersForRequest);
         textViewNumOffersForRequest.setText(numOffersForCurrentRequest);
@@ -97,7 +95,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         textViewDate.setBackgroundResource(color);
 
         ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
-        imageViewHeader.setImageResource(groupText);
+        imageViewHeader.setImageResource(imageIcon);
         imageViewHeader.setBackgroundResource(color);
 
         return view;
@@ -105,27 +103,36 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {
-        String childText = (String) getChild(groupPosition, childPosition);
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_request_item_offers, null);
         }
 
-        TextView textViewItem = (TextView) view.findViewById(R.id.textViewItem);
-        textViewItem.setText(childText);
+        String elementStr = (String) getChild(groupPosition, childPosition);
+        String[] elementsArr = elementStr.split("#");
+        String name = elementsArr[0];
+        String price = elementsArr[1];
+        int color = Integer.parseInt(elementsArr[2]);
+        final String request_id = elementsArr[3];
+        final String provider_id = elementsArr[4];
+
+        view.setBackgroundColor(color);
+
+        TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
+        textViewProviderName.setText(name);
+
+        TextView textViewPrice = (TextView) view.findViewById(R.id.textViewPrice);
+        textViewPrice.setText(price);
 
         Button buttonAcceptOffer = (Button) view.findViewById(R.id.buttonAcceptOffer);
         buttonAcceptOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: send update to database
+                Intent intent = new Intent(v.getContext(), AcceptOfferConfirmationActivity.class);
+                intent.putExtra("request_id", request_id);
+                intent.putExtra("provider_id", provider_id);
 
-
-
-
-
-
-                Toast.makeText(v.getContext(), "Offer Accepted.", Toast.LENGTH_SHORT).show();
+                v.getContext().startActivity(intent);
             }
         });
 

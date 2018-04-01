@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
+
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,10 +45,17 @@ public class RequestsFragment extends Fragment {
 
     private ExpandableListView expandableListViewRequests;
     private ExpandableListAdapter expandableListViewAdapter;
-    public static HashMap<String, Request> requestHashMap;
+    private static HashMap<String, Request> requestHashMap = null; //
+    private HashMap<String, Offer> offersForRequestHashMap = null; //offer id, Offer object
     private List<String> listItemImages;
     private List<String> listElements;
     private HashMap<String, List<String>> hashMapRequestData;
+
+    private static int requestCount = 0;
+    private int imageCount = 0;
+    private int requestColor;
+    private int numOffersForCurrentRequest;
+    private int offerDropdownColor = R.color.offerDropdown;
 
     public RequestsFragment() {
         // Required empty public constructor
@@ -85,10 +96,11 @@ public class RequestsFragment extends Fragment {
     }
 
     public void refreshRequestsFragment(final View rootView) {
-        final User currentUser = LocalData.getCurrentUserInstance(); //user logged in
+        final User currentUser = LocalData.getCurrentUserInstance(); //current user who is logged in
 
         VolleyFetcher fetcher = new VolleyFetcher("https://ask-capa.herokuapp.com/api/requests/by/" + currentUser.getUser_id(), getContext());
         fetcher.jsonReader(new VolleyCallback() {
+
             @Override
             public void onSuccess(JSONArray jsonArrayRequests) {
                 requestHashMap = JsonParser.JsonArrayRequestsToHashMapRequests(jsonArrayRequests);
@@ -97,55 +109,110 @@ public class RequestsFragment extends Fragment {
                 listItemImages = new ArrayList<>();
                 listElements = null;
 
-                int imageCount = 0;
-                int numOffersForCurrentRequest = 0;
-                for (Request currentRequest : requestHashMap.values()) {
+                requestCount = 0;
+                imageCount = 0;
+                for (final Request currentRequest : requestHashMap.values()) {
                     final Item currentItem = LocalData.getHashMapItemsById().get(currentRequest.getItem_id());
 
-                    //TODO: get num offers for current request and set in numOffersForCurrentRequest
+                    numOffersForCurrentRequest = 0; //defaulted
+                    requestColor = R.color.requestWithOutOffer; //defaulted
 
-                    int color = (numOffersForCurrentRequest == 0) ? R.color.requestWithOutOffer : R.color.requestWithOffer;
-                    String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Date: " + currentRequest.getBegin_date() + " - "
-                            + currentRequest.getEnd_date() + "#" + color + "#" + currentItem.getIcon();
+                    //----------
+                    VolleyFetcher offersForRequestFetcher = new VolleyFetcher("https://ask-capa.herokuapp.com/api/offers/for/" + currentRequest.getRequest_id(), getContext());
+                    offersForRequestFetcher.jsonReader(new VolleyCallback() {
+                        @Override
+                        public void onSuccess(JSONArray jsonArrayOffersForRequest) {
+                            offersForRequestHashMap = JsonParser.JsonArrayOffersToHashMapOffers(jsonArrayOffersForRequest);
 
-                    listItemImages.add(imageHeaderStr);
-                    listElements = new ArrayList<>();
+                            Log.d("CURRENT REQUEST", "ID: " + currentRequest.getRequest_id());
+                            if (offersForRequestHashMap != null && offersForRequestHashMap.size() > 0) {
+                                Log.d("OFFER HASH MAP", "Size: " + offersForRequestHashMap.size());
 
-                    //TODO: loop through all offers
-                    if (numOffersForCurrentRequest != 0) {
-                        //TODO: these will be replaced by the offer information
-//                    listElements.add("Item: " + currentItem.getName());
-//                    listElements.add("Date: " + currentRequest.getBegin_date() + " - " + currentRequest.getEnd_date());
-                        listElements.add("Price: $" + currentItem.getPrice());
-                    }
+                                numOffersForCurrentRequest = offersForRequestHashMap.size();
+                                requestColor = R.color.requestWithOffer;
 
-                    hashMapRequestData.put(imageHeaderStr, listElements);
-                    imageCount++;
-                    numOffersForCurrentRequest++;
+                                listElements = new ArrayList<>();
+
+                                //loop through Offers for current Request
+                                for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
+                                    String offerElementsStr = "Provider: " + currentOfferForCurrentRequest.getProvider_name() + " "
+                                            + currentOfferForCurrentRequest.getProvider_surname() + " " + currentOfferForCurrentRequest.getProvider_id() +
+                                            "#Price: $" + currentItem.getPrice() + "0#" + offerDropdownColor + "#" + currentRequest.getRequest_id()
+                                            + "#" + currentOfferForCurrentRequest.getProvider_id();
+                                    listElements.add(offerElementsStr);
+                                }
+                            } else {
+                                numOffersForCurrentRequest = 0;
+                                requestColor = R.color.requestWithOutOffer;
+                                Log.d("OFFER HASH MAP", "NULL");
+                            }
+
+                            //current Request information
+//                            String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Date: " + currentRequest.getBegin_date() + " - "
+//                                    + currentRequest.getEnd_date() + "#" + requestColor + "#" + currentItem.getIcon();
+                            String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
+                                    + "#" + requestColor + "#" + currentItem.getIcon();
+                            listItemImages.add(imageHeaderStr);
+
+                            hashMapRequestData.put(imageHeaderStr, listElements);
+                            imageCount++;
+
+                            requestCount++;
+                            if (requestCount == requestHashMap.size()) { //gone through all Requests
+                                assignToExpandableListView(rootView);
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            Toast.makeText(getContext(), "Failure to receive Offers for Request " + currentRequest.getRequest_id() + ".", Toast.LENGTH_SHORT).show();
+
+                            requestCount++;
+                            if (requestCount == requestHashMap.size()) { //gone through all Requests
+                                assignToExpandableListView(rootView);
+                            }
+                        }
+
+                    });
+
                 }
 
-                expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
-                expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemImages, hashMapRequestData);
-                expandableListViewRequests.setAdapter(expandableListViewAdapter);
-                int[] color = {Color.BLACK, Color.BLACK};
-                expandableListViewRequests.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
-                expandableListViewRequests.setDividerHeight(4);
-
-                Display display = getActivity().getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                int width = size.x;
-
-                expandableListViewRequests.setIndicatorBounds(width - 100, width);
-
             }
+
             @Override
             public void onFailure() {
-                Toast.makeText(getContext(), "Failure to receive your Requests.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failure to receive your Request.", Toast.LENGTH_SHORT).show();
             }
+
         });
 
     }
+
+    public void assignToExpandableListView(View rootView) {
+        Log.d("hashMapRequestData", hashMapRequestData.toString());
+
+        //add to expandable list view
+        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
+        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemImages, hashMapRequestData);
+        expandableListViewRequests.setAdapter(expandableListViewAdapter);
+        int[] color = {Color.BLACK, Color.BLACK};
+        expandableListViewRequests.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
+        expandableListViewRequests.setDividerHeight(4);
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+
+        expandableListViewRequests.setIndicatorBounds(width - 100, width);
+    }
+
+
+
+
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
