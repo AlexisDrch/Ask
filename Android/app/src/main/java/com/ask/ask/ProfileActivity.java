@@ -18,8 +18,10 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
 
+        //Pulls in the user from the recyclerViewAdapter
         User newUser = (User) getIntent().getSerializableExtra("profileUser");
 
+        //updates the profile name from the user
         profileName = (TextView) findViewById(R.id.pA_profileName);
         profileDescription = (TextView) findViewById(R.id.pA_profileDescription);
         profileIcon = (ImageView) findViewById(R.id.pA_profilePic);
@@ -30,6 +32,8 @@ public class ProfileActivity extends AppCompatActivity {
         profileName.setText(name);
         profileDescription.setText(description);
 
+        //redownloads image from url
+        //TODO: make this more efficient in that it only creates the image once
         new DownloadImageTask((ImageView) profileIcon)
                 .execute(newUser.getPpicture_url());
 

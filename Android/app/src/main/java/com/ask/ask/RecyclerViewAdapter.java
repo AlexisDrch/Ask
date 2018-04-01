@@ -125,7 +125,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     @Override
                     public void onFailure() {
-                        // in case
+                        // in case of failure
+                        Log.d("USER_GET_FAILURE", "Something went wrong");
                     }
                 });
             }
