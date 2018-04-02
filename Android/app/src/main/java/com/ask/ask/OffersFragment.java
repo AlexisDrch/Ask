@@ -89,42 +89,6 @@ public class OffersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
         refreshOffersFragment(rootView);
-
-//        //dummy data
-//        listItemHeaders = new ArrayList<>(3);
-//        ArrayList<String> listElements1 = new ArrayList<>();
-//        ArrayList<String> listElements2 = new ArrayList<>();
-//        ArrayList<String> listElements3 = new ArrayList<>();
-//        hashMapOfferData = new HashMap<>(3);
-//
-//        listItemHeaders.add(R.drawable.tent);
-//        listElements1.add("Item: Tent");
-//        listElements1.add("Requester: Alexis");
-//        listElements1.add("Date: 4/1/18 - 4/3/18");
-//        listElements1.add("Price: $15 per day");
-//        listElements1.add("Description: to go camping in Yosemite");
-//        listElements1.add("Status: Pending");
-//        hashMapOfferData.put(listItemHeaders.get(0), listElements1);
-//
-//        listItemHeaders.add(R.drawable.stove);
-//        listElements2.add("Item: Surfboard");
-//        listElements2.add("Requester: Carolyn");
-//        listElements2.add("Date: 4/4/18 - 4/7/18");
-//        listElements2.add("Price: $5 per day");
-//        listElements2.add("Description: for beach weekend");
-//        listElements2.add("Status: Pending");
-//        hashMapOfferData.put(listItemHeaders.get(1), listElements2);
-//
-//        listItemHeaders.add(R.drawable.sleepingbag);
-//        listElements3.add("Item: Sleeping Bag");
-//        listElements3.add("Requester: Pulak");
-//        listElements3.add("Date: 4/2/18 - 4/5/18");
-//        listElements3.add("Price: $10 per day");
-//        listElements3.add("Description: for hiking trip");
-//        listElements3.add("Status: Pending");
-//        hashMapOfferData.put(listItemHeaders.get(2), listElements3);
-//        //dummy data
-
         return rootView;
     }
 
@@ -135,25 +99,26 @@ public class OffersFragment extends Fragment {
         fetcher.jsonReader(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray jsonArrayOffers) {
+                Log.d("offffffer", jsonArrayOffers.toString());
                 offerHashMap = JsonParser.JsonArrayOffersToHashMapOffers(jsonArrayOffers);
-
                 listItemImages = new ArrayList<>();
                 listElements = null;
 
                 for (Offer currentOffer : offerHashMap.values()) {
                     final Item currentItem = LocalData.getHashMapItemsById().get(currentOffer.getItemFulfilling_id());
+                    if (currentItem != null) {
+                        listItemImages.add(currentItem.getIcon());
+                        listElements = new ArrayList<>();
 
-                    listItemImages.add(currentItem.getIcon());
-                    listElements = new ArrayList<>();
+                        listElements.add("Item: " + currentItem.getName());
+                        listElements.add("Requester: " + "Name of Requester");
+                        listElements.add("Date: " + currentOffer.getBeginDate() + " - " + currentOffer.getEndDate());
+                        listElements.add("Price: " + currentItem.getPrice());
+                        listElements.add("Description: " + currentOffer.getDescription());
+                        listElements.add("Status: " + currentOffer.getStatus());
 
-                    listElements.add("Item: " + currentItem.getName());
-                    listElements.add("Requester: " + "Name of Requester");
-                    listElements.add("Date: " + currentOffer.getBeginDate() + " - " + currentOffer.getEndDate());
-                    listElements.add("Price: " + currentItem.getPrice());
-                    listElements.add("Description: " + currentOffer.getDescription());
-                    listElements.add("Status: " + currentOffer.getStatus());
-
-                    hashMapOfferData.put(currentItem.getIcon(), listElements);
+                        hashMapOfferData.put(currentItem.getIcon(), listElements);
+                    }
                 }
 
                 expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
