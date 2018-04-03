@@ -78,7 +78,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 final Offer newOffer = new Offer(
                         ""+currentRequest.getRequester_id(),
-                        "" + currentUser.getUser_id(),
+                        ""+currentUser.getUser_id(),
+                        "" + price,
                         ""+currentRequest.getItem_id(),
                         ""+price,
                         ""+-1,
@@ -87,6 +88,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         ""+currentRequest.getEnd_date(),
                         ""+currentRequest.getDescription(),
                         "MESSAGE");
+
+                  public Offer(String requester_id, String provider_id,
+                        String offer_price, String itemFulfilling_id, String itemProviding_id,
+                        String begin_date, String end_Date, String description, String message)
+
+
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object
                 final String url = "https://ask-capa.herokuapp.com/api/offers";

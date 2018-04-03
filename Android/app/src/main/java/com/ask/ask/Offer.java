@@ -35,13 +35,15 @@ public class Offer implements Serializable {
     private int status;
 
 
-    public Offer(String requester_id, String provider_id, String offer_id, String offer_price, String itemFulfilling_id, String itemProviding_id, String begin_date, String end_Date, String description, String message) {
+    public Offer(String requester_id, String request_id,
+                 String provider_id, String offer_price,
+                 String belonging_id, String begin_date, String end_Date,
+                 String description, String message) {
         this.requester_id = requester_id;
         this.request_id = request_id;
         this.provider_id = provider_id;
         this.provider_name = provider_name;
         this.provider_surname = provider_surname;
-        this.offer_id = offer_id;
         this.offer_price = offer_price;
         this.itemFulfilling_id = itemFulfilling_id;
         this.belonging_id = belonging_id;
