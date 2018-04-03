@@ -160,13 +160,18 @@ public class NewRequestFragment extends Fragment {
     }
 
     /*
-      * pick Data in calendar.
+      * pick data in calendar.
     */
     public void showDateBeginPickerDialog(View view, String message) {
         Toast toast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
-        DialogFragment datePickerBeginFragment = new DatePickerFragment(textViewBeginDate, textViewEndDate, view, 0);
+        DialogFragment datePickerBeginFragment = new DataPickerFragment(textViewBeginDate, textViewEndDate, view, 0);
         datePickerBeginFragment.show(getFragmentManager(), "dateBeginPicker");
     }
+
 }
+
+
+
+

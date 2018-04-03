@@ -39,7 +39,6 @@ public class User implements Serializable{
     private ArrayList<Offer> offers;
     private ArrayList<Offer> matches;
 
-    private LinkedList<Review> reviews;
 
     public User(int user_id, String user_name, String password, String email, String name,
                 String surname, String description, String ppicture_url, String phone_num, int age,
@@ -62,10 +61,6 @@ public class User implements Serializable{
         this.requests = new ArrayList<>();
         this.offers = new ArrayList<>();
         this.matches = new ArrayList<>();
-    }
-
-    public LinkedList<Review> getReviews() {
-        return reviews;
     }
 
     public ArrayList<Request> getRequests() {

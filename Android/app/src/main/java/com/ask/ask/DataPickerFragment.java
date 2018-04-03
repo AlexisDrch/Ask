@@ -1,36 +1,26 @@
 package com.ask.ask;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
- * Created by alexander on 3/18/2018.
- *
- * This fragment is used to display a popup calendar where the user can select their request begin and date.
+ * Created by alexisdurocher on 03/04/2018.
  */
 
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class DataPickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     private DatePickerDialog datePickerDialog;
 
@@ -45,10 +35,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     private String NO_DATE = "No date selected.";
 
 
-    public DatePickerFragment() {};
+    public DataPickerFragment() {};
 
     @SuppressLint("ValidFragment")
-    public DatePickerFragment(TextView textViewBegin, TextView textViewEnd, View view, int dateTime) {
+    public DataPickerFragment(TextView textViewBegin, TextView textViewEnd, View view, int dateTime) {
         super();
         this.textViewBegin = textViewBegin;
         this.textViewEnd = textViewEnd;
@@ -136,7 +126,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         Toast toast = Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
-        DialogFragment datePickerBeginFragment = new DatePickerFragment(textViewBegin, textViewEnd, view, 0);
+        DialogFragment datePickerBeginFragment = new DataPickerFragment(textViewBegin, textViewEnd, view, 0);
         datePickerBeginFragment.show(getFragmentManager(), "dateBeginPicker");
     }
 
@@ -144,7 +134,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         Toast toast = Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
-        DialogFragment datePickerEndFragment = new DatePickerFragment(textViewBegin, textViewEnd, v, 1);
+        DialogFragment datePickerEndFragment = new DataPickerFragment(textViewBegin, textViewEnd, v, 1);
         datePickerEndFragment.show(getFragmentManager(), "dateEndPicker");
     }
 
