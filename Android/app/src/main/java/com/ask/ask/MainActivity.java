@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity
         navigationDrawerLayout = findViewById(R.id.navigation_drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
 
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override

@@ -93,7 +93,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         int color = Integer.parseInt(headerArr[4]);
         int imageIcon = Integer.parseInt(headerArr[5]);
 
-        view.setBackgroundColor(view.getResources().getColor(color));
+
 
         if (statusInt == LocalData.REQUEST_WITH_PENDING_OFFERS) {
 
@@ -101,7 +101,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.listview_request_header_pending, null);
             }
-
+            view.setBackgroundColor(view.getResources().getColor(color));
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
@@ -120,7 +120,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.listview_request_header_accepted, null);
             }
-
+            view.setBackgroundColor(view.getResources().getColor(color));
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
@@ -195,48 +195,48 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        SwipeMenuListView swipeMenuOfferControl = (SwipeMenuListView) view.findViewById(R.id.swipeMenuOfferControl);
-
-        ArrayList<String> listView = new ArrayList<>();
-
-        ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1);
-        swipeMenuOfferControl.setAdapter(adapter);
-
-        final View v = view;
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
-            @Override
-            public void create(SwipeMenu menu) {
-                // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(v.getContext());
-                // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
-                        0xCE)));
-                // set item width
-                openItem.setWidth(dp2px(90));
-                // set item title
-                openItem.setTitle("Open");
-                // set item title fontsize
-                openItem.setTitleSize(18);
-                // set item title font color
-                openItem.setTitleColor(Color.WHITE);
-                // add to menu
-                menu.addMenuItem(openItem);
-
-                // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(v.getContext());
-                // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
-                        0x3F, 0x25)));
-                // set item width
-                deleteItem.setWidth(dp2px(90));
-                // set a icon
-                deleteItem.setIcon(R.drawable.ic_delete);
-                // add to menu
-                menu.addMenuItem(deleteItem);
-            }
-        };
-
-        listView.setMenuCreator(creator);
+//        SwipeMenuListView swipeMenuOfferControl = (SwipeMenuListView) view.findViewById(R.id.swipeMenuOfferControl);
+//
+//        ArrayList<String> listView = new ArrayList<>();
+//
+//        ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1);
+//        swipeMenuOfferControl.setAdapter(adapter);
+//
+//        final View v = view;
+//        SwipeMenuCreator creator = new SwipeMenuCreator() {
+//            @Override
+//            public void create(SwipeMenu menu) {
+//                // create "open" item
+//                SwipeMenuItem openItem = new SwipeMenuItem(v.getContext());
+//                // set item background
+//                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
+//                        0xCE)));
+//                // set item width
+//                openItem.setWidth(dp2px(90));
+//                // set item title
+//                openItem.setTitle("Open");
+//                // set item title fontsize
+//                openItem.setTitleSize(18);
+//                // set item title font color
+//                openItem.setTitleColor(Color.WHITE);
+//                // add to menu
+//                menu.addMenuItem(openItem);
+//
+//                // create "delete" item
+//                SwipeMenuItem deleteItem = new SwipeMenuItem(v.getContext());
+//                // set item background
+//                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+//                        0x3F, 0x25)));
+//                // set item width
+//                deleteItem.setWidth(dp2px(90));
+//                // set a icon
+//                deleteItem.setIcon(R.drawable.ic_delete);
+//                // add to menu
+//                menu.addMenuItem(deleteItem);
+//            }
+//        };
+//
+//        listView.setMenuCreator(creator);
 
 
 

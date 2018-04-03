@@ -77,16 +77,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 String provider_surname = currentUser.getSurname();
 
                 final Offer newOffer = new Offer(
-                        ""+currentRequest.getRequester_id(),
+                        ""+currentItem.getItem_id(),
+                        ""+currentRequest.getRequest_id(),
                         "" + currentUser.getUser_id(),
-                        ""+currentRequest.getItem_id(),
-                        ""+price,
-                        ""+-1,
-                        "ITEM_PROVIDING_ID",
                         ""+currentRequest.getBegin_date(),
                         ""+currentRequest.getEnd_date(),
+                        ""+currentRequest.getLon(),
+                        ""+currentRequest.getLat(),
+                        ""+price,
                         ""+currentRequest.getDescription(),
-                        "MESSAGE");
+                        ""+currentRequest.getEnd_date());
+
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object
                 final String url = "https://ask-capa.herokuapp.com/api/offers";
@@ -116,7 +117,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 final Intent intent = new Intent(myContext, ProfileActivity.class);
 
-
                 VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users", myContext);
                 process.jsonReader(new VolleyCallback() {
                     @Override
@@ -138,6 +138,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         Log.d("USER_GET_FAILURE", "Something went wrong");
                     }
                 });
+
             }
         });
 
