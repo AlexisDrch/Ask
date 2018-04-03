@@ -1,5 +1,7 @@
 var db = require('../db-connection'); //reference of dbconnection.js
-
+const OFFER_PENDING_REQUEST = 0
+const OFFER_ACCEPTED_FOR_REQUEST = 1
+const OFFER_DENIED = 2
 // Convert Javascript date to Pg YYYY MM DD HH MI SS
 
 function pgFormatDate(date) {
@@ -39,6 +41,7 @@ var Offer = {
 		offer.begin_date = new Date('December 17, 2018');
 		offer.end_date = new Date('December 31, 2018');
 		offer.request_id = parseInt(offer.request_id);
+		offer.offer_price = parseInt(offer.offer_price);
 		offer.provider_id = parseInt(offer.provider_id);
 		offer.belonging_id = parseInt(offer.belonging_id);
 		offer.begin_date = pgFormatDate(offer.begin_date);
@@ -48,12 +51,13 @@ var Offer = {
 		offer.provider_name = provider.name;
 		offer.provider_surname = provider.surname;
 		offer.provider_ppicture_url = provider.ppicture_url;
+		offer.status = OFFER_PENDING_REQUEST;
 		console.log(JSON.stringify(offer, null, 2));
 		return db.any(
 			' Insert into "offer"' +
 			' (belonging_id, request_id, '+
 			' provider_id, provider_name, provider_surname, provider_ppicture_url, '+
-			' begin_date, end_date, lon, lat, description, message)' +
+			' begin_date, end_date, lon, lat, offer_price, description, status, message)' +
 			' values('+
 				' ${belonging_id},'+
 				' ${request_id},'+
@@ -65,7 +69,9 @@ var Offer = {
 				' ${end_date},'+
 				' ${lon},'+
 				' ${lat},'+
+				' ${offer_price},'+
 				' ${description},'+
+				' ${status},'+
 				' ${message}'+	
 			');', offer);
 	},
