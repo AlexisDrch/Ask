@@ -191,6 +191,7 @@ public class POSTData {
         Map<String, String> requestParams = new HashMap<>();
         requestParams.put("item_id", request.getItem_id());
         requestParams.put("requester_id", request.getRequester_id());
+        requestParams.put("request_price", request.getRequest_price());
         requestParams.put("begin_date", request.getBegin_date());
         requestParams.put("end_date", request.getEnd_date());
         requestParams.put("lon", "-1"); //TODO: would ask user to set location as temporary variables
@@ -210,6 +211,7 @@ public class POSTData {
         offerParams.put("lon", "-1"); //TODO: would ask user to set location as temporary variables
         offerParams.put("lat", "-1");
         offerParams.put("description", offer.getDescription());
+        offerParams.put("offer_price", offer.getOffer_price());
         offerParams.put("message", offer.getMessage());
 
         return offerParams;
