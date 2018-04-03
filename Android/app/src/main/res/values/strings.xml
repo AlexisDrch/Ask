@@ -12,6 +12,12 @@
     <string name="beach">Beach</string>
     <string name="hiking">Hiking</string>
 
+    <string name="REQUEST_WITH_PENDING_OFFERS">Status: Pending</string>
+    <string name="REQUEST_WITH_OFFER_SELECTED">Status: Match</string>
+    <string name="OFFER_PENDING_FOR_REQUEST">Status: Pending</string>
+    <string name="OFFER_ACCEPTED_FOR_REQUEST">Status: Match</string>
+    <string name="OFFER_DENIED">Status: Denied</string>
+
     <string name="category">Category</string>
     <string name="item">Item</string>
 

@@ -112,7 +112,7 @@ public class MyRequestsFragment extends Fragment {
 
                 if (requestHashMap.size() == 0) { //no current Requests
                     textViewNoRequests = (TextView) rootView.findViewById(R.id.textViewNoRequests);
-                    textViewNoRequests.setVisibility(View.VISIBLE);
+                    textViewNoRequests.setText(R.string.noRequestsMade);
                 }
 
                 for (final Request currentRequest : requestHashMap.values()) {
@@ -140,9 +140,9 @@ public class MyRequestsFragment extends Fragment {
 
                                     //loop through Offers for current Request and create String description to add to listElements
                                     for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
-                                        String currentOfferInfoStr = "Provider: " + currentOfferForCurrentRequest.getProvider_name() + " "
-                                                + currentOfferForCurrentRequest.getProvider_surname() + " " + currentOfferForCurrentRequest.getProvider_id() +
-                                                "#Price: $" + currentItem.getPrice() + "0#" + requestColor + "#" + currentRequest.getRequest_id()
+                                        String currentOfferInfoStr = "Provider: " + (currentOfferForCurrentRequest.getProvider_name() + " "
+                                                + currentOfferForCurrentRequest.getProvider_surname()) + "#Price: $" + currentItem.getPrice()
+                                                + "0#" + requestColor + "#" + currentRequest.getRequest_id()
                                                 + "#" + currentOfferForCurrentRequest.getProvider_id();
 
                                         listElements.add(currentOfferInfoStr);
@@ -201,7 +201,7 @@ public class MyRequestsFragment extends Fragment {
     public void assignToExpandableListView(View rootView) {
 //        Log.d("hashMapRequestData", hashMapRequestData.toString());
 
-        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
+        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests); //defined in fragment_requests.xml
         expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemImages, hashMapRequestData);
         expandableListViewRequests.setAdapter(expandableListViewAdapter);
         int[] color = {Color.BLACK, Color.BLACK};

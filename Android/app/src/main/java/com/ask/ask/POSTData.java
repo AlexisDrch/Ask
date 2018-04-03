@@ -166,19 +166,19 @@ public class POSTData {
             @Override
             protected Map<String, String> getParams() {
                 if (STATUS == POST_REQUEST) {
-                    Log.d("POST", "POST_REQUEST");
+                    Log.d("POSTData", "POST_REQUEST");
                     return getRequestParams();
                 } else if (STATUS == POST_OFFER) {
-                    Log.d("POST", "POST_OFFER");
+                    Log.d("POSTData", "POST_OFFER");
                     return getOfferParams();
                 } else if (STATUS == POST_LOGIN) {
-                    Log.d("POST", "POST_LOGIN");
+                    Log.d("POSTData", "POST_LOGIN");
                     return getLoginParams();
                 } else if (STATUS == POST_ACCEPT_OFFER) {
-                    Log.d("POST", "POST_ACCEPT_OFFER");
+                    Log.d("POSTData", "POST_ACCEPT_OFFER");
                     return getAcceptOfferParams();
                 } else {
-                    Log.d("POST", "NULL");
+                    Log.d("POSTData", "NULL");
                     return null;
                 }
             }

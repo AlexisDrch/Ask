@@ -48,7 +48,7 @@ public class RequestConfirmationActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(4000);
+                    Thread.sleep(5000);
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 } catch (InterruptedException e) {

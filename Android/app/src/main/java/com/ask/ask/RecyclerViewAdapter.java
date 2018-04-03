@@ -103,7 +103,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     @Override
                     public void onFailure() {
-                        Log.d("RecyclerViewAdapter", "failure posting offer!");
+                        Log.d("RecyclerViewAdapter", "failure posting offer");
                         Toast.makeText(myContext, "Unable to send Offer.", Toast.LENGTH_SHORT).show();
                     }
                 });

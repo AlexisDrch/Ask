@@ -9,7 +9,6 @@
         android:id="@+id/textViewNoOffers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/noOffersMade"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"

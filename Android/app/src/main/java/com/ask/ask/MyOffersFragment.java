@@ -53,7 +53,7 @@ public class MyOffersFragment extends Fragment {
     private List<String> listElements;
     private HashMap<String, List<String>> hashMapOfferData;
 
-    private int offerCount = 0;
+    private static int offerCount = 0;
     private int offerColor;
 
     public MyOffersFragment() {
@@ -110,41 +110,44 @@ public class MyOffersFragment extends Fragment {
                 offerCount = 0;
                 offerColor = R.color.offerPending; //defaulted
 
-                if (offerHashMap.size() == 0) { //no current Requests
+                Log.d("OFFERS FRAGMENT", "offerHashMap size = " + offerHashMap.size());
+                if (offerHashMap.size() == 0) { //no current Offers made by User
                     textViewNoOffers = (TextView) rootView.findViewById(R.id.textViewNoOffers);
-                    textViewNoOffers.setVisibility(View.VISIBLE);
-                }
+                    textViewNoOffers.setText(R.string.noOffersMade);
+                } else {
 
-                for (Offer currentOffer : offerHashMap.values()) {
-                    Log.d("CURRENT OFFER", currentOffer.getRequest_id() + " STATUS: " + currentOffer.getStatus());
+                    for (Offer currentOffer : offerHashMap.values()) {
+                        Log.d("OFFERS FRAGMENT", "CURRENT OFFER: ID: " + currentOffer.getRequest_id() + " STATUS: " + currentOffer.getStatus());
 
-                    final Item currentItem = LocalData.getHashMapItemsById().get(currentOffer.getBelonging_id());
+                        final Item currentItem = LocalData.getHashMapItemsById().get(currentOffer.getBelonging_id());
 
-                    if (currentItem != null) {
-                        String currentOfferInfoStr = "";
+                        if (currentItem != null) {
+                            String currentOfferInfoStr = "";
 
-                        if (currentOffer.getStatus() == LocalData.OFFER_PENDING_FOR_REQUEST) { //PENDING
-                            offerColor = R.color.offerPending;
-                            Log.d("OFFERS FRAGMENT", "PENDING");
-                        } else if (currentOffer.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) { //ACCEPTED
-                            offerColor = R.color.offerAccepted;
-                            Log.d("OFFERS FRAGMENT", "ACCEPTED");
-                        } else { //DENIED
-                            offerColor = R.color.offerDenied;
-                            Log.d("OFFERS FRAGMENT", "DENIED");
+                            if (currentOffer.getStatus() == LocalData.OFFER_PENDING_FOR_REQUEST) { //PENDING
+                                offerColor = R.color.offerPending;
+                                Log.d("OFFERS FRAGMENT", "OFFER_PENDING_FOR_REQUEST");
+                            } else if (currentOffer.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) { //ACCEPTED
+                                offerColor = R.color.offerAccepted;
+                                Log.d("OFFERS FRAGMENT", "OFFER_ACCEPTED_FOR_REQUEST");
+                            } else if (currentOffer.getStatus() == LocalData.OFFER_DENIED){ //DENIED
+                                offerColor = R.color.offerDenied;
+                                Log.d("OFFERS FRAGMENT", "LocalData");
+                            }
+
+                            currentOfferInfoStr = offerCount + "#Name: " + "REQUESTER NAME" + "#Status: " + currentOffer.getStatus()
+                                    + "#Request Id: " + currentOffer.getRequest_id()
+                                    + "#" + offerColor + "#" + currentItem.getIcon();
+
+                            listItemImages.add(currentOfferInfoStr);
+                            hashMapOfferData.put(currentOfferInfoStr, listElements);
+
+                            offerCount++;
                         }
 
-                        currentOfferInfoStr = offerCount + "#Name: " + "Requester name" + "#Status: " + currentOffer.getStatus()
-                                + "#Request Id: " + currentOffer.getRequest_id()
-                                + "#" + offerColor + "#" + currentItem.getIcon();
+                    } //end for loop
 
-                        listItemImages.add(currentOfferInfoStr);
-                        hashMapOfferData.put(currentOfferInfoStr, listElements);
-
-                        offerCount++;
-                    }
-
-                    expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
+                    expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers); //defined in fragment_offers.xml
                     expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemImages, hashMapOfferData);
                     expandableListViewOffers.setAdapter(expandableListViewAdapter);
                     int[] color = {Color.BLACK, Color.BLACK};

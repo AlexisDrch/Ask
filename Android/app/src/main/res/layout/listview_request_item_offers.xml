@@ -9,26 +9,30 @@
     <LinearLayout
         android:layout_width="150dp"
         android:layout_height="90dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent">
 
         <TextView
             android:id="@+id/textViewProviderName"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"
-            android:text=""
+            android:gravity="center"
+            android:text="Provider: Alexander Fache"
+            android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"
-            android:text=""
+            android:text="Price: $33"
+            android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/textViewProviderName" />

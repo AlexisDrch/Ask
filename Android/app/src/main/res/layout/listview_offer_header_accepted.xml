@@ -35,8 +35,8 @@
             android:gravity="center"
             android:text="Message"
             android:textAlignment="center"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textAllCaps="false"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
