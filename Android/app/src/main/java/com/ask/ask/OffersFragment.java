@@ -139,23 +139,24 @@ public class OffersFragment extends Fragment {
                         imageCount++;
                     }
 
+                    expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
+                    expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemImages, hashMapOfferData);
+                    expandableListViewOffers.setAdapter(expandableListViewAdapter);
+                    int[] color = {Color.BLACK, Color.BLACK};
+                    expandableListViewOffers.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
+                    expandableListViewOffers.setDividerHeight(4);
+
+                    Display display = getActivity().getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
+                    int width = size.x;
+
+                    expandableListViewOffers.setIndicatorBounds(width - 100, width);
+
                 }
 
-                expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
-                expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemImages, hashMapOfferData);
-                expandableListViewOffers.setAdapter(expandableListViewAdapter);
-                int[] color = {Color.BLACK, Color.BLACK};
-                expandableListViewOffers.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
-                expandableListViewOffers.setDividerHeight(4);
-
-                Display display = getActivity().getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                int width = size.x;
-
-                expandableListViewOffers.setIndicatorBounds(width - 100, width);
-
             }
+
             @Override
             public void onFailure() {
                 Toast.makeText(getContext(), "Failure to receive your Offers.", Toast.LENGTH_SHORT).show();

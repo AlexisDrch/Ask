@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.w3c.dom.Text;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -122,6 +126,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 @Override
                 public void onClick(View v) {
                     //TODO: switch to messaging screen
+
 
 
                     Toast.makeText(v.getContext(), "Go to Message Screen.", Toast.LENGTH_SHORT).show();

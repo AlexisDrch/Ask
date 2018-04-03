@@ -58,8 +58,11 @@ public class MainActivity extends AppCompatActivity
     private CardView card;
     private Toolbar tb;
 
+<<<<<<< HEAD
     private Button askButton;
 
+=======
+>>>>>>> 53ff6afd8555b86ae658b8a0929a513069009db3
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -270,6 +273,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
+<<<<<<< HEAD
     public void toggleNewRequestFragment(Fragment requestedFragment){
         //replace existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -279,6 +283,8 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
+=======
+>>>>>>> 53ff6afd8555b86ae658b8a0929a513069009db3
     /**
      *
      */

@@ -127,7 +127,7 @@ public class RequestsFragment extends Fragment {
                             Log.d("CURRENT REQUEST", "ID: " + currentRequest.getRequest_id() + " STATUS: " + currentRequest.getStatus());
                             if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_WITH_PENDING_OFFERS) { //With or without pending Offers
 
-                                if (offersForRequestHashMap != null && offersForRequestHashMap.size() > 0) {
+                                if (offersForRequestHashMap != null && offersForRequestHashMap.size() > 0) { //add if no offer accepted
                                     Log.d("OFFER HASH MAP", "SIZE: " + offersForRequestHashMap.size());
 
                                     numOffersForCurrentRequest = offersForRequestHashMap.size();
@@ -154,11 +154,14 @@ public class RequestsFragment extends Fragment {
                                 Log.d("OFFER HASH MAP", "OFFER ACCEPTED");
                             }
 
-                            String currentRequestInfoStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
+                            //current Request information
+//                            String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Date: " + currentRequest.getBegin_date() + " - "
+//                                    + currentRequest.getEnd_date() + "#" + requestColor + "#" + currentItem.getIcon();
+                            String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
                                     + "#Status: " + currentRequest.getStatus() + "#" + requestColor + "#" + currentItem.getIcon();
-                            listItemImages.add(currentRequestInfoStr);
+                            listItemImages.add(imageHeaderStr);
 
-                            hashMapRequestData.put(currentRequestInfoStr, listElements);
+                            hashMapRequestData.put(imageHeaderStr, listElements);
                             imageCount++;
 
                             requestCount++;

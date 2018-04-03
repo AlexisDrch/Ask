@@ -14,5 +14,4 @@
     <color name="offerPending">#f442e8</color>
     <color name="offerAccepted">#00695c</color>
     <color name="offerDenied">#ff0000</color>
-
 </resources>
