@@ -73,6 +73,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
+                String provider_name = currentUser.getName();
+                String provider_surname = currentUser.getSurname();
 
                 final Offer newOffer = new Offer(
                         ""+currentRequest.getRequester_id(),
@@ -85,7 +87,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         ""+currentRequest.getEnd_date(),
                         ""+currentRequest.getDescription(),
                         "MESSAGE");
-
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object
                 final String url = "https://ask-capa.herokuapp.com/api/offers";

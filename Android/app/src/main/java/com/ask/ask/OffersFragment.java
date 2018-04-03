@@ -47,12 +47,14 @@ public class OffersFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public static HashMap<String, Offer> offerHashMap;
     private ExpandableListView expandableListViewOffers;
     private ExpandableListAdapter expandableListViewAdapter;
-    private List<Integer> listItemImages;
+    public static HashMap<String, Offer> offerHashMap;
+    private List<String> listItemImages;
     private List<String> listElements;
-    private HashMap<Integer, List<String>> hashMapOfferData;
+    private HashMap<String, List<String>> hashMapOfferData;
+
+    private int offerColor;
 
     public OffersFragment() {
         // Required empty public constructor
@@ -99,43 +101,62 @@ public class OffersFragment extends Fragment {
         fetcher.jsonReader(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray jsonArrayOffers) {
-                Log.d("offffffer", jsonArrayOffers.toString());
                 offerHashMap = JsonParser.JsonArrayOffersToHashMapOffers(jsonArrayOffers);
+
+                hashMapOfferData = new HashMap<>();
                 listItemImages = new ArrayList<>();
                 listElements = null;
 
+                offerColor = R.color.offerPending; //defaulted
+
+                int imageCount = 0;
                 for (Offer currentOffer : offerHashMap.values()) {
-                    final Item currentItem = LocalData.getHashMapItemsById().get(currentOffer.getItemFulfilling_id());
+                    Log.d("CURRENT OFFER", currentOffer.getRequest_id() + " STATUS: " + currentOffer.getStatus());
+
+                    final Item currentItem = LocalData.getHashMapItemsById().get(currentOffer.getBelonging_id());
+
                     if (currentItem != null) {
-                        listItemImages.add(currentItem.getIcon());
-                        listElements = new ArrayList<>();
+                        String currentOfferInfoStr = "";
 
-                        listElements.add("Item: " + currentItem.getName());
-                        listElements.add("Requester: " + "Name of Requester");
-                        listElements.add("Date: " + currentOffer.getBeginDate() + " - " + currentOffer.getEndDate());
-                        listElements.add("Price: " + currentItem.getPrice());
-                        listElements.add("Description: " + currentOffer.getDescription());
-                        listElements.add("Status: " + currentOffer.getStatus());
+                        if (currentOffer.getStatus() == LocalData.OFFER_PENDING_FOR_REQUEST) { //PENDING
+                            offerColor = R.color.offerPending;
+                            Log.d("OFFERS FRAGMENT", "PENDING");
+                        } else if (currentOffer.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) { //ACCEPTED
+                            offerColor = R.color.offerAccepted;
+                            Log.d("OFFERS FRAGMENT", "ACCEPTED");
+                        } else { //DENIED
+                            offerColor = R.color.offerDenied;
+                            Log.d("OFFERS FRAGMENT", "DENIED");
+                        }
 
-                        hashMapOfferData.put(currentItem.getIcon(), listElements);
+                        currentOfferInfoStr = imageCount + "#Name: " + "Requester name" + "#Status: " + currentOffer.getStatus()
+                                + "#Request Id: " + currentOffer.getRequest_id()
+                                + "#" + offerColor + "#" + currentItem.getIcon();
+
+                        listItemImages.add(currentOfferInfoStr);
+                        hashMapOfferData.put(currentOfferInfoStr, listElements);
+
+                        imageCount++;
                     }
+
+                    expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
+                    expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemImages, hashMapOfferData);
+                    expandableListViewOffers.setAdapter(expandableListViewAdapter);
+                    int[] color = {Color.BLACK, Color.BLACK};
+                    expandableListViewOffers.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
+                    expandableListViewOffers.setDividerHeight(4);
+
+                    Display display = getActivity().getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
+                    int width = size.x;
+
+                    expandableListViewOffers.setIndicatorBounds(width - 100, width);
+
                 }
 
-                expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);
-                expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemImages, hashMapOfferData);
-                expandableListViewOffers.setAdapter(expandableListViewAdapter);
-                int[] color = {Color.BLACK, Color.BLACK};
-                expandableListViewOffers.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
-                expandableListViewOffers.setDividerHeight(4);
-
-                Display display = getActivity().getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                int width = size.x;
-
-                expandableListViewOffers.setIndicatorBounds(width - 100, width);
-
             }
+
             @Override
             public void onFailure() {
                 Toast.makeText(getContext(), "Failure to receive your Offers.", Toast.LENGTH_SHORT).show();

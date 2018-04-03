@@ -35,8 +35,13 @@ public class POSTData {
     private int POST_REQUEST = 2;
     private int POST_OFFER = 3;
     private int POST_LOGIN = 4;
+    private int POST_ACCEPT_OFFER = 5;
     private String mEmail = "";
     private String mPassword = "";
+
+    private String request_id = "";
+    private String provider_id = "";
+    private String message = "";
 
     public POSTData() {
         STATUS = BEGIN;
@@ -74,11 +79,34 @@ public class POSTData {
         return STATUS;
     }
 
+    public String getRequest_id() {
+        return request_id;
+    }
+
+    public void setRequest_id(String request_id) {
+        this.request_id = request_id;
+    }
+
+    public String getProvider_id() {
+        return provider_id;
+    }
+
+    public void setProvider_id(String provider_id) {
+        this.provider_id = provider_id;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public void postRequest(String url, Request request, Context context, final VolleyCallback volleyCallback) {
         setStatus(POST_REQUEST);
         setUrl(url);
         setRequest(request);
-        Log.d("NEW REQUEST", request.toDescriptiveString());
         setContext(context);
         createPOST(volleyCallback);
     }
@@ -100,8 +128,17 @@ public class POSTData {
         createPOST(volleyCallback);
     }
 
+    public void postAcceptOffer(String url, String request_id, String provider_id, String message, Context context, final VolleyCallback volleyCallback) {
+        setStatus(POST_ACCEPT_OFFER);
+        setUrl(url);
+        setRequest_id(request_id);
+        setProvider_id(provider_id);
+        setMessage(message);
+        setContext(context);
+        createPOST(volleyCallback);
+    }
+
     private void createPOST(final VolleyCallback volleyCallback) {
-        Log.d("TEST", "5");
         RequestQueue postQueue = Volley.newRequestQueue(context);
 
         StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.POST, url,
@@ -128,7 +165,6 @@ public class POSTData {
         ) {
             @Override
             protected Map<String, String> getParams() {
-                Log.d("TEST", "6");
                 if (STATUS == POST_REQUEST) {
                     Log.d("POST", "POST_REQUEST");
                     return getRequestParams();
@@ -138,6 +174,9 @@ public class POSTData {
                 } else if (STATUS == POST_LOGIN) {
                     Log.d("POST", "POST_LOGIN");
                     return getLoginParams();
+                } else if (STATUS == POST_ACCEPT_OFFER) {
+                    Log.d("POST", "POST_ACCEPT_OFFER");
+                    return getAcceptOfferParams();
                 } else {
                     Log.d("POST", "NULL");
                     return null;
@@ -145,9 +184,7 @@ public class POSTData {
             }
         };
 
-        Log.d("TEST", "9");
         postQueue.add(postRequest);
-        Log.d("TEST", "10");
     }
 
     private Map<String, String> getRequestParams() {
@@ -164,18 +201,16 @@ public class POSTData {
     }
 
     private Map<String, String> getOfferParams() {
-        Log.d("TEST", "7");
         Map<String, String> offerParams = new HashMap<>();
         offerParams.put("belonging_id", "-1");
-        offerParams.put("request_id", "" + offer.getRequester_id());
+        offerParams.put("request_id", "" + offer.getRequest_id());
         offerParams.put("provider_id", "" + offer.getProvider_id());
-        offerParams.put("begin_date", offer.getBeginDate());
-        offerParams.put("end_date", offer.getEndDate());
+        offerParams.put("begin_date", offer.getBegin_date());
+        offerParams.put("end_date", offer.getEnd_date());
         offerParams.put("lon", "-1"); //TODO: would ask user to set location as temporary variables
         offerParams.put("lat", "-1");
         offerParams.put("description", offer.getDescription());
         offerParams.put("message", offer.getMessage());
-        Log.d("TEST", "8");
 
         return offerParams;
     }
@@ -186,6 +221,21 @@ public class POSTData {
         offerParams.put("password", "" + mPassword);
 
         return offerParams;
+    }
+
+    private Map<String, String > getAcceptOfferParams() {
+        Map<String, String> acceptOfferParams = new HashMap<>();
+        acceptOfferParams.put("belonging_id", "-1");
+        acceptOfferParams.put("request_id", "" + getRequest_id());
+        acceptOfferParams.put("provider_id", "" + getProvider_id());
+        acceptOfferParams.put("begin_date", "");
+        acceptOfferParams.put("end_date", "");
+        acceptOfferParams.put("lon", "-1");
+        acceptOfferParams.put("lat", "-1");
+        acceptOfferParams.put("description", "");
+        acceptOfferParams.put("message", getMessage());
+
+        return acceptOfferParams;
     }
 
 }

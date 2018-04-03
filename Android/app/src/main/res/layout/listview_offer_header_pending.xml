@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewNumOffersForRequest"
+            android:id="@+id/textViewRequesterName"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:gravity="center"
@@ -29,7 +29,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textViewDate"
+            android:id="@+id/textViewRequestId"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:gravity="center"

@@ -15,12 +15,18 @@ public class Offer implements Serializable {
     private String provider_id;
     private String offer_id;
     private String offer_price;
+    private String request_id;
     private String itemFulfilling_id;
-    private String itemProviding_id;
+    private String belonging_id;
     private String begin_date;
-    private String end_Date;
+    private String end_date;
     private String description;
     private String message;
+
+    private String provider_name;
+    private String provider_surname;
+    private String lon;
+    private String lat;
 
     private int NOT_SELECTED = -1;
     private int IN_PROGRESS = 0;
@@ -28,46 +34,44 @@ public class Offer implements Serializable {
     private int MATCHED = 2;
     private int status;
 
+
     public Offer(String requester_id, String provider_id, String offer_id, String offer_price, String itemFulfilling_id, String itemProviding_id, String begin_date, String end_Date, String description, String message) {
         this.requester_id = requester_id;
+        this.request_id = request_id;
         this.provider_id = provider_id;
+        this.provider_name = provider_name;
+        this.provider_surname = provider_surname;
         this.offer_id = offer_id;
         this.offer_price = offer_price;
         this.itemFulfilling_id = itemFulfilling_id;
-        this.itemProviding_id = itemProviding_id;
+        this.belonging_id = belonging_id;
         this.begin_date = begin_date;
-        this.end_Date = end_Date;
+        this.end_date = end_date;
         this.description = description;
         this.message = message;
+        this.lon = lon;
+        this.lat = lat;
         this.status = IN_PROGRESS;
-    }
-
-    public String getRequester_id() {
-        return requester_id;
     }
 
     public String getProvider_id() {
         return provider_id;
     }
 
-    public String getOffer_id() {
-        return offer_id;
+    public String getRequest_id() {
+        return request_id;
     }
 
-    public String getItemFulfilling_id() {
-        return itemFulfilling_id;
+    public String getBelonging_id() {
+        return belonging_id;
     }
 
-    public String getItemProviding_id() {
-        return itemProviding_id;
-    }
-
-    public String getBeginDate() {
+    public String getBegin_date() {
         return begin_date;
     }
 
-    public String getEndDate() {
-        return end_Date;
+    public String getEnd_date() {
+        return end_date;
     }
 
     public String getDescription() {
@@ -78,16 +82,24 @@ public class Offer implements Serializable {
         return message;
     }
 
+    public String getProvider_name() {
+        return provider_name;
+    }
+
+    public String getProvider_surname() {
+        return provider_surname;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
     public int getStatus() {
         return status;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public String getOffer_price() {
@@ -105,21 +117,22 @@ public class Offer implements Serializable {
                 ", provider_id='" + provider_id + '\'' +
                 ", offer_id='" + offer_id + '\'' +
                 ", offer_price='" + offer_price + '\'' +
+                ", request_id='" + request_id + '\'' +
                 ", itemFulfilling_id='" + itemFulfilling_id + '\'' +
-                ", itemProviding_id='" + itemProviding_id + '\'' +
+                ", itemProviding_id='" + belonging_id + '\'' +
                 ", begin_date='" + begin_date + '\'' +
-                ", end_Date='" + end_Date + '\'' +
+                ", end_Date='" + end_date + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
     }
 
     public String toDescriptiveString(){
-        Item fulfillingItem = LocalData.getHashMapItemsById().get(this.getItemFulfilling_id());
+        Item item = LocalData.getHashMapItemsById().get(this.getBelonging_id());
 
-        return "You are fulfilling a " + fulfillingItem.getName() +
-                " from " + this.getBeginDate() + " to " + this.getEndDate() +
-                " for $" + fulfillingItem.getPrice() + " per day.";
+        return "You are fulfilling a " + item.getName() +
+                " from " + this.getBegin_date() + " to " + this.getEnd_date() +
+                " for $" + item.getPrice() + " per day.";
     }
 
 }

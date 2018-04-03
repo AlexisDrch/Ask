@@ -29,7 +29,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textViewDate"
+            android:id="@+id/textViewRequestId"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:gravity="center"
