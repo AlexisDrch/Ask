@@ -125,9 +125,9 @@ public class RequestsFragment extends Fragment {
                             listElements = new ArrayList<>();
 
                             Log.d("CURRENT REQUEST", "ID: " + currentRequest.getRequest_id() + " STATUS: " + currentRequest.getStatus());
-                            if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_PENDING) { //TODO: need constants
+                            if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_WITH_PENDING_OFFERS) { //With or without pending Offers
 
-                                if (offersForRequestHashMap != null && offersForRequestHashMap.size() > 0) { //add if no offer accepted
+                                if (offersForRequestHashMap != null && offersForRequestHashMap.size() > 0) {
                                     Log.d("OFFER HASH MAP", "SIZE: " + offersForRequestHashMap.size());
 
                                     numOffersForCurrentRequest = offersForRequestHashMap.size();
@@ -135,33 +135,30 @@ public class RequestsFragment extends Fragment {
 
                                     //loop through Offers for current Request and create String description to add to listElements
                                     for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
-                                        String offerElementsStr = "Provider: " + currentOfferForCurrentRequest.getProvider_name() + " "
+                                        String currentOfferInfoStr = "Provider: " + currentOfferForCurrentRequest.getProvider_name() + " "
                                                 + currentOfferForCurrentRequest.getProvider_surname() + " " + currentOfferForCurrentRequest.getProvider_id() +
                                                 "#Price: $" + currentItem.getPrice() + "0#" + requestColor + "#" + currentRequest.getRequest_id()
                                                 + "#" + currentOfferForCurrentRequest.getProvider_id();
-                                        listElements.add(offerElementsStr);
+
+                                        listElements.add(currentOfferInfoStr);
                                     }
                                 } else {
                                     numOffersForCurrentRequest = 0;
                                     requestColor = R.color.requestWithOutOffer;
-                                    Log.d("OFFER HASH MAP", "NULL");
+                                    Log.d("OFFER HASH MAP", "NO OFFERS");
                                 }
 
-                            } else if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_ACCEPTED){ //accepted an offer for this request
+                            } else if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_WITH_OFFER_SELECTED){ //Requester accepted an Offer
                                 numOffersForCurrentRequest = -1;
                                 requestColor = R.color.requestWithOfferAccepted;
-                                Log.d("OFFER HASH MAP", "ACCEPTED");
+                                Log.d("OFFER HASH MAP", "OFFER ACCEPTED");
                             }
 
-
-                            //current Request information
-//                            String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Date: " + currentRequest.getBegin_date() + " - "
-//                                    + currentRequest.getEnd_date() + "#" + requestColor + "#" + currentItem.getIcon();
-                            String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
+                            String currentRequestInfoStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
                                     + "#Status: " + currentRequest.getStatus() + "#" + requestColor + "#" + currentItem.getIcon();
-                            listItemImages.add(imageHeaderStr);
+                            listItemImages.add(currentRequestInfoStr);
 
-                            hashMapRequestData.put(imageHeaderStr, listElements);
+                            hashMapRequestData.put(currentRequestInfoStr, listElements);
                             imageCount++;
 
                             requestCount++;

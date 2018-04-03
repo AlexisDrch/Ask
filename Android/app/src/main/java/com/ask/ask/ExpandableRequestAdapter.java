@@ -2,8 +2,6 @@ package com.ask.ask;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -79,21 +73,24 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         String headerStr = (String) getGroup(position);
         String[] headerArr = headerStr.split("#");
         String numOffersForCurrentRequest = headerArr[1];
-        String date = headerArr[2];
+        String requestId = headerArr[2];
         String status = headerArr[3];
         int temp = status.indexOf(":");
         int statusInt = Integer.parseInt(status.substring(temp + 1).trim());
         int color = Integer.parseInt(headerArr[4]);
         int imageIcon = Integer.parseInt(headerArr[5]);
 
-        if (statusInt == LocalData.REQUEST_PENDING) {
+        view.setBackgroundColor(view.getResources().getColor(color));
+
+        if (statusInt == LocalData.REQUEST_WITH_PENDING_OFFERS) {
 
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_request_header, null);
+                view = inflater.inflate(R.layout.listview_request_header_pending, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewHeader.setImageResource(imageIcon);
 
             TextView textViewNumOffersForRequest = (TextView) view.findViewById(R.id.textViewNumOffersForRequest);
             textViewNumOffersForRequest.setText(numOffersForCurrentRequest);
@@ -101,20 +98,18 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
             textViewStatus.setText(status);
 
-            TextView textViewDate = (TextView) view.findViewById(R.id.textViewDate);
-            textViewDate.setText(date);
+            TextView textViewRequestId = (TextView) view.findViewById(R.id.textViewRequestId);
+            textViewRequestId.setText(requestId);
 
-            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
-            imageViewHeader.setImageResource(imageIcon);
-
-        } else if (statusInt == LocalData.REQUEST_ACCEPTED) {
+        } else if (statusInt == LocalData.REQUEST_WITH_OFFER_SELECTED) {
 
             if (view == null) {
                 LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.listview_request_header_accepted, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewHeader.setImageResource(imageIcon);
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
             textViewStatus.setText(status);
@@ -133,9 +128,6 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 }
             });
 
-            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
-            imageViewHeader.setImageResource(imageIcon);
-
         }
 
         return view;
@@ -153,7 +145,6 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         String name = elementsArr[0];
         String price = elementsArr[1];
         int color = Integer.parseInt(elementsArr[2]);
-//        String colorStr = Integer.toHexString(color).toUpperCase().substring(2);
         final String request_id = elementsArr[3];
         final String provider_id = elementsArr[4];
 
@@ -173,6 +164,9 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 intent.putExtra("request_id", request_id);
                 intent.putExtra("provider_id", provider_id);
 
+                //TODO: send OFFER_ACCEPTED_FOR_REQUEST to database with the offer_id
+
+
                 v.getContext().startActivity(intent);
             }
         });
@@ -184,6 +178,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 //TODO: send update to database
 
 
+                //TODO: send OFFER_DENIED to database with the offer_id
 
 
                 Toast.makeText(v.getContext(), "Offer Denied.", Toast.LENGTH_SHORT).show();

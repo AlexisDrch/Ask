@@ -54,6 +54,8 @@ public class OffersFragment extends Fragment {
     private List<String> listElements;
     private HashMap<String, List<String>> hashMapOfferData;
 
+    private int offerColor;
+
     public OffersFragment() {
         // Required empty public constructor
     }
@@ -99,45 +101,44 @@ public class OffersFragment extends Fragment {
         fetcher.jsonReader(new VolleyCallback() {
             @Override
             public void onSuccess(JSONArray jsonArrayOffers) {
-                Log.d("OFFER", jsonArrayOffers.toString());
                 offerHashMap = JsonParser.JsonArrayOffersToHashMapOffers(jsonArrayOffers);
 
                 hashMapOfferData = new HashMap<>();
                 listItemImages = new ArrayList<>();
                 listElements = null;
 
+                offerColor = R.color.offerPending; //defaulted
+
                 int imageCount = 0;
                 for (Offer currentOffer : offerHashMap.values()) {
-                    Log.d("CURRENT OFFER", currentOffer.toString());
+                    Log.d("CURRENT OFFER", currentOffer.getRequest_id() + " STATUS: " + currentOffer.getStatus());
 
                     final Item currentItem = LocalData.getHashMapItemsById().get(currentOffer.getBelonging_id());
+
                     if (currentItem != null) {
-//                        listItemImages.add(currentItem.getIcon());
-//                        listElements = new ArrayList<>();
-//
-//                        listElements.add("Item: " + currentItem.getName());
-//                        listElements.add("Requester: " + "Name of Requester");
-//                        listElements.add("Date: " + currentOffer.getBeginDate() + " - " + currentOffer.getEndDate());
-//                        listElements.add("Price: " + currentItem.getPrice());
-//                        listElements.add("Description: " + currentOffer.getDescription());
-//                        listElements.add("Status: " + currentOffer.getStatus());
-//
-//                        hashMapOfferData.put(currentItem.getIcon(), listElements);
+                        String currentOfferInfoStr = "";
 
-                        listItemImages.add(imageCount + "#" + R.drawable.tent); //need to make this
-                        listElements = new ArrayList<>();
+                        if (currentOffer.getStatus() == LocalData.OFFER_PENDING_FOR_REQUEST) { //PENDING
+                            offerColor = R.color.offerPending;
+                            Log.d("OFFERS FRAGMENT", "PENDING");
+                        } else if (currentOffer.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) { //ACCEPTED
+                            offerColor = R.color.offerAccepted;
+                            Log.d("OFFERS FRAGMENT", "ACCEPTED");
+                        } else { //DENIED
+                            offerColor = R.color.offerDenied;
+                            Log.d("OFFERS FRAGMENT", "DENIED");
+                        }
 
-                        listElements.add("Item: " + currentItem.getName());
-                        listElements.add("Requester: " + "Requester's Name"); //TODO:
-                        listElements.add("Date: " + currentOffer.getBegin_date() + " - " + currentOffer.getEnd_date());
-                        listElements.add("Price: " + currentItem.getPrice());
-                        listElements.add("Description: " + currentOffer.getDescription());
-                        listElements.add("Status: " + currentOffer.getStatus());
+                        currentOfferInfoStr = imageCount + "#Name: " + "Requester name" + "#Status: " + currentOffer.getStatus()
+                                + "#Request Id: " + currentOffer.getRequest_id()
+                                + "#" + offerColor + "#" + currentItem.getIcon();
 
-                        hashMapOfferData.put(imageCount + "#" + R.drawable.tent, listElements); //TODO: item image
+                        listItemImages.add(currentOfferInfoStr);
+                        hashMapOfferData.put(currentOfferInfoStr, listElements);
+
+                        imageCount++;
                     }
 
-                    imageCount++;
                 }
 
                 expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers);

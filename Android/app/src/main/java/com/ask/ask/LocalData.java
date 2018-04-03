@@ -16,8 +16,12 @@ public abstract class LocalData {
     protected static HashMap<String, Item> itemHashMapByName = null;
     public static Boolean currentUserIsLoggedin = false;
 
-    public static int REQUEST_PENDING = 0;
-    public static int REQUEST_ACCEPTED = 1;
+    public static int REQUEST_WITH_PENDING_OFFERS = 0;
+    public static int REQUEST_WITH_OFFER_SELECTED = 1;
+
+    public static int OFFER_PENDING_FOR_REQUEST = 0;
+    public static int OFFER_ACCEPTED_FOR_REQUEST = 1;
+    public static int OFFER_DENIED = 2;
 
     //TODO: something like this maybe for getting, change if better idea
 //    public static String[] getArrayOfItemNames() {
