@@ -76,23 +76,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 String provider_name = currentUser.getName();
                 String provider_surname = currentUser.getSurname();
 
+
                 final Offer newOffer = new Offer(
-                        ""+currentRequest.getRequester_id(),
-                        ""+currentUser.getUser_id(),
-                        "" + price,
-                        ""+currentRequest.getItem_id(),
-                        ""+price,
-                        ""+-1,
-                        "ITEM_PROVIDING_ID",
+                        ""+currentItem.getItem_id(),
+                        ""+currentRequest.getRequest_id(),
+                        "" + currentUser.getUser_id(),
                         ""+currentRequest.getBegin_date(),
                         ""+currentRequest.getEnd_date(),
+                        ""+currentRequest.getLon(),
+                        ""+currentRequest.getLat(),
+                        ""+price,
                         ""+currentRequest.getDescription(),
-                        "MESSAGE");
-
-                  public Offer(String requester_id, String provider_id,
-                        String offer_price, String itemFulfilling_id, String itemProviding_id,
-                        String begin_date, String end_Date, String description, String message)
-
+                        ""+currentRequest.getEnd_date());
 
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object

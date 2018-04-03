@@ -75,7 +75,6 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
         int color = Integer.parseInt(headerInfoArr[4]);
         int imageIcon = Integer.parseInt(headerInfoArr[5]);
 
-        view.setBackgroundColor(view.getResources().getColor(color));
 
         if (status == LocalData.OFFER_PENDING_FOR_REQUEST) {
 
@@ -84,6 +83,7 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_offer_header_pending, null);
             }
 
+            view.setBackgroundColor(view.getResources().getColor(color));
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
@@ -102,6 +102,9 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
                 LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.listview_offer_header_accepted, null);
             }
+
+
+            view.setBackgroundColor(view.getResources().getColor(color));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);

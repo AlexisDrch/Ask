@@ -11,12 +11,9 @@ import java.io.Serializable;
 
 public class Offer implements Serializable {
 
-    private String requester_id;
     private String provider_id;
-    private String offer_id;
     private String offer_price;
     private String request_id;
-    private String itemFulfilling_id;
     private String belonging_id;
     private String begin_date;
     private String end_date;
@@ -34,18 +31,15 @@ public class Offer implements Serializable {
     private int MATCHED = 2;
     private int status;
 
-
-    public Offer(String requester_id, String request_id,
-                 String provider_id, String offer_price,
-                 String belonging_id, String begin_date, String end_Date,
-                 String description, String message) {
-        this.requester_id = requester_id;
+    public Offer(String belonging_id, String request_id,
+                 String provider_id,
+                 String begin_date,String end_date,
+                 String lon, String lat,
+                 String offer_price, String description,
+                 String message) {
         this.request_id = request_id;
         this.provider_id = provider_id;
-        this.provider_name = provider_name;
-        this.provider_surname = provider_surname;
         this.offer_price = offer_price;
-        this.itemFulfilling_id = itemFulfilling_id;
         this.belonging_id = belonging_id;
         this.begin_date = begin_date;
         this.end_date = end_date;
@@ -115,16 +109,15 @@ public class Offer implements Serializable {
     @Override
     public String toString() {
         return "Offer{" +
-                "requester_id='" + requester_id + '\'' +
                 ", provider_id='" + provider_id + '\'' +
-                ", offer_id='" + offer_id + '\'' +
+                ", request_id='" + request_id + '\'' +
                 ", offer_price='" + offer_price + '\'' +
                 ", request_id='" + request_id + '\'' +
-                ", itemFulfilling_id='" + itemFulfilling_id + '\'' +
-                ", itemProviding_id='" + belonging_id + '\'' +
+                ", belonging_id='" + belonging_id + '\'' +
                 ", begin_date='" + begin_date + '\'' +
                 ", end_Date='" + end_date + '\'' +
                 ", description='" + description + '\'' +
+                ", message='" + message + '\'' +
                 ", status=" + status +
                 '}';
     }

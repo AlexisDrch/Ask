@@ -84,7 +84,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         int color = Integer.parseInt(headerArr[4]);
         int imageIcon = Integer.parseInt(headerArr[5]);
 
-        view.setBackgroundColor(view.getResources().getColor(color));
+
 
         if (statusInt == LocalData.REQUEST_WITH_PENDING_OFFERS) {
 
@@ -92,7 +92,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.listview_request_header_pending, null);
             }
-
+            view.setBackgroundColor(view.getResources().getColor(color));
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
@@ -111,7 +111,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.listview_request_header_accepted, null);
             }
-
+            view.setBackgroundColor(view.getResources().getColor(color));
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
