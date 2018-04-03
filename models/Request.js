@@ -35,10 +35,11 @@ var Request = {
 		request.requester_name = requester.name;
 		request.requester_surname = requester.surname;
 		request.requester_ppicture_url = requester.ppicture_url;
+		request.request_price = requester.request_price;
 		//console.log(JSON.stringify(request, null, 2));
 		return db.any(
 			' Insert into "request"' +
-			' (item_id, requester_id, requester_name, requester_surname, requester_ppicture_url,' +
+			' (item_id, requester_id, requester_name, requester_surname, requester_ppicture_url, request_price,' +
 			' status, begin_date, end_date, lon, lat, description)' +
 			' values('+
 				' ${item_id},'+
@@ -46,6 +47,7 @@ var Request = {
 				' ${requester_name},'+
 				' ${requester_surname},'+
 				' ${requester_ppicture_url},'+
+				' ${request_price},'+
 				' ${status},'+
 				' ${begin_date},'+
 				' ${end_date},'+

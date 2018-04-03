@@ -66,7 +66,7 @@ var Offer = {
 				' ${lon},'+
 				' ${lat},'+
 				' ${description},'+
-				' ${message}'+
+				' ${message}'+	
 			');', offer);
 	},
 

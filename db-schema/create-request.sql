@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS "request" (
 	requester_name varchar(500),
 	requester_surname varchar(500),
 	requester_ppicture_url varchar(1000),
+	request_price double precision NOT NULL,
 	status int NOT NULL,
 	begin_date date NOT NULL,
 	end_date date NOT NULL,
