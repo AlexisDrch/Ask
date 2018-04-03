@@ -4,21 +4,26 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
-
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AboutFragment.OnFragmentInteractionListener} interface
+ * {@link MySettingsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link AboutFragment#newInstance} factory method to
+ * Use the {@link MySettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AboutFragment extends Fragment {
+public class MySettingsFragment extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,9 +34,12 @@ public class AboutFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private ListView listViewProfiles;
+    private Switch switchNotifications;
+    private CheckBox checkBoxRequestUpdates;
+    private CheckBox checkBoxOfferUpdates;
+    private Button buttonLogout;
 
-    public AboutFragment() {
+    public MySettingsFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +49,11 @@ public class AboutFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AboutFragment.
+     * @return A new instance of fragment MySettingsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AboutFragment newInstance(String param1, String param2) {
-        AboutFragment fragment = new AboutFragment();
+    public static MySettingsFragment newInstance(String param1, String param2) {
+        MySettingsFragment fragment = new MySettingsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,19 +73,39 @@ public class AboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_about, container, false);
-        listViewProfiles = (ListView) rootView.findViewById(R.id.listViewProfiles);
 
-        String[] profileData = {"Alexis#masters student#" + R.drawable.ic_profile,
-                "Pulak#2nd year CS#" + R.drawable.ic_profile,
-                "Alex#2nd year EE#" + R.drawable.ic_profile,
-                "Carolyn#3rd year CS#" + R.drawable.ic_profile,
-                "Georgia Tech Lorraine#Spring 2018#" + R.drawable.ic_about};
+        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        switchNotifications = (Switch) rootView.findViewById(R.id.switchNotifications);
+        checkBoxRequestUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxRequestUpdates);
+        checkBoxOfferUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxOfferUpdates);
+        buttonLogout = (Button) rootView.findViewById(R.id.buttonLogout);
 
-        ProfileAdapter adapter = new ProfileAdapter(getContext(), R.layout.listview_about_profile_row, profileData);
+        checkBoxRequestUpdates.setEnabled(false);
+        checkBoxOfferUpdates.setEnabled(false);
 
-        listViewProfiles = (ListView) rootView.findViewById(R.id.listViewProfiles);
-        listViewProfiles.setAdapter(adapter);
+        switchNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.d("Settings - onCreateView", "checked");
+                    checkBoxRequestUpdates.setEnabled(true);
+                    checkBoxOfferUpdates.setEnabled(true);
+                } else {
+                    Log.d("Settings - onCreateView", "unchecked");
+                    checkBoxRequestUpdates.setEnabled(false);
+                    checkBoxOfferUpdates.setEnabled(false);
+                }
+
+            }
+        });
+
+        buttonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: save all change and log out user
+                Toast.makeText(getContext(), "Logging out.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return rootView;
     }

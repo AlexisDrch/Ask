@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,14 +32,14 @@ import com.elmargomez.typer.Typer;
 public class MainActivity extends AppCompatActivity
     implements
         HomeFragment.OnFragmentInteractionListener,
-        ProfileFragment.OnFragmentInteractionListener,
-        RequestsFragment.OnFragmentInteractionListener,
-        OffersFragment.OnFragmentInteractionListener,
-        SettingsFragment.OnFragmentInteractionListener,
-        AboutFragment.OnFragmentInteractionListener {
+        MyProfileFragment.OnFragmentInteractionListener,
+        MyRequestsFragment.OnFragmentInteractionListener,
+        MyOffersFragment.OnFragmentInteractionListener,
+        MySettingsFragment.OnFragmentInteractionListener,
+        MyAboutFragment.OnFragmentInteractionListener {
 
-    private String DEFAULT_USER_EMAIL = "pulakazad28@gmail.com";
-    private String DEFAULT_USER_PASSWORD = "logs4daze";
+    private String DEFAULT_USER_EMAIL = "alexander.fache@gmail.com";
+    private String DEFAULT_USER_PASSWORD = "empIYAH";
 
     //toolbars
     private CollapsingToolbarLayout mToolbar;
@@ -76,7 +74,6 @@ public class MainActivity extends AppCompatActivity
         // side-menu general views
         navigationDrawerLayout = findViewById(R.id.navigation_drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
-
 
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -224,23 +221,23 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.fragment_profile:
                 Log.d("selectDrawerItem", "2b");
-                requestedFragmentClass = ProfileFragment.class;
+                requestedFragmentClass = MyProfileFragment.class;
                 break;
             case R.id.fragment_requests:
                 Log.d("selectDrawerItem", "2c");
-                requestedFragmentClass = RequestsFragment.class;
+                requestedFragmentClass = MyRequestsFragment.class;
                 break;
             case R.id.fragment_offers:
                 Log.d("selectDrawerItem", "2d");
-                requestedFragmentClass = OffersFragment.class;
+                requestedFragmentClass = MyOffersFragment.class;
                 break;
             case R.id.fragment_settings:
                 Log.d("selectDrawerItem", "2f");
-                requestedFragmentClass = SettingsFragment.class;
+                requestedFragmentClass = MySettingsFragment.class;
                 break;
             case R.id.fragment_about:
                 Log.d("selectDrawerItem", "2g");
-                requestedFragmentClass = AboutFragment.class;
+                requestedFragmentClass = MyAboutFragment.class;
                 break;
             default:
                 Log.d("selectDrawerItem", "2g");

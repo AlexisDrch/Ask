@@ -14,9 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import java.util.ArrayList;
@@ -26,12 +25,12 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RequestsFragment.OnFragmentInteractionListener} interface
+ * {@link MyRequestsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RequestsFragment#newInstance} factory method to
+ * Use the {@link MyRequestsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RequestsFragment extends Fragment {
+public class MyRequestsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,6 +42,8 @@ public class RequestsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private TextView textViewNoRequests;
+
     private ExpandableListView expandableListViewRequests;
     private ExpandableListAdapter expandableListViewAdapter;
     private static HashMap<String, Request> requestHashMap = null; //
@@ -52,11 +53,10 @@ public class RequestsFragment extends Fragment {
     private HashMap<String, List<String>> hashMapRequestData;
 
     private static int requestCount = 0;
-    private int imageCount = 0;
     private int requestColor;
     private int numOffersForCurrentRequest;
 
-    public RequestsFragment() {
+    public MyRequestsFragment() {
         // Required empty public constructor
     }
 
@@ -66,11 +66,11 @@ public class RequestsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RequestsFragment.
+     * @return A new instance of fragment MyRequestsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RequestsFragment newInstance(String param1, String param2) {
-        RequestsFragment fragment = new RequestsFragment();
+    public static MyRequestsFragment newInstance(String param1, String param2) {
+        MyRequestsFragment fragment = new MyRequestsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -109,7 +109,12 @@ public class RequestsFragment extends Fragment {
                 listElements = null;
 
                 requestCount = 0;
-                imageCount = 0;
+
+                if (requestHashMap.size() == 0) { //no current Requests
+                    textViewNoRequests = (TextView) rootView.findViewById(R.id.textViewNoRequests);
+                    textViewNoRequests.setVisibility(View.VISIBLE);
+                }
+
                 for (final Request currentRequest : requestHashMap.values()) {
                     final Item currentItem = LocalData.getHashMapItemsById().get(currentRequest.getItem_id());
 
@@ -155,14 +160,11 @@ public class RequestsFragment extends Fragment {
                             }
 
                             //current Request information
-//                            String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Date: " + currentRequest.getBegin_date() + " - "
-//                                    + currentRequest.getEnd_date() + "#" + requestColor + "#" + currentItem.getIcon();
-                            String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
+                            String imageHeaderStr = requestCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
                                     + "#Status: " + currentRequest.getStatus() + "#" + requestColor + "#" + currentItem.getIcon();
                             listItemImages.add(imageHeaderStr);
 
                             hashMapRequestData.put(imageHeaderStr, listElements);
-                            imageCount++;
 
                             requestCount++;
                             if (requestCount == requestHashMap.size()) { //gone through all Requests and their Offers
@@ -197,9 +199,8 @@ public class RequestsFragment extends Fragment {
     }
 
     public void assignToExpandableListView(View rootView) {
-        Log.d("hashMapRequestData", hashMapRequestData.toString());
+//        Log.d("hashMapRequestData", hashMapRequestData.toString());
 
-        //add to expandable list view
         expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
         expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemImages, hashMapRequestData);
         expandableListViewRequests.setAdapter(expandableListViewAdapter);

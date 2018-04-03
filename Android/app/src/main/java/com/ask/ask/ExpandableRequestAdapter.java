@@ -2,19 +2,28 @@ package com.ask.ask;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+
 import org.json.JSONArray;
 import org.w3c.dom.Text;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -165,14 +174,10 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         buttonAcceptOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), AcceptOfferConfirmationActivity.class);
-                intent.putExtra("request_id", request_id);
-                intent.putExtra("provider_id", provider_id);
+                sendOffer(v, request_id, provider_id);
+                //TODO: go to messaging page
 
-                //TODO: send OFFER_ACCEPTED_FOR_REQUEST to database with the offer_id
-
-
-                v.getContext().startActivity(intent);
+                Toast.makeText(v.getContext(), "Offer Accepted.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -190,7 +195,77 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             }
         });
 
+        SwipeMenuListView swipeMenuOfferControl = (SwipeMenuListView) view.findViewById(R.id.swipeMenuOfferControl);
+
+        ArrayList<String> listView = new ArrayList<>();
+
+        ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1);
+        swipeMenuOfferControl.setAdapter(adapter);
+
+        final View v = view;
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+                // create "open" item
+                SwipeMenuItem openItem = new SwipeMenuItem(v.getContext());
+                // set item background
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
+                        0xCE)));
+                // set item width
+                openItem.setWidth(dp2px(90));
+                // set item title
+                openItem.setTitle("Open");
+                // set item title fontsize
+                openItem.setTitleSize(18);
+                // set item title font color
+                openItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem);
+
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem(v.getContext());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+                        0x3F, 0x25)));
+                // set item width
+                deleteItem.setWidth(dp2px(90));
+                // set a icon
+                deleteItem.setIcon(R.drawable.ic_delete);
+                // add to menu
+                menu.addMenuItem(deleteItem);
+            }
+        };
+
+        listView.setMenuCreator(creator);
+
+
+
+
+
+
         return view;
+    }
+
+    private void sendOffer(View view, String request_id, String provider_id) {
+        final String url = "https://ask-capa.herokuapp.com/api/offers/accept/" + request_id;
+
+        final View v = view;
+
+        POSTData postData = new POSTData();
+        postData.postAcceptOffer(url, request_id, provider_id, "", v.getContext(), new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONArray jsonArray) {
+                Toast.makeText(v.getContext(), "Offer Accepted.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure() {
+                Toast.makeText(v.getContext(), "Error Accepting Offer.", Toast.LENGTH_SHORT).show();
+                // handle failure on accepting offer
+            }
+
+        });
+
     }
 
     @Override

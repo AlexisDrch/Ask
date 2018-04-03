@@ -35,23 +35,29 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonAcceptOffer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Accept"
-        android:layout_gravity="center_vertical"/>
+    <!--<Button-->
+        <!--android:id="@+id/buttonAcceptOffer"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:text="Accept"-->
+        <!--android:layout_gravity="center_vertical"/>-->
 
-    <Button
-        android:id="@+id/buttonDenyOffer"
+    <!--<Button-->
+        <!--android:id="@+id/buttonDenyOffer"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:text="Deny"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--app:layout_constraintLeft_toRightOf="@+id/buttonAcceptOffer"/>-->
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/swipeMenuOfferControl"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
-        android:text="Deny"
-        android:layout_gravity="center_vertical"
-        app:layout_constraintLeft_toRightOf="@+id/buttonAcceptOffer"/>
+        android:layout_height="wrap_content">
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
 
 </LinearLayout>

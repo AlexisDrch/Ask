@@ -58,5 +58,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="noRequestsMade">You have made no Requests.</string>
+    <string name="noOffersMade">You have made no Offers.</string>
 
 </resources>
