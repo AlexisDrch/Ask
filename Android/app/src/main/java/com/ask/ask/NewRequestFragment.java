@@ -107,11 +107,15 @@ public class NewRequestFragment extends Fragment {
                     String beginDate = textViewBeginDate.getText().toString();
                     String endDate = textViewEndDate.getText().toString();
                     String description = editTextDescription.getText().toString();
+                    String request_price = editTextPrice.getText().toString();
 
                     // create corresponding request object
                     final Request newRequest = new Request(
-                            ""+LocalData.getCurrentUserInstance().getUser_id(), ""+-1,
-                            ""+currentItem.getItem_id(),""+beginDate,
+                            ""+LocalData.getCurrentUserInstance().getUser_id(),
+                            ""+-1,
+                            ""+request_price,
+                            ""+currentItem.getItem_id(),
+                            ""+beginDate,
                             ""+endDate, description);
 
                     //post new request json object

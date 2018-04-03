@@ -65,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final Item currentItem = LocalData.getHashMapItemsById().get(currentRequest.getItem_id());
         holder.itemName.setText(currentItem.getName());
         holder.itemIcon.setImageResource(currentItem.getIcon());
-        String price = "$" + String.valueOf(currentItem.getPrice()) + "0";
+        final String price = String.valueOf(currentItem.getPrice());
         holder.itemPrice.setText(price);
 
         // Match button
@@ -74,9 +74,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View view) {
                 final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
 
-                final Offer newOffer = new Offer(currentRequest.getRequester_id(), "" + currentUser.getUser_id(),
-                        currentRequest.getItem_id(), ""+-1,"ITEM_PROVIDING_ID", currentRequest.getBegin_date(), currentRequest.getEnd_date(),
-                        currentRequest.getDescription(), "MESSAGE");
+                final Offer newOffer = new Offer(
+                        ""+currentRequest.getRequester_id(),
+                        "" + currentUser.getUser_id(),
+                        ""+currentRequest.getItem_id(),
+                        ""+price,
+                        ""+-1,
+                        "ITEM_PROVIDING_ID",
+                        ""+currentRequest.getBegin_date(),
+                        ""+currentRequest.getEnd_date(),
+                        ""+currentRequest.getDescription(),
+                        "MESSAGE");
 
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object

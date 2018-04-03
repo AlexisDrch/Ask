@@ -13,8 +13,9 @@ import java.util.LinkedList;
 
 public class Request implements Serializable {
 
-    public Request(String requester_id, String request_id, String item_id, String begin_date, String end_date, String description) {
+    public Request(String requester_id, String request_id, String request_price, String item_id, String begin_date, String end_date, String description) {
         this.end_date = end_date;
+        this.request_price = request_price;
         this.request_id = request_id;
         this.description = description;
         this.item_id = item_id;
@@ -45,6 +46,8 @@ public class Request implements Serializable {
     private String lat;
 
     private String requester_id;
+
+    private String request_price;
 
     public String getLon ()
     {
@@ -163,6 +166,14 @@ public class Request implements Serializable {
     public void setRequester_id (String requester_id)
     {
         this.requester_id = requester_id;
+    }
+
+    public String getRequest_price() {
+        return request_price;
+    }
+
+    public void setRequest_price(String request_price) {
+        this.request_price = request_price;
     }
 
     @Override
