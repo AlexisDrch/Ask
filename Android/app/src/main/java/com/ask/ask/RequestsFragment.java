@@ -55,7 +55,6 @@ public class RequestsFragment extends Fragment {
     private int imageCount = 0;
     private int requestColor;
     private int numOffersForCurrentRequest;
-    private int offerDropdownColor = R.color.offerDropdown;
 
     public RequestsFragment() {
         // Required empty public constructor
@@ -117,48 +116,56 @@ public class RequestsFragment extends Fragment {
                     numOffersForCurrentRequest = 0; //defaulted
                     requestColor = R.color.requestWithOutOffer; //defaulted
 
-                    //----------
                     VolleyFetcher offersForRequestFetcher = new VolleyFetcher("https://ask-capa.herokuapp.com/api/offers/for/" + currentRequest.getRequest_id(), getContext());
                     offersForRequestFetcher.jsonReader(new VolleyCallback() {
                         @Override
                         public void onSuccess(JSONArray jsonArrayOffersForRequest) {
                             offersForRequestHashMap = JsonParser.JsonArrayOffersToHashMapOffers(jsonArrayOffersForRequest);
 
-                            Log.d("CURRENT REQUEST", "ID: " + currentRequest.getRequest_id());
-                            if (offersForRequestHashMap != null && offersForRequestHashMap.size() > 0) {
-                                Log.d("OFFER HASH MAP", "Size: " + offersForRequestHashMap.size());
+                            listElements = new ArrayList<>();
 
-                                numOffersForCurrentRequest = offersForRequestHashMap.size();
-                                requestColor = R.color.requestWithOffer;
+                            Log.d("CURRENT REQUEST", "ID: " + currentRequest.getRequest_id() + " STATUS: " + currentRequest.getStatus());
+                            if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_PENDING) { //TODO: need constants
 
-                                listElements = new ArrayList<>();
+                                if (offersForRequestHashMap != null && offersForRequestHashMap.size() > 0) { //add if no offer accepted
+                                    Log.d("OFFER HASH MAP", "SIZE: " + offersForRequestHashMap.size());
 
-                                //loop through Offers for current Request
-                                for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
-                                    String offerElementsStr = "Provider: " + currentOfferForCurrentRequest.getProvider_name() + " "
-                                            + currentOfferForCurrentRequest.getProvider_surname() + " " + currentOfferForCurrentRequest.getProvider_id() +
-                                            "#Price: $" + currentItem.getPrice() + "0#" + offerDropdownColor + "#" + currentRequest.getRequest_id()
-                                            + "#" + currentOfferForCurrentRequest.getProvider_id();
-                                    listElements.add(offerElementsStr);
+                                    numOffersForCurrentRequest = offersForRequestHashMap.size();
+                                    requestColor = R.color.requestWithOffer;
+
+                                    //loop through Offers for current Request and create String description to add to listElements
+                                    for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
+                                        String offerElementsStr = "Provider: " + currentOfferForCurrentRequest.getProvider_name() + " "
+                                                + currentOfferForCurrentRequest.getProvider_surname() + " " + currentOfferForCurrentRequest.getProvider_id() +
+                                                "#Price: $" + currentItem.getPrice() + "0#" + requestColor + "#" + currentRequest.getRequest_id()
+                                                + "#" + currentOfferForCurrentRequest.getProvider_id();
+                                        listElements.add(offerElementsStr);
+                                    }
+                                } else {
+                                    numOffersForCurrentRequest = 0;
+                                    requestColor = R.color.requestWithOutOffer;
+                                    Log.d("OFFER HASH MAP", "NULL");
                                 }
-                            } else {
-                                numOffersForCurrentRequest = 0;
-                                requestColor = R.color.requestWithOutOffer;
-                                Log.d("OFFER HASH MAP", "NULL");
+
+                            } else if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_ACCEPTED){ //accepted an offer for this request
+                                numOffersForCurrentRequest = -1;
+                                requestColor = R.color.requestWithOfferAccepted;
+                                Log.d("OFFER HASH MAP", "ACCEPTED");
                             }
+
 
                             //current Request information
 //                            String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Date: " + currentRequest.getBegin_date() + " - "
 //                                    + currentRequest.getEnd_date() + "#" + requestColor + "#" + currentItem.getIcon();
                             String imageHeaderStr = imageCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
-                                    + "#" + requestColor + "#" + currentItem.getIcon();
+                                    + "#Status: " + currentRequest.getStatus() + "#" + requestColor + "#" + currentItem.getIcon();
                             listItemImages.add(imageHeaderStr);
 
                             hashMapRequestData.put(imageHeaderStr, listElements);
                             imageCount++;
 
                             requestCount++;
-                            if (requestCount == requestHashMap.size()) { //gone through all Requests
+                            if (requestCount == requestHashMap.size()) { //gone through all Requests and their Offers
                                 assignToExpandableListView(rootView);
                             }
 
@@ -169,7 +176,7 @@ public class RequestsFragment extends Fragment {
                             Toast.makeText(getContext(), "Failure to receive Offers for Request " + currentRequest.getRequest_id() + ".", Toast.LENGTH_SHORT).show();
 
                             requestCount++;
-                            if (requestCount == requestHashMap.size()) { //gone through all Requests
+                            if (requestCount == requestHashMap.size()) { //gone through all Requests and their Offers
                                 assignToExpandableListView(rootView);
                             }
                         }
@@ -182,7 +189,7 @@ public class RequestsFragment extends Fragment {
 
             @Override
             public void onFailure() {
-                Toast.makeText(getContext(), "Failure to receive your Request.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failure to receive your Requests.", Toast.LENGTH_SHORT).show();
             }
 
         });
@@ -208,11 +215,7 @@ public class RequestsFragment extends Fragment {
         expandableListViewRequests.setIndicatorBounds(width - 100, width);
     }
 
-
-
-
-
-
+    //0000000000 v leave below as defaulted
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

@@ -2,6 +2,7 @@ package com.ask.ask;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -74,29 +76,67 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int position, boolean isExpanded, View view, ViewGroup parent) {
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.listview_request_header, null);
-        }
-
         String headerStr = (String) getGroup(position);
         String[] headerArr = headerStr.split("#");
         String numOffersForCurrentRequest = headerArr[1];
         String date = headerArr[2];
-        int color = Integer.parseInt(headerArr[3]);
-        int imageIcon = Integer.parseInt(headerArr[4]);
+        String status = headerArr[3];
+        int temp = status.indexOf(":");
+        int statusInt = Integer.parseInt(status.substring(temp + 1).trim());
+        int color = Integer.parseInt(headerArr[4]);
+        int imageIcon = Integer.parseInt(headerArr[5]);
 
-        TextView textViewNumOffersForRequest = (TextView) view.findViewById(R.id.textViewNumOffersForRequest);
-        textViewNumOffersForRequest.setText(numOffersForCurrentRequest);
-        textViewNumOffersForRequest.setBackgroundResource(color);
+        if (statusInt == LocalData.REQUEST_PENDING) {
 
-        TextView textViewDate = (TextView) view.findViewById(R.id.textViewDate);
-        textViewDate.setText(date);
-        textViewDate.setBackgroundResource(color);
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.listview_request_header, null);
+            }
 
-        ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
-        imageViewHeader.setImageResource(imageIcon);
-        imageViewHeader.setBackgroundResource(color);
+            view.setBackgroundColor(view.getResources().getColor(color));
+
+            TextView textViewNumOffersForRequest = (TextView) view.findViewById(R.id.textViewNumOffersForRequest);
+            textViewNumOffersForRequest.setText(numOffersForCurrentRequest);
+
+            TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
+            textViewStatus.setText(status);
+
+            TextView textViewDate = (TextView) view.findViewById(R.id.textViewDate);
+            textViewDate.setText(date);
+
+            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewHeader.setImageResource(imageIcon);
+
+        } else if (statusInt == LocalData.REQUEST_ACCEPTED) {
+
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.listview_request_header_accepted, null);
+            }
+
+            view.setBackgroundColor(view.getResources().getColor(color));
+
+            TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
+            textViewStatus.setText(status);
+
+            TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
+            textViewProviderName.setText("Provider Name"); //TODO: need to get provider name and put here
+
+            Button buttonMessage = (Button) view.findViewById(R.id.buttonMessage);
+            buttonMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO: switch to messaging screen
+
+
+                    Toast.makeText(v.getContext(), "Go to Message Screen.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewHeader.setImageResource(imageIcon);
+
+        }
 
         return view;
     }
@@ -113,10 +153,11 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         String name = elementsArr[0];
         String price = elementsArr[1];
         int color = Integer.parseInt(elementsArr[2]);
+//        String colorStr = Integer.toHexString(color).toUpperCase().substring(2);
         final String request_id = elementsArr[3];
         final String provider_id = elementsArr[4];
 
-        view.setBackgroundColor(color);
+        view.setBackgroundColor(view.getResources().getColor(color));
 
         TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
         textViewProviderName.setText(name);

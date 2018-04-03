@@ -73,9 +73,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
-                String[] nameArr = currentUser.getName().split(" ");
-                String provider_name = nameArr[0];
-                String provider_surname = nameArr[1];
+                String provider_name = currentUser.getName();
+                String provider_surname = currentUser.getSurname();
 
                 final Offer newOffer = new Offer("" + currentUser.getUser_id(), currentRequest.getRequest_id(), currentRequest.getItem_id(),
                         currentRequest.getBegin_date(), currentRequest.getEnd_date(),

@@ -16,6 +16,8 @@ public abstract class LocalData {
     protected static HashMap<String, Item> itemHashMapByName = null;
     public static Boolean currentUserIsLoggedin = false;
 
+    public static int REQUEST_PENDING = 0;
+    public static int REQUEST_ACCEPTED = 1;
 
     //TODO: something like this maybe for getting, change if better idea
 //    public static String[] getArrayOfItemNames() {
