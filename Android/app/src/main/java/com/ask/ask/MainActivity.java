@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity
         MySettingsFragment.OnFragmentInteractionListener,
         MyAboutFragment.OnFragmentInteractionListener {
 
-    private String DEFAULT_USER_EMAIL = "alexander.fache@gmail.com";
-    private String DEFAULT_USER_PASSWORD = "empIYAH";
+    private String DEFAULT_USER_EMAIL = "aleksi.durocher@gmail.com";
+    private String DEFAULT_USER_PASSWORD = "passwordalexis";
 
     //toolbars
     private CollapsingToolbarLayout mCollapsingToolbar;
