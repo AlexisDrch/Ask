@@ -1,6 +1,5 @@
 var db = require('../db-connection'); //reference of dbconnection.js
-const REQUEST_WITH_PENDING_OFFERS = 0
-const REQUEST_WITH_OFFER_SELECTED = 1
+var utils = require('../models/const');
 
 // Convert Javascript date to Pg YYYY MM DD HH MI SS
 
@@ -12,7 +11,7 @@ function pgFormatDate(date) {
 var Request = {
 
 	getAllUnFilledRequests:function(){
-		return db.any('select * from "request" where status =' + REQUEST_WITH_PENDING_OFFERS);
+		return db.any('select * from "request" where status =' + utils.REQUEST_WITH_PENDING_OFFERS);
 	},
 	getRequestsByRequestId:function(request_id){
 		return db.any('select * from "request" where request_id = $1',request_id);
@@ -66,25 +65,26 @@ var Request = {
 	// note : maybe don't need the requester_id : 
 	// -> is already in request object (accessible from request id)
 	acceptOffer:function(offer, requester_id){
-
+		console.log("status" + utils.OFFER_ACCEPTED_FOR_REQUEST);
 		return db.any(
 			' UPDATE "offer" set' +
 			' requester_id = ' + requester_id +
+			' , status = ' + utils.OFFER_ACCEPTED_FOR_REQUEST +
 			' WHERE request_id = ${request_id}' +
 			' AND provider_id = ${provider_id}' +
 			';', offer);
 	},
 
-	/* Update a request from status UnFilled to Pending
+	/* Update a request from status REQUEST_WITH_PENDING_OFFERS to REQUEST_WITH_OFFER_SELECTED
 	params:
 		-  request_id
 	use-case:
-		A requester accepted an offer, its request is now pending until its completely filled.
+		A requester accepted an offer, status changes.
 	*/
 	updateUnFilledRequestToPending:function(request_id){
 		return db.any(
 			' UPDATE "request" set' +
-			' status = ' + PENDING_REQUEST +
+			' status = ' + utils.REQUEST_WITH_OFFER_SELECTED +
 			' WHERE request_id = $1',request_id);
 	}
 };

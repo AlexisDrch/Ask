@@ -1,7 +1,5 @@
 var db = require('../db-connection'); //reference of dbconnection.js
-const OFFER_PENDING_REQUEST = 0
-const OFFER_ACCEPTED_FOR_REQUEST = 1
-const OFFER_DENIED = 2
+var utils = require('../models/const');
 // Convert Javascript date to Pg YYYY MM DD HH MI SS
 
 function pgFormatDate(date) {
@@ -51,7 +49,7 @@ var Offer = {
 		offer.provider_name = provider.name;
 		offer.provider_surname = provider.surname;
 		offer.provider_ppicture_url = provider.ppicture_url;
-		offer.status = OFFER_PENDING_REQUEST;
+		offer.status = utils.OFFER_PENDING_REQUEST;
 		console.log(JSON.stringify(offer, null, 2));
 		return db.any(
 			' Insert into "offer"' +
