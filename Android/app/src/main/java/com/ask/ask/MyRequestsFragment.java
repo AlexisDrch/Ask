@@ -143,7 +143,7 @@ public class MyRequestsFragment extends Fragment {
                                         String currentOfferInfoStr = "Provider: " + (currentOfferForCurrentRequest.getProvider_name() + " "
                                                 + currentOfferForCurrentRequest.getProvider_surname()) + "#Price: $" + currentItem.getPrice()
                                                 + "0#" + requestColor + "#" + currentRequest.getRequest_id()
-                                                + "#" + currentOfferForCurrentRequest.getProvider_id();
+                                                + "#" + currentOfferForCurrentRequest.getProvider_id() + "#" + currentRequest.getRequester_id();
 
                                         listElements.add(currentOfferInfoStr);
                                     }

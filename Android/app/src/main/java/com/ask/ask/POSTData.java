@@ -227,15 +227,8 @@ public class POSTData {
 
     private Map<String, String > getAcceptOfferParams() {
         Map<String, String> acceptOfferParams = new HashMap<>();
-        acceptOfferParams.put("belonging_id", "-1");
         acceptOfferParams.put("request_id", "" + getRequest_id());
         acceptOfferParams.put("provider_id", "" + getProvider_id());
-        acceptOfferParams.put("begin_date", "");
-        acceptOfferParams.put("end_date", "");
-        acceptOfferParams.put("lon", "-1");
-        acceptOfferParams.put("lat", "-1");
-        acceptOfferParams.put("description", "");
-        acceptOfferParams.put("message", getMessage());
 
         return acceptOfferParams;
     }

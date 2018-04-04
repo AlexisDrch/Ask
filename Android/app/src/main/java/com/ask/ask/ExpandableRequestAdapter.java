@@ -158,6 +158,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         int color = Integer.parseInt(elementsArr[2]);
         final String request_id = elementsArr[3];
         final String provider_id = elementsArr[4];
+        final String requester_id = elementsArr[5]; //current logged in user
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -178,20 +179,8 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) { //TODO: send Offer accept status to database and update Request, Offer
                 Log.d("ExpRequestAdapter", "buttonAccept");
 
-                final String url = "https://ask-capa.herokuapp.com/api/offers/accept/" + request_id;
-
+                final String url = "https://ask-capa.herokuapp.com/api/offers/accept/" + requester_id;
                 final View vi = v;
-
-                User currentUser = LocalData.getCurrentUserInstance();
-                final Request newRequest = new Request(
-                        "" + currentUser.getUser_id(),
-                        request_id,
-                        request_price,
-                        "",
-                        "",
-                        "",
-                        "");
-                newRequest.setStatus("" + LocalData.REQUEST_WITH_OFFER_SELECTED);
 
                 POSTData postData = new POSTData();
                 postData.postAcceptOffer(url, request_id, provider_id, "Accepting Offer from user id " + provider_id + ".", v.getContext(), new VolleyCallback() {
