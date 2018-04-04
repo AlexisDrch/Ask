@@ -9,7 +9,7 @@ import com.ask.ask.Utils.DownloadImageTask;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView profileName, profileDescription;
+    TextView profileName, profileDescription, profileRating;
     ImageView profileIcon;
 
     @Override
@@ -25,12 +25,16 @@ public class ProfileActivity extends AppCompatActivity {
         profileName = (TextView) findViewById(R.id.pA_profileName);
         profileDescription = (TextView) findViewById(R.id.pA_profileDescription);
         profileIcon = (ImageView) findViewById(R.id.pA_profilePic);
+        profileRating = (TextView) findViewById(R.id.pA_reviewRate);
 
         String name = newUser.getName() + " " + newUser.getSurname();
         String description = newUser.getDescription();
+        String rating = ""+ newUser.getUser_id();
 
         profileName.setText(name);
         profileDescription.setText(description);
+        profileRating.setText("Rating: " + rating + "/5");
+
 
         //redownloads image from url
         //TODO: make this more efficient in that it only creates the image once
