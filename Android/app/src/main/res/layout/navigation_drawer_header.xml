@@ -3,7 +3,7 @@
     android:id="@+id/navigationDrawerHeader"
     android:layout_width="match_parent"
     android:layout_height="192dp"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/backgroundgradient"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"

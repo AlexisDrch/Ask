@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,7 +42,8 @@ public class MainActivity extends AppCompatActivity
     private String DEFAULT_USER_PASSWORD = "passwordalexis";
 
     //toolbars
-    private CollapsingToolbarLayout mToolbar;
+    private CollapsingToolbarLayout mCollapsingToolbar;
+    private Toolbar myToolbar;
 
     // side menu views
     private DrawerLayout navigationDrawerLayout;
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity
 
                         new DownloadImageTask((ImageView) sideMenuUserImage)
                                 .execute(LocalData.getCurrentUserInstance().getPpicture_url());
-                        sideMenuUserNameSurname.setText(LocalData.getCurrentUserInstance().getName() +
+                        sideMenuUserNameSurname.setText(LocalData.getCurrentUserInstance().getName() + " " +
                                 LocalData.getCurrentUserInstance().getSurname());
                         sideMenuUserEmail.setText(LocalData.getCurrentUserInstance().getEmail());
                     }
@@ -147,35 +146,40 @@ public class MainActivity extends AppCompatActivity
 
 
         //creating collapsing toolbar and adding title
-        mToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
-        mToolbar.setTitle(getTitle());
-        mToolbar.setExpandedTitleTextAppearance(R.style.expandingToolbar);
-        mToolbar.setCollapsedTitleTextAppearance(R.style.collapsingToolbar);
+        mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
+        mCollapsingToolbar.setTitle(getTitle());
+        mCollapsingToolbar.setExpandedTitleTextAppearance(R.style.expandingToolbar);
+        mCollapsingToolbar.setCollapsedTitleTextAppearance(R.style.collapsingToolbar);
 
-
-        //changing title font
-        Typeface font = Typer.set(this).getFont(Font.ROBOTO_THIN);
-        mToolbar.setExpandedTitleTypeface(font);
-        mToolbar.setCollapsedTitleTypeface(font);
-        // display new request fragment
-
-        // add focus on spinner when toolbar dragged to ask new request
-        mToolbar.setOnTouchListener(new View.OnTouchListener() {
+    // display new request fragment
+    // add focus on spinner when toolbar dragged to ask new request
+        myToolbar = (Toolbar) findViewById(R.id.toolbarid);
+        myToolbar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                try {
-                    if (!NewRequestFragmentIsSet) {
-                        toggleNewRequestFragment((Fragment) NewRequestFragment.class.newInstance());
-                        NewRequestFragmentIsSet = true;
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    try {
+                        if (!NewRequestFragmentIsSet) {
+                            toggleNewRequestFragment((Fragment) NewRequestFragment.class.newInstance());
+                            NewRequestFragmentIsSet = true;
+                        }
+                    } catch (InstantiationException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
                     }
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    return false;
                 }
                 return false;
             }
         });
+
+
+    //changing title font
+    Typeface font = Typer.set(this).getFont(Font.ROBOTO_THIN);
+    mCollapsingToolbar.setExpandedTitleTypeface(font);
+    mCollapsingToolbar.setCollapsedTitleTypeface(font);
+
 
         //creating the card
         card = (CardView) findViewById(R.id.requestCard);
@@ -199,7 +203,7 @@ public class MainActivity extends AppCompatActivity
 
                 new DownloadImageTask((ImageView) sideMenuUserImage)
                         .execute(LocalData.getCurrentUserInstance().getPpicture_url());
-                sideMenuUserNameSurname.setText(LocalData.getCurrentUserInstance().getName() +
+                sideMenuUserNameSurname.setText(LocalData.getCurrentUserInstance().getName() + " " +
                         LocalData.getCurrentUserInstance().getSurname());
                 sideMenuUserEmail.setText(LocalData.getCurrentUserInstance().getEmail());
                 navigationDrawerLayout.openDrawer(GravityCompat.START); //for animation

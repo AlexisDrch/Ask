@@ -2,6 +2,7 @@ package com.ask.ask;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.elmargomez.typer.Font;
+import com.elmargomez.typer.Typer;
 
 import org.json.JSONArray;
 
@@ -94,6 +98,11 @@ public class NewRequestFragment extends Fragment {
                 showDateBeginPickerDialog(v, "Select Begin Date");
             }
         });
+
+        //changing button font
+        Typeface font = Typer.set(fragmentContext).getFont(Font.ROBOTO_THIN);
+        askNewRequestButton.setTypeface(font);
+
 
         askNewRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
