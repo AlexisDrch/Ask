@@ -372,7 +372,7 @@ SELECT pg_catalog.setval('item_item_id_seq', 8, true);
 -- Name: request_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('request_request_id_seq', 1, false);
+SELECT pg_catalog.setval('request_request_id_seq', 4, true);
 
 
 --
@@ -459,7 +459,7 @@ ALTER TABLE ONLY item
 --
 
 ALTER TABLE ONLY offer
-    ADD CONSTRAINT offer_belonging_id_fkey FOREIGN KEY (belonging_id) REFERENCES belonging(belonging_id) ON DELETE CASCADE;
+    ADD CONSTRAINT offer_belonging_id_fkey FOREIGN KEY (belonging_id) REFERENCES item(item_id) ON DELETE CASCADE;
 
 
 --
