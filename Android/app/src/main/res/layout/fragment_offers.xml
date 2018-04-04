@@ -3,7 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ask.ask.ProfileFragment">
+    tools:context="com.ask.ask.MyProfileFragment">
+
+    <TextView
+        android:id="@+id/textViewNoOffers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <ExpandableListView
         android:id="@+id/expandableListViewOffers"

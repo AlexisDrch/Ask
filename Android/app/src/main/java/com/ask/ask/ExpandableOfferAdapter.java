@@ -1,6 +1,7 @@
 package com.ask.ask;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,11 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return listHashMap.get(listHeaders.get(groupPosition)).size();
+        if (listHashMap.get(listHeaders.get(groupPosition)) == null) {
+            return 0;
+        } else {
+            return listHashMap.get(listHeaders.get(groupPosition)).size();
+        }
     }
 
     @Override
@@ -75,7 +80,6 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
         int color = Integer.parseInt(headerInfoArr[4]);
         int imageIcon = Integer.parseInt(headerInfoArr[5]);
 
-
         if (status == LocalData.OFFER_PENDING_FOR_REQUEST) {
 
             if (view == null) {
@@ -91,7 +95,7 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
             textViewRequesterName.setText(requesterName);
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
-            textViewStatus.setText(status);
+            textViewStatus.setText(R.string.OFFER_PENDING_FOR_REQUEST);
 
             TextView textViewRequestId = (TextView) view.findViewById(R.id.textViewRequestId);
             textViewRequestId.setText(requestId);
@@ -103,7 +107,6 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_offer_header_accepted, null);
             }
 
-
             view.setBackgroundColor(view.getResources().getColor(color));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
@@ -113,18 +116,35 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
             textViewRequesterName.setText(requesterName);
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
-            textViewStatus.setText(status);
+            textViewStatus.setText(R.string.OFFER_ACCEPTED_FOR_REQUEST);
 
             Button buttonMessage = (Button) view.findViewById(R.id.buttonMessage);
             buttonMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    //TODO: switch to messaging screen
+                public void onClick(View v) { //TODO: switch to messaging screen
 
 
                     Toast.makeText(v.getContext(), "Go to Message Screen.", Toast.LENGTH_SHORT).show();
                 }
             });
+
+        } else if (status == LocalData.OFFER_DENIED) {
+
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.listview_offer_header_denied, null);
+            }
+
+            view.setBackgroundColor(view.getResources().getColor(color));
+
+            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewHeader.setImageResource(imageIcon);
+
+            TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
+            textViewStatus.setText(R.string.OFFER_DENIED);
+
+            TextView textViewMessage = (TextView) view.findViewById(R.id.textViewMessage);
+            textViewMessage.setText("Your Offer for request " + requestId + " has been denied.");
 
         }
 
@@ -134,14 +154,15 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
     //TODO: don't use this anymore
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {
-        String childText = (String) getChild(groupPosition, childPosition);
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.listview_offer_item, null);
-        }
-
-        TextView textViewItem = (TextView) view.findViewById(R.id.textViewItem);
-        textViewItem.setText(childText);
+        Log.d("OFFERADAPTER", "getChildView");
+//        String childText = (String) getChild(groupPosition, childPosition);
+//        if (view == null) {
+//            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            view = inflater.inflate(R.layout.listview_offer_item, null);
+//        }
+//
+//        TextView textViewItem = (TextView) view.findViewById(R.id.textViewItem);
+//        textViewItem.setText(childText);
         return view;
     }
 

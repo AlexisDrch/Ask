@@ -32,14 +32,14 @@ import com.elmargomez.typer.Typer;
 public class MainActivity extends AppCompatActivity
     implements
         HomeFragment.OnFragmentInteractionListener,
-        ProfileFragment.OnFragmentInteractionListener,
-        RequestsFragment.OnFragmentInteractionListener,
-        OffersFragment.OnFragmentInteractionListener,
-        SettingsFragment.OnFragmentInteractionListener,
-        AboutFragment.OnFragmentInteractionListener {
+        MyProfileFragment.OnFragmentInteractionListener,
+        MyRequestsFragment.OnFragmentInteractionListener,
+        MyOffersFragment.OnFragmentInteractionListener,
+        MySettingsFragment.OnFragmentInteractionListener,
+        MyAboutFragment.OnFragmentInteractionListener {
 
-    private String DEFAULT_USER_EMAIL = "aleksi.durocher@gmail.com";
-    private String DEFAULT_USER_PASSWORD = "passwordalexis";
+    private String DEFAULT_USER_EMAIL = "alexander.fache@gmail.com";
+    private String DEFAULT_USER_PASSWORD = "empIYAH";
 
     //toolbars
     private CollapsingToolbarLayout mCollapsingToolbar;
@@ -228,23 +228,23 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.fragment_profile:
                 Log.d("selectDrawerItem", "2b");
-                requestedFragmentClass = ProfileFragment.class;
+                requestedFragmentClass = MyProfileFragment.class;
                 break;
             case R.id.fragment_requests:
                 Log.d("selectDrawerItem", "2c");
-                requestedFragmentClass = RequestsFragment.class;
+                requestedFragmentClass = MyRequestsFragment.class;
                 break;
             case R.id.fragment_offers:
                 Log.d("selectDrawerItem", "2d");
-                requestedFragmentClass = OffersFragment.class;
+                requestedFragmentClass = MyOffersFragment.class;
                 break;
             case R.id.fragment_settings:
                 Log.d("selectDrawerItem", "2f");
-                requestedFragmentClass = SettingsFragment.class;
+                requestedFragmentClass = MySettingsFragment.class;
                 break;
             case R.id.fragment_about:
                 Log.d("selectDrawerItem", "2g");
-                requestedFragmentClass = AboutFragment.class;
+                requestedFragmentClass = MyAboutFragment.class;
                 break;
             default:
                 Log.d("selectDrawerItem", "2g");

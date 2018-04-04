@@ -166,19 +166,19 @@ public class POSTData {
             @Override
             protected Map<String, String> getParams() {
                 if (STATUS == POST_REQUEST) {
-                    Log.d("POST", "POST_REQUEST");
+                    Log.d("POSTData", "POST_REQUEST");
                     return getRequestParams();
                 } else if (STATUS == POST_OFFER) {
-                    Log.d("POST", "POST_OFFER");
+                    Log.d("POSTData", "POST_OFFER");
                     return getOfferParams();
                 } else if (STATUS == POST_LOGIN) {
-                    Log.d("POST", "POST_LOGIN");
+                    Log.d("POSTData", "POST_LOGIN");
                     return getLoginParams();
                 } else if (STATUS == POST_ACCEPT_OFFER) {
-                    Log.d("POST", "POST_ACCEPT_OFFER");
+                    Log.d("POSTData", "POST_ACCEPT_OFFER");
                     return getAcceptOfferParams();
                 } else {
-                    Log.d("POST", "NULL");
+                    Log.d("POSTData", "NULL");
                     return null;
                 }
             }
@@ -227,15 +227,8 @@ public class POSTData {
 
     private Map<String, String > getAcceptOfferParams() {
         Map<String, String> acceptOfferParams = new HashMap<>();
-        acceptOfferParams.put("belonging_id", "-1");
         acceptOfferParams.put("request_id", "" + getRequest_id());
         acceptOfferParams.put("provider_id", "" + getProvider_id());
-        acceptOfferParams.put("begin_date", "");
-        acceptOfferParams.put("end_date", "");
-        acceptOfferParams.put("lon", "-1");
-        acceptOfferParams.put("lat", "-1");
-        acceptOfferParams.put("description", "");
-        acceptOfferParams.put("message", getMessage());
 
         return acceptOfferParams;
     }

@@ -143,7 +143,7 @@ public class NewRequestFragment extends Fragment {
                         public void onFailure() {
                             Log.d("NewRequestFragment", "failure posting request!");
                             // handle failure on posting request
-                            Log.d("ERRORPOST",newRequest.toString());
+                            Log.d("ERRORPOST", newRequest.toString());
                         }
                     });
                 }

@@ -32,7 +32,6 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".AcceptOfferConfirmationActivity" />
     </application>
 
 </manifest>

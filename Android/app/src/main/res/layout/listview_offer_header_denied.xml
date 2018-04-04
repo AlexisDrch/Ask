@@ -11,15 +11,6 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewNumOffersForRequest"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/textViewStatus"
             android:layout_width="100dp"
             android:layout_height="50dp"
@@ -29,9 +20,9 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/textViewDate"
+            android:id="@+id/textViewMessage"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="16sp"

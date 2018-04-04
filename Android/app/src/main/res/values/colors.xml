@@ -11,7 +11,7 @@
     <color name="requestWithOutOffer">#5cc8f9</color>
     <color name="requestWithOffer">#c57fff</color>
     <color name="requestWithOfferAccepted">#00695c</color>
-    <color name="offerPending">#f442e8</color>
+    <color name="offerPending">#c57fff</color>
     <color name="offerAccepted">#00695c</color>
     <color name="offerDenied">#ff0000</color>
 </resources>

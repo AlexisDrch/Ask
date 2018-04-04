@@ -76,7 +76,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 String provider_name = currentUser.getName();
                 String provider_surname = currentUser.getSurname();
 
-
                 final Offer newOffer = new Offer(
                         ""+currentItem.getItem_id(),
                         ""+currentRequest.getRequest_id(),
@@ -104,7 +103,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     @Override
                     public void onFailure() {
-                        Log.d("RecyclerViewAdapter", "failure posting offer!");
+                        Log.d("RecyclerViewAdapter", "failure posting offer");
                         Toast.makeText(myContext, "Unable to send Offer.", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -117,7 +116,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 final Intent intent = new Intent(myContext, ProfileActivity.class);
-
 
                 VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users", myContext);
                 process.jsonReader(new VolleyCallback() {
@@ -140,6 +138,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         Log.d("USER_GET_FAILURE", "Something went wrong");
                     }
                 });
+
             }
         });
 
