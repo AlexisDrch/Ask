@@ -1,7 +1,10 @@
 package com.ask.ask;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -44,8 +47,11 @@ public class MainActivity extends AppCompatActivity
         SettingsFragment.OnFragmentInteractionListener,
         AboutFragment.OnFragmentInteractionListener {
 
-    private String DEFAULT_USER_EMAIL = "pulakazad28@gmail.com";
-    private String DEFAULT_USER_PASSWORD = "logs4daze";
+
+    private String DEFAULT_USER_EMAIL = "cs947@cornell.edu";
+    private String DEFAULT_USER_PASSWORD = "askisd@best";
+    //private String DEFAULT_USER_EMAIL = "pulakazad28@gmail.com";
+    //private String DEFAULT_USER_PASSWORD = "logs4daze";
 
     //toolbars
     private CollapsingToolbarLayout mToolbar;
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.d("tagfortestingmessage", "testing for PRINT MESSAGE");
         //trigger login activity
         if (!LocalData.currentUserIsLoggedin){
             Intent loginIntent = new Intent(this.getApplicationContext(), LoginActivity.class);
@@ -181,6 +187,19 @@ public class MainActivity extends AppCompatActivity
         //creating the card
         card = (CardView) findViewById(R.id.requestCard);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(Constants.CHANNEL_ID, Constants.CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
+
+            mChannel.setDescription(Constants.CHANNEL_DESCRIPTION);
+            mChannel.enableLights(true);
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+
+            mChannel.setVibrationPattern(new long[] {100, 200, 300, 400, 500, 400, 300, 200, 100});
+            mNotificationManager.createNotificationChannel(mChannel);
+        }
     }
 
     /**
