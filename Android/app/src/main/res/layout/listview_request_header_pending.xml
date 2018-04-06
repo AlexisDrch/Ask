@@ -20,36 +20,42 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewItemName" >
 
         <ImageView
-            android:id="@+id/imageViewItemImage"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/requestOfferImageHeight"/>
+                android:id="@+id/imageViewItemImage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/requestOfferImageHeight" />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp">
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage">
 
             <TextView
                 android:id="@+id/textViewNumOffersForRequest"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:gravity="center"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:text="Offers: 0"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent" />
+                app:layout_constraintEnd_toStartOf="@+id/textViewStatus"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textViewStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
                 android:gravity="center"
+                android:text="Pending"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/textViewRequestId"
                 app:layout_constraintLeft_toRightOf="@+id/textViewNumOffersForRequest" />
 
             <TextView
@@ -59,10 +65,13 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:gravity="center"
+                android:text="Request Id: 14"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@+id/textViewStatus"/>
+                app:layout_constraintLeft_toRightOf="@+id/textViewStatus"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_bias="0.9"/>
 
         </android.support.constraint.ConstraintLayout>
 
