@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +94,8 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         int statusInt = Integer.parseInt(status.substring(temp + 1).trim());
         int color = Integer.parseInt(headerArr[4]);
         int imageIcon = Integer.parseInt(headerArr[5]);
+        String itemName = headerArr[6];
+        String providerName = headerArr[7];
 
         if (statusInt == LocalData.REQUEST_WITH_PENDING_OFFERS) {
 
@@ -101,7 +104,9 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_request_header_pending, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
@@ -111,6 +116,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
             textViewStatus.setText(R.string.REQUEST_WITH_PENDING_OFFERS);
+            textViewStatus.setTextColor(view.getResources().getColor(color));
 
             TextView textViewRequestId = (TextView) view.findViewById(R.id.textViewRequestId);
             textViewRequestId.setText(requestId);
@@ -122,22 +128,29 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_request_header_accepted, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
+            ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
+
+
+
             TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
-            textViewProviderName.setText("PROVIDER NAME"); //TODO: get Provider name to display here
+            textViewProviderName.setText(providerName); //TODO: get Provider name to display here
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
             textViewStatus.setText(R.string.REQUEST_WITH_OFFER_SELECTED);
+            textViewStatus.setTextColor(view.getResources().getColor(color));
 
             Button buttonMessage = (Button) view.findViewById(R.id.buttonMessage);
             buttonMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { //TODO: switch to messaging screen
-
+                    Log.d("RequestAdapter", "buttonMessage");
 
 
                     Toast.makeText(v.getContext(), "Go to Message Screen.", Toast.LENGTH_SHORT).show();
@@ -165,8 +178,6 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             view = inflater.inflate(R.layout.listview_request_item_offers, null);
         }
 
-        view.setBackgroundColor(view.getResources().getColor(color));
-
         TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
         textViewProviderName.setText(provider_name);
 
@@ -186,6 +197,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 postData.postAcceptOffer(url, request_id, provider_id, "Accepting Offer from user id " + provider_id + ".", v.getContext(), new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONArray jsonArray) {
+                        Log.d("RequestAdapter", "buttonAcceptOffer");
                         Toast.makeText(vi.getContext(), "Offer Accepted.", Toast.LENGTH_SHORT).show();
                         Toast.makeText(vi.getContext(), "Go to Message Screen.", Toast.LENGTH_SHORT).show();
 //                        Intent intent = new Intent(vi.getContext(), .class); //TODO: go to messaging, same as for buttonMessage
@@ -209,7 +221,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) { //TODO: send Offer accept status to database and update Request, Offer
                 //TODO: send OFFER_DENIED to database with the offer_id
-                Log.d("ExpRequestAdapter", "buttonAccept");
+                Log.d("RequestAdapter", "buttonDenyOffer");
 
 
                 Toast.makeText(v.getContext(), "Offer Denied.", Toast.LENGTH_SHORT).show();

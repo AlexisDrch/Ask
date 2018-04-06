@@ -27,8 +27,6 @@
         android:fitsSystemWindows="true"
         android:id="@+id/container">
 
-
-
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
@@ -41,7 +39,6 @@
                 android:id="@+id/collapsingToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background"
                 app:titleEnabled="true"
                 app:contentScrim="@color/colorPrimaryDark"
                 app:expandedTitleMarginEnd="64dp"

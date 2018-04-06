@@ -79,6 +79,7 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
         String requestId = headerInfoArr[3];
         int color = Integer.parseInt(headerInfoArr[4]);
         int imageIcon = Integer.parseInt(headerInfoArr[5]);
+        String itemName = headerInfoArr[6];
 
         if (status == LocalData.OFFER_PENDING_FOR_REQUEST) {
 
@@ -87,7 +88,10 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_offer_header_pending, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
+
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
@@ -107,7 +111,9 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_offer_header_accepted, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
@@ -122,6 +128,7 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
             buttonMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) { //TODO: switch to messaging screen
+                    Log.d("OfferAdapter", "buttonMessage");
 
 
                     Toast.makeText(v.getContext(), "Go to Message Screen.", Toast.LENGTH_SHORT).show();
@@ -135,7 +142,9 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_offer_header_denied, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
