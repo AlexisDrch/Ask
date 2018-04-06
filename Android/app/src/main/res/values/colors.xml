@@ -8,11 +8,11 @@
     <color name="snowWhite">#FEFEFE</color>
     <color name="lightGray">#FBFCFA</color>
     <color name="milkWhite">#FBFCFA</color>
-    <color name="requestWithOutOffer">#5cc8f9</color>
-    <color name="requestWithOffer">#c57fff</color>
-    <color name="requestWithOfferAccepted">#00695c</color>
-    <color name="offerPending">#c57fff</color>
-    <color name="offerAccepted">#00695c</color>
+    <color name="requestWithOutOffer">#ff5f52</color>
+    <color name="requestWithOffer">#c62828</color>
+    <color name="requestWithOfferAccepted">#8e0000</color>
+    <color name="offerPending">#ff5f52</color>
+    <color name="offerAccepted">#8e0000</color>
     <color name="offerDenied">#ff0000</color>
 
 

@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +57,9 @@ public class MyRequestsFragment extends Fragment {
     private static int requestCount = 0;
     private int requestColor;
     private int numOffersForCurrentRequest;
+    private String providerName;
+    private String providerIdForCurrentRequest;
+    private String providerProfileImageForCurrentRequest;
 
     public MyRequestsFragment() {
         // Required empty public constructor
@@ -128,6 +133,9 @@ public class MyRequestsFragment extends Fragment {
                             offersForRequestHashMap = JsonParser.JsonArrayOffersToHashMapOffers(jsonArrayOffersForRequest);
 
                             listElements = new ArrayList<>();
+                            providerName = "XXXX"; //to make string split happy
+                            providerIdForCurrentRequest = "XXXX";
+                            providerProfileImageForCurrentRequest = "XXXX";
 
                             Log.d("CURRENT REQUEST", "ID: " + currentRequest.getRequest_id() + " STATUS: " + currentRequest.getStatus());
                             if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_WITH_PENDING_OFFERS) { //With or without pending Offers
@@ -140,8 +148,8 @@ public class MyRequestsFragment extends Fragment {
 
                                     //loop through Offers for current Request and create String description to add to listElements
                                     for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
-                                        String currentOfferInfoStr = "Provider: " + (currentOfferForCurrentRequest.getProvider_name() + " "
-                                                + currentOfferForCurrentRequest.getProvider_surname()) + "#Price: $" + currentItem.getPrice()
+                                        String currentOfferInfoStr = (currentOfferForCurrentRequest.getProvider_name() + " "
+                                                + currentOfferForCurrentRequest.getProvider_surname()) + "#$" + currentItem.getPrice()
                                                 + "0#" + requestColor + "#" + currentRequest.getRequest_id()
                                                 + "#" + currentOfferForCurrentRequest.getProvider_id() + "#" + currentRequest.getRequester_id();
 
@@ -154,6 +162,15 @@ public class MyRequestsFragment extends Fragment {
                                 }
 
                             } else if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_WITH_OFFER_SELECTED){ //Requester accepted an Offer
+                                for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
+                                    if (currentOfferForCurrentRequest.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) {
+                                        providerName = currentOfferForCurrentRequest.getProvider_name() + " " + currentOfferForCurrentRequest.getProvider_surname();
+                                        providerIdForCurrentRequest = currentOfferForCurrentRequest.getProvider_id();
+                                        providerProfileImageForCurrentRequest = "XXXX";
+                                        break;
+                                    }
+                                }
+
                                 numOffersForCurrentRequest = -1;
                                 requestColor = R.color.requestWithOfferAccepted;
                                 Log.d("OFFER HASH MAP", "OFFER ACCEPTED");
@@ -161,7 +178,8 @@ public class MyRequestsFragment extends Fragment {
 
                             //current Request information
                             String imageHeaderStr = requestCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
-                                    + "#Status: " + currentRequest.getStatus() + "#" + requestColor + "#" + currentItem.getIcon();
+                                    + "#Status: " + currentRequest.getStatus() + "#" + requestColor + "#" + currentItem.getIcon() + "#" + currentItem.getName()
+                                    + "#" + providerName + "#" + providerIdForCurrentRequest + "#" + currentUser.getUser_id() + "#" + providerProfileImageForCurrentRequest;
                             listItemImages.add(imageHeaderStr);
 
                             hashMapRequestData.put(imageHeaderStr, listElements);
