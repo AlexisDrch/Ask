@@ -2,10 +2,12 @@ package com.ask.ask;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -65,7 +67,7 @@ public class NewRequestFragment extends Fragment {
 
         imageViewItemImage = (ImageView) rootView.findViewById(R.id.imageViewItemImage);
         spinnerLocalItems = (Spinner) rootView.findViewById(R.id.spinnerItems);
-        textViewItemName = (TextView) rootView.findViewById(R.id.textViewItemName);
+        //textViewItemName = (TextView) rootView.findViewById(R.id.textViewItemName);
         textViewBeginDate = (TextView) rootView.findViewById(R.id.textViewBeginDate);
         textViewEndDate = (TextView) rootView.findViewById(R.id.textViewEndDate);
         editTextPrice = (EditText) rootView.findViewById(R.id.editTextPrice);
@@ -75,10 +77,15 @@ public class NewRequestFragment extends Fragment {
 
         // prepare the local items spinner
         spinnerLocalItems.setEnabled(true);
+        // spinner colors
+        spinnerLocalItems.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        spinnerLocalItems.setBackgroundColor(getResources().getColor(R.color.primaryGreen));
+
         spinnerLocalItemsAdapter = ArrayAdapter.createFromResource(fragmentContext,  R.array.localItemsArray,
                 android.R.layout.simple_spinner_dropdown_item);
         spinnerLocalItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLocalItems.setAdapter(spinnerLocalItemsAdapter);
+
 
         //handle event on local items spinner: i.e when a local item is selected, should fill the appropriate fields
         spinnerLocalItems.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -87,6 +94,8 @@ public class NewRequestFragment extends Fragment {
                 currentItem = (Item) LocalData.getHashMapItemsByName().get(spinnerLocalItemsAdapter.getItem(position));
                 updateItemFields(currentItem);
                 localItemsSpinnerPosition = position;
+                view.setBackgroundColor(getResources().getColor(R.color.primaryGreen));
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -108,7 +117,7 @@ public class NewRequestFragment extends Fragment {
             @Override
             public void onClick(final View view) {
                 // toast message if a field is not set
-                if (TextUtils.isEmpty(textViewItemName.getText()) || TextUtils.isEmpty(textViewBeginDate.getText())
+                if ( TextUtils.isEmpty(textViewBeginDate.getText())
                         || TextUtils.isEmpty(textViewEndDate.getText()) || TextUtils.isEmpty(editTextDescription.getText()))
                     Toast.makeText(fragmentContext, "All fields require an input.", Toast.LENGTH_SHORT).show();
                 else {
@@ -159,7 +168,7 @@ public class NewRequestFragment extends Fragment {
       * Update the layout with selected item
     */
     public void updateItemFields(Item currentItem){
-        textViewItemName.setText(currentItem.getName());
+        //textViewItemName.setText(currentItem.getName());
         imageViewItemImage.setImageResource(currentItem.getIcon());
         editTextPrice.setText(""+currentItem.getPrice() +"0");
         // set a lambda description for the request

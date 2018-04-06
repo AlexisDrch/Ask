@@ -7,7 +7,7 @@
         <item
             android:id="@+id/fragment_home"
             android:icon="@drawable/ic_home"
-            android:title="@string/home"/>
+            android:title="@string/app_name"/>
         <item
             android:id="@+id/fragment_profile"
             android:icon="@drawable/ic_profile"
