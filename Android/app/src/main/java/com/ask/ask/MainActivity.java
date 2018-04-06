@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity
 
 
     /**
-     * Determines the menuItem that was selected and goes to the corresponding fragments.
+     * Determines the menuItem that was to be selected and goes to the corresponding fragments.
      * @param menuItem
      */
     private void selectDrawerItem(MenuItem menuItem) {
