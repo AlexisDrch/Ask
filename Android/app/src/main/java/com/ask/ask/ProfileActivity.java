@@ -2,21 +2,23 @@ package com.ask.ask;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.ask.ask.Utils.DownloadImageTask;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    TextView profileName, profileDescription, profileRating;
+    TextView profileName, profileDescription;
     ImageView profileIcon;
+    RatingBar ratingBarUserRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
 
         //Pulls in the user from the recyclerViewAdapter
         User newUser = (User) getIntent().getSerializableExtra("profileUser");
@@ -25,7 +27,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileName = (TextView) findViewById(R.id.pA_profileName);
         profileDescription = (TextView) findViewById(R.id.pA_profileDescription);
         profileIcon = (ImageView) findViewById(R.id.pA_profilePic);
-        profileRating = (TextView) findViewById(R.id.pA_reviewRate);
+        ratingBarUserRating = (RatingBar) findViewById(R.id.ratingBarUserRating);
 
         String name = newUser.getName() + " " + newUser.getSurname();
         String description = newUser.getDescription();
@@ -33,15 +35,13 @@ public class ProfileActivity extends AppCompatActivity {
 
         profileName.setText(name);
         profileDescription.setText(description);
-        profileRating.setText("Rating: " + rating + "/5");
 
+        ratingBarUserRating.setRating(Float.parseFloat(rating) % ratingBarUserRating.getNumStars());
 
         //redownloads image from url
         //TODO: make this more efficient in that it only creates the image once
-        new DownloadImageTask((ImageView) profileIcon)
-                .execute(newUser.getPpicture_url());
-
-
+        new DownloadImageTask((ImageView) profileIcon).execute(newUser.getPpicture_url());
 
     }
+
 }
