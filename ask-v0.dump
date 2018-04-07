@@ -144,6 +144,9 @@ CREATE TABLE offer (
     belonging_id integer NOT NULL,
     request_id integer NOT NULL,
     requester_id integer,
+    requester_name character varying(500),
+    requester_surname character varying(500),
+    requester_ppicture_url character varying(1000),
     provider_id integer NOT NULL,
     provider_name character varying(500),
     provider_surname character varying(500),
@@ -323,7 +326,7 @@ COPY item (item_id, name, category_id, avg_price, picture, description) FROM std
 -- Data for Name: offer; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY offer (belonging_id, request_id, requester_id, provider_id, provider_name, provider_surname, provider_ppicture_url, begin_date, end_date, lon, lat, offer_price, description, status, message) FROM stdin;
+COPY offer (belonging_id, request_id, requester_id, requester_name, requester_surname, requester_ppicture_url, provider_id, provider_name, provider_surname, provider_ppicture_url, begin_date, end_date, lon, lat, offer_price, description, status, message) FROM stdin;
 \.
 
 
@@ -372,7 +375,7 @@ SELECT pg_catalog.setval('item_item_id_seq', 8, true);
 -- Name: request_request_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('request_request_id_seq', 4, true);
+SELECT pg_catalog.setval('request_request_id_seq', 5, true);
 
 
 --

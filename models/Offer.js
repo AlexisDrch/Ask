@@ -50,9 +50,9 @@ var Offer = {
 		offer.provider_name = provider.name;
 		offer.provider_surname = provider.surname;
 		offer.provider_ppicture_url = provider.ppicture_url;
-		offer.requester_name = request.request_name;
-		offer.requester_surname = request.request_surname;
-		offer.requester_ppicture_url = request.request_ppicture_url;
+		offer.requester_name = request.requester_name;
+		offer.requester_surname = request.requester_surname;
+		offer.requester_ppicture_url = request.requester_ppicture_url;
 		offer.status = utils.OFFER_PENDING_REQUEST;
 		console.log(JSON.stringify(offer, null, 2));
 		return db.any(
