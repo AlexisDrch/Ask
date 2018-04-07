@@ -90,7 +90,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         ""+currentRequest.getLat(),
                         ""+price,
                         ""+currentRequest.getDescription(),
-                        ""+currentRequest.getEnd_date());
+                        ""+currentRequest.getEnd_date(),
+                        ""+currentUser.getPpicture_url());
 
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object

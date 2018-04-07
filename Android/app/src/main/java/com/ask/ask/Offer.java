@@ -19,6 +19,7 @@ public class Offer implements Serializable {
     private String end_date;
     private String description;
     private String message;
+    private String provider_ppicture_url;
 
     private String provider_name;
     private String provider_surname;
@@ -36,7 +37,7 @@ public class Offer implements Serializable {
                  String begin_date,String end_date,
                  String lon, String lat,
                  String offer_price, String description,
-                 String message) {
+                 String message, String provider_ppicture_url) {
         this.request_id = request_id;
         this.provider_id = provider_id;
         this.offer_price = offer_price;
@@ -48,6 +49,7 @@ public class Offer implements Serializable {
         this.lon = lon;
         this.lat = lat;
         this.status = IN_PROGRESS;
+        this.provider_ppicture_url = provider_ppicture_url;
     }
 
     public String getProvider_id() {
@@ -130,4 +132,11 @@ public class Offer implements Serializable {
                 " for $" + item.getPrice() + " per day.";
     }
 
+    public String getProvider_ppicture_url() {
+        return provider_ppicture_url;
+    }
+
+    public void setProvider_ppicture_url(String provider_ppicture_url) {
+        this.provider_ppicture_url = provider_ppicture_url;
+    }
 }

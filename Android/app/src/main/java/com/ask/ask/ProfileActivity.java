@@ -29,7 +29,11 @@ public class ProfileActivity extends AppCompatActivity {
 
         String name = newUser.getName() + " " + newUser.getSurname();
         String description = newUser.getDescription();
-        String rating = ""+ newUser.getUser_id();
+        String temp_rating = ""+ newUser.getUser_id();
+
+        int int_rating = Integer.parseInt(temp_rating);
+        int_rating = int_rating % 5;
+        String rating = "" + int_rating;
 
         profileName.setText(name);
         profileDescription.setText(description);

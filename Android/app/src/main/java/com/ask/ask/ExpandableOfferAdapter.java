@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ask.ask.Utils.DownloadImageTask;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -81,6 +83,8 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
         int color = Integer.parseInt(headerInfoArr[4]);
         int imageIcon = Integer.parseInt(headerInfoArr[5]);
         String itemName = headerInfoArr[6];
+        String provider_ppictureUrl = headerInfoArr[7];
+
 
         if (status == LocalData.OFFER_PENDING_FOR_REQUEST) {
 
@@ -122,6 +126,10 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 
             TextView textViewRequesterName = (TextView) view.findViewById(R.id.textViewRequesterName);
             textViewRequesterName.setText(requesterName);
+
+            ImageView profileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
+            new DownloadImageTask((ImageView) profileImage)
+                    .execute(provider_ppictureUrl);
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
             textViewStatus.setText(R.string.OFFER_ACCEPTED_FOR_REQUEST);

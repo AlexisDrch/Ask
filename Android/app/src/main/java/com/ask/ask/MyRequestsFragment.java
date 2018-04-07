@@ -48,7 +48,9 @@ public class MyRequestsFragment extends Fragment {
 
     private ExpandableListView expandableListViewRequests;
     private ExpandableListAdapter expandableListViewAdapter;
-    private static HashMap<String, Request> requestHashMap = null; //
+    private static HashMap<String, Request> requestHashMap = null;//
+    private static HashMap<String, User> userHashMap;
+
     private HashMap<String, Offer> offersForRequestHashMap = null; //offer id, Offer object
     private List<String> listItemImages;
     private List<String> listElements;
@@ -60,6 +62,8 @@ public class MyRequestsFragment extends Fragment {
     private String providerName;
     private String providerIdForCurrentRequest;
     private String providerProfileImageForCurrentRequest;
+    private User provider;
+
 
     public MyRequestsFragment() {
         // Required empty public constructor
@@ -112,6 +116,7 @@ public class MyRequestsFragment extends Fragment {
                 hashMapRequestData = new HashMap<>();
                 listItemImages = new ArrayList<>();
                 listElements = null;
+                provider = null;
 
                 requestCount = 0;
 
@@ -151,7 +156,8 @@ public class MyRequestsFragment extends Fragment {
                                         String currentOfferInfoStr = (currentOfferForCurrentRequest.getProvider_name() + " "
                                                 + currentOfferForCurrentRequest.getProvider_surname()) + "#$" + currentItem.getPrice()
                                                 + "0#" + requestColor + "#" + currentRequest.getRequest_id()
-                                                + "#" + currentOfferForCurrentRequest.getProvider_id() + "#" + currentRequest.getRequester_id();
+                                                + "#" + currentOfferForCurrentRequest.getProvider_id() + "#" + currentRequest.getRequester_id()
+                                                + "#" + currentOfferForCurrentRequest.getProvider_ppicture_url();
 
                                         listElements.add(currentOfferInfoStr);
                                     }
@@ -164,9 +170,11 @@ public class MyRequestsFragment extends Fragment {
                             } else if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_WITH_OFFER_SELECTED){ //Requester accepted an Offer
                                 for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
                                     if (currentOfferForCurrentRequest.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) {
+
+
                                         providerName = currentOfferForCurrentRequest.getProvider_name() + " " + currentOfferForCurrentRequest.getProvider_surname();
                                         providerIdForCurrentRequest = currentOfferForCurrentRequest.getProvider_id();
-                                        providerProfileImageForCurrentRequest = "XXXX";
+                                        providerProfileImageForCurrentRequest = currentOfferForCurrentRequest.getProvider_ppicture_url();
                                         break;
                                     }
                                 }

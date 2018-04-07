@@ -40,6 +40,8 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> listHeaders;
     private HashMap<String, List<String>> listHashMap;
+    private static HashMap<String, User> userHashMap;
+
 
     public ExpandableRequestAdapter(Context context, List<String> listHeaders, HashMap<String, List<String>> listHashMap) {
         this.context = context;
@@ -106,10 +108,8 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
         if (statusInt == LocalData.REQUEST_WITH_PENDING_OFFERS) {
 
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_request_header_pending, null);
-            }
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.listview_request_header_pending, null);
 
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
@@ -130,10 +130,8 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
         } else if (statusInt == LocalData.REQUEST_WITH_OFFER_SELECTED) {
 
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_request_header_accepted, null);
-            }
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.listview_request_header_accepted, null);
 
             TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
             Log.d("textView", "" + ((textViewProviderName == null) ? "null" : "not null") + "    " + providerName);
@@ -146,31 +144,39 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
-//            ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
-////            new DownloadImageTask((ImageView) cardViewProfileImage).execute(provider_ppicture_url);
-//            cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    final View view = v;
-//                    final Intent intent = new Intent(view.getContext(), ProfileActivity.class);
-//
-//                    VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users/" + provider_id, view.getContext());
-//                    process.jsonReader(new VolleyCallback() {
-//                        @Override
-//                        public void onSuccess(JSONArray jsonArrayRequests) {
-//                            HashMap<String, User> currentProviderForRequest = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
-//                            User profile = currentProviderForRequest.get(provider_id);
-//                            intent.putExtra("profileUser", (Serializable) profile);
-//                            view.getContext().startActivity(intent);
-//                        }
-//                        @Override
-//                        public void onFailure() {
-//                            Log.d("REQUESTADAPTER", "failure to get user");
-//                        }
-//                    });
-//
-//                }
-//            });
+            ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
+            new DownloadImageTask((ImageView) cardViewProfileImage).execute(provider_ppicture_url);
+
+            // Handles when profilePic is clicked
+            cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final Intent intent = new Intent(context, ProfileActivity.class);
+
+                    VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users", context);
+                    process.jsonReader(new VolleyCallback() {
+                        @Override
+                        public void onSuccess(JSONArray jsonArrayRequests) {
+                            // handle JSONOBJECT response
+                            userHashMap = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
+                            for (String each : userHashMap.keySet()) {
+                                Log.d("USER KEY", each);
+                            }
+                            User profile = userHashMap.get(provider_id);
+                            Log.d("PROFILE#", profile.toString());
+                            intent.putExtra("profileUser", (Serializable) profile);
+                            context.startActivity(intent);
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            // in case of failure
+                            Log.d("USER_GET_FAILURE", "Something went wrong");
+                        }
+                    });
+
+                }
+            });
 
 
 
@@ -199,17 +205,50 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         final String request_id = elementsArr[3];
         final String provider_id = elementsArr[4];
         final String requester_id = elementsArr[5]; //current logged in user
+        final String provider_ppicture_url = elementsArr[6];
 
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.listview_request_item_offers, null);
-        }
+        LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.listview_request_item_offers, null);
 
         TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
         textViewProviderName.setText(provider_name);
 
         TextView textViewPrice = (TextView) view.findViewById(R.id.textViewPrice);
         textViewPrice.setText(request_price);
+
+        ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.pA_profilePic);
+        new DownloadImageTask((ImageView) cardViewProfileImage).execute(provider_ppicture_url);
+
+        // Handles when profilePic is clicked
+        cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent intent = new Intent(context, ProfileActivity.class);
+
+                VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users", context);
+                process.jsonReader(new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONArray jsonArrayRequests) {
+                        // handle JSONOBJECT response
+                        userHashMap = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
+                        for (String each : userHashMap.keySet()) {
+                            Log.d("USER KEY", each);
+                        }
+                        User profile = userHashMap.get(provider_id);
+                        Log.d("PROFILE#", profile.toString());
+                        intent.putExtra("profileUser", (Serializable) profile);
+                        context.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        // in case of failure
+                        Log.d("USER_GET_FAILURE", "Something went wrong");
+                    }
+                });
+
+            }
+        });
 
         Button buttonAcceptOffer = (Button) view.findViewById(R.id.buttonAcceptOffer);
         buttonAcceptOffer.setOnClickListener(new View.OnClickListener() {

@@ -24,15 +24,20 @@
             android:id="@+id/cardViewProfileImage"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:gravity="center"
             android:textAlignment="center"
             app:civ_border_color="#FFFF"
             app:civ_border_width="2dp"
+            app:layout_constraintEnd_toStartOf="@+id/textViewProviderName"
+            app:layout_constraintHorizontal_bias="0.091"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.06"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"/>
+            card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textViewProviderName"
