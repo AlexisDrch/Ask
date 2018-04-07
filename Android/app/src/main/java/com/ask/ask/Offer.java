@@ -1,5 +1,7 @@
 package com.ask.ask;
 
+import com.android.volley.toolbox.StringRequest;
+
 import java.io.Serializable;
 
 /**
@@ -20,6 +22,9 @@ public class Offer implements Serializable {
     private String description;
     private String message;
     private String provider_ppicture_url;
+    private String requester_name;
+    private String requester_surname;
+    private String requester_ppicture_url;
 
     private String provider_name;
     private String provider_surname;
@@ -34,10 +39,12 @@ public class Offer implements Serializable {
 
     public Offer(String belonging_id, String request_id,
                  String provider_id,
-                 String begin_date,String end_date,
+                 String begin_date, String end_date,
                  String lon, String lat,
                  String offer_price, String description,
-                 String message, String provider_ppicture_url) {
+                 String message, String provider_ppicture_url,
+                 String requester_name, String requester_surname,
+                 String requester_ppicture_url) {
         this.request_id = request_id;
         this.provider_id = provider_id;
         this.offer_price = offer_price;
@@ -45,6 +52,9 @@ public class Offer implements Serializable {
         this.begin_date = begin_date;
         this.end_date = end_date;
         this.description = description;
+        this.requester_name = requester_name;
+        this.requester_surname = requester_surname;
+        this.requester_ppicture_url = requester_ppicture_url;
         this.message = message;
         this.lon = lon;
         this.lat = lat;
@@ -137,5 +147,29 @@ public class Offer implements Serializable {
 
     public void setProvider_ppicture_url(String provider_ppicture_url) {
         this.provider_ppicture_url = provider_ppicture_url;
+    }
+
+    public String getRequester_ppicture_url() {
+        return requester_ppicture_url;
+    }
+
+    public void setRequester_ppicture_url(String requester_ppicture_url) {
+        this.requester_ppicture_url = requester_ppicture_url;
+    }
+
+    public String getRequester_surname() {
+        return requester_surname;
+    }
+
+    public void setRequester_surname(String requester_surname) {
+        this.requester_surname = requester_surname;
+    }
+
+    public String getRequester_name() {
+        return requester_name;
+    }
+
+    public void setRequester_name(String requester_name) {
+        this.requester_name = requester_name;
     }
 }

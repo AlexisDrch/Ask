@@ -117,9 +117,6 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
-            TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
-            textViewStatus.setText(R.string.OFFER_ACCEPTED_FOR_REQUEST);
-
             TextView textViewRequesterName = (TextView) view.findViewById(R.id.textViewRequesterName);
             textViewRequesterName.setText(context.getString(R.string.requestedBy) + " " + requesterName);
 

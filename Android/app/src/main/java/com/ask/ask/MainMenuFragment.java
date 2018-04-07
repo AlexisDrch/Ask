@@ -143,7 +143,10 @@ public class MainMenuFragment extends Fragment {
                         ""+price,
                         ""+currentRequest.getDescription(),
                         ""+currentRequest.getEnd_date(),
-                        "" + currentUser.getPpicture_url());
+                        "" + currentUser.getPpicture_url(),
+                        ""+currentRequest.getRequester_name(),
+                        ""+currentRequest.getRequester_surname(),
+                        ""+currentRequest.getRequester_ppicture_url());
 
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object

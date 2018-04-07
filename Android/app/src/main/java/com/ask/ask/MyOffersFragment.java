@@ -133,10 +133,13 @@ public class MyOffersFragment extends Fragment {
                                 offerColor = R.color.offerDenied;
                                 Log.d("OFFERS FRAGMENT", "LocalData");
                             }
+                            String name = currentOffer.getRequester_name() + " " + currentOffer.getRequester_surname();
+                            Log.d("POOOOP", name);
 
-                            currentOfferInfoStr = offerCount + "#" + "REQUESTER NAME" + "#Status: " + currentOffer.getStatus()
+                            currentOfferInfoStr = offerCount + "#" + name +  "#Status: " + currentOffer.getStatus()
                                     + "#Request Id: " + currentOffer.getRequest_id()
-                                    + "#" + offerColor + "#" + currentItem.getIcon() + "#" + currentItem.getName();
+                                    + "#" + offerColor + "#" + currentItem.getIcon() + "#" + currentItem.getName()
+                                    + "#" + currentOffer.getProvider_ppicture_url();
 
                             listItemImages.add(currentOfferInfoStr);
                             hashMapOfferData.put(currentOfferInfoStr, listElements);
@@ -158,7 +161,7 @@ public class MyOffersFragment extends Fragment {
                     display.getSize(size);
                     int width = size.x;
 
-                    expandableListViewOffers.setIndicatorBounds(width - 100, width);
+                    expandableListViewOffers.setIndicatorBounds(width + 100, width);
 
                 }
 
