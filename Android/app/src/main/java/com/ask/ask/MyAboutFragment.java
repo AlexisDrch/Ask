@@ -65,7 +65,7 @@ public class MyAboutFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_about, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_myabout, container, false);
         listViewProfiles = (ListView) rootView.findViewById(R.id.listViewProfiles);
 
         String[] profileData = {"Alexis#masters student#" + R.drawable.ic_profile,

@@ -111,8 +111,15 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_request_header_pending, parent, false);
 
-            ImageView imageViewCancelRequest = (ImageView) view.findViewById(R.id.imageViewCancelRequest);
-            imageViewCancelRequest.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryDark));
+            ImageView imageViewRemoveRequest = (ImageView) view.findViewById(R.id.imageViewRemoveRequest);
+            imageViewRemoveRequest.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryDark));
+            imageViewRemoveRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("REQUESTADAPTER", "cancel request");
+                    Toast.makeText(v.getContext(), "Requested Removed.", Toast.LENGTH_SHORT);
+                }
+            });
 
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
@@ -133,18 +140,13 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_request_header_accepted, parent, false);
 
-            TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
-            textViewProviderName.setText(context.getString(R.string.providedBy) + " " + providerName);
-            Log.d("textView", "" + ((textViewProviderName == null) ? "null" : "not null") + "    " + providerName);
-
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
             textViewItemName.setBackground(view.getResources().getDrawable(R.drawable.backgroundgradient));
 
+            // Handles when profilePic is clicked
             ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
             new DownloadImageTask((ImageView) cardViewProfileImage).execute(provider_ppicture_url);
-
-            // Handles when profilePic is clicked
             cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -175,9 +177,8 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 }
             });
 
-
-            ImageView imageViewItemImage = (ImageView) view.findViewById(R.id.imageViewItemImage);
-            imageViewItemImage.setImageResource(imageIcon);
+            TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
+            textViewProviderName.setText(context.getString(R.string.providedBy) + " " + providerName);
 
             ImageView imageViewButtonMessage = (ImageView) view.findViewById(R.id.imageViewButtonMessage);
             imageViewButtonMessage.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +188,9 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                     v.getContext().startActivity(intent);
                 }
             });
+
+            ImageView imageViewItemImage = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewItemImage.setImageResource(imageIcon);
 
         }
 
@@ -204,6 +208,11 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         final String provider_id = elementsArr[4];
         final String requester_id = elementsArr[5]; //current logged in user
         final String provider_ppicture_url = elementsArr[6];
+        final String requester_ppicture_url = elementsArr[7];
+        final String requester_name = elementsArr[8];
+        final String itemName = elementsArr[9];
+        final String itemId = elementsArr[10];
+
 
         LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -263,12 +272,12 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                         Toast.makeText(vi.getContext(), "Offer Accepted.", Toast.LENGTH_SHORT).show();
 
                         final Intent intent = new Intent(vi.getContext(), OfferAcceptedActivity.class);
-                        intent.putExtra("itemName", "ITEM NAME");
-                        intent.putExtra("itemImage", R.drawable.tent);
-                        intent.putExtra("requesterName", "REQUESTER NAME");
-                        intent.putExtra("requesterImage", "https://res.cloudinary.com/campus-job/image/upload/t_student-public-page/v1/profile_pictures/Qooxf0yZAH_20151129.jpeg");
-                        intent.putExtra("providerName", "PROVIDER NAME");
-                        intent.putExtra("providerImage", "https://pbs.twimg.com/media/CkiDYVmUoAAoe6n.jpg");
+                        intent.putExtra("itemName", itemName);
+                        intent.putExtra("itemImage", LocalData.getHashMapItemsById().get(itemId).getIcon());
+                        intent.putExtra("requesterName", requester_name);
+                        intent.putExtra("requesterImage", requester_ppicture_url);
+                        intent.putExtra("providerName", provider_name);
+                        intent.putExtra("providerImage", provider_ppicture_url);
                         vi.getContext().startActivity(intent);
                     }
 

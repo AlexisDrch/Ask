@@ -35,7 +35,7 @@
             android:layout_marginTop="8dp"
             android:button="@null"
             android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-            android:text="Request Updates" />
+            android:text="My Request Updates" />
 
         <CheckBox
             android:id="@+id/checkBoxOfferUpdates"
@@ -48,7 +48,7 @@
             android:layout_marginTop="8dp"
             android:button="@null"
             android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-            android:text="Offer Updates" />
+            android:text="My Offer Updates" />
 
         <Button
             android:id="@+id/buttonLogout"

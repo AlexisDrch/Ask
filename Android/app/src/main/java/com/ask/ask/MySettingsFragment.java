@@ -1,5 +1,6 @@
 package com.ask.ask;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -74,7 +75,7 @@ public class MySettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_mysettings, container, false);
         switchNotifications = (Switch) rootView.findViewById(R.id.switchNotifications);
         checkBoxRequestUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxRequestUpdates);
         checkBoxOfferUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxOfferUpdates);
@@ -87,11 +88,9 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Log.d("Settings - onCreateView", "checked");
                     checkBoxRequestUpdates.setEnabled(true);
                     checkBoxOfferUpdates.setEnabled(true);
                 } else {
-                    Log.d("Settings - onCreateView", "unchecked");
                     checkBoxRequestUpdates.setEnabled(false);
                     checkBoxOfferUpdates.setEnabled(false);
                 }
@@ -104,6 +103,7 @@ public class MySettingsFragment extends Fragment {
             public void onClick(View view) {
                 //TODO: save all change and log out user
                 Toast.makeText(getContext(), "Logging out.", Toast.LENGTH_SHORT).show();
+                System.exit(0);
             }
         });
 

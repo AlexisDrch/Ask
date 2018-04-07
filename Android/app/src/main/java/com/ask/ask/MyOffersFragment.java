@@ -89,7 +89,7 @@ public class MyOffersFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_myoffers, container, false);
         refreshOffersFragment(rootView);
         return rootView;
     }
@@ -149,7 +149,7 @@ public class MyOffersFragment extends Fragment {
 
                     } //end for loop
 
-                    expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers); //defined in fragment_offers.xml
+                    expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers); //defined in fragment_myoffersrs.xml
                     expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemImages, hashMapOfferData);
                     expandableListViewOffers.setAdapter(expandableListViewAdapter);
                     int[] color = {Color.BLACK, Color.BLACK};
