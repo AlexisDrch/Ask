@@ -1,7 +1,10 @@
 CREATE TABLE IF NOT EXISTS "offer" (
-	belonging_id int NOT NULL REFERENCES item(belonging_id) ON DELETE CASCADE,
+	belonging_id int NOT NULL REFERENCES item(item_id) ON DELETE CASCADE,
 	request_id int NOT NULL REFERENCES request(request_id) ON DELETE CASCADE,
 	requester_id int REFERENCES "user"(user_id) ON DELETE CASCADE,
+	requester_name varchar(500),
+	requester_surname varchar(500),
+	requester_ppicture_url varchar(1000),
 	provider_id int NOT NULL REFERENCES "user"(user_id) ON DELETE CASCADE,
 	provider_name varchar(500),
 	provider_surname varchar(500),

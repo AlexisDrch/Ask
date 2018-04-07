@@ -9,8 +9,15 @@ router.post('/',function(req, res, next) {
 
 	console.log(JSON.stringify(req.body,null,2));
 
-	User.getUserByUserId(req.body.provider_id)
-    .then(array_users => Offer.makeOffer(array_users[0], req.body))
+	Promise.all([User.getUserByUserId(req.body.provider_id), Request.getRequestsByRequestId(req.body.request_id)])
+    .then(function(values)  {
+      provider = values[0][0];
+      request = values[1][0];
+      console.log("000" + JSON.stringify({provider, request}));
+      return [provider, request];
+    })
+    // make the offer
+    .then(data => Offer.makeOffer(data[0], data[1], req.body))
     .then(function (data) {
       res.status(200)
         .json({

@@ -7,7 +7,7 @@
 6 silly lifecycle ask@0.0.0~prestart: no script for prestart, continuing
 7 info lifecycle ask@0.0.0~start: ask@0.0.0
 8 verbose lifecycle ask@0.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle ask@0.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/alexisdurocher/Docs/YouTheaSea/P18/cours/MobileApps/Ask/node_modules/.bin:/Users/alexisdurocher/.rvm/gems/ruby-2.4.2/bin:/Users/alexisdurocher/.rvm/gems/ruby-2.4.2@global/bin:/Users/alexisdurocher/.rvm/rubies/ruby-2.4.2/bin:/Users/alexisdurocher/anaconda3/bin:/anaconda/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin:/Users/alexisdurocher/.rvm/bin
+9 verbose lifecycle ask@0.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/alexisdurocher/Docs/YouTheaSea/P18/cours/MobileApps/Ask/node_modules/.bin:/Applications/Postgres.app/Contents/Versions/10/bin/:/Users/alexisdurocher/.rvm/gems/ruby-2.4.2/bin:/Users/alexisdurocher/.rvm/gems/ruby-2.4.2@global/bin:/Users/alexisdurocher/.rvm/rubies/ruby-2.4.2/bin:/Users/alexisdurocher/anaconda3/bin:/anaconda/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/TeX/texbin:/Users/alexisdurocher/.rvm/bin
 10 verbose lifecycle ask@0.0.0~start: CWD: /Users/alexisdurocher/Docs/YouTheaSea/P18/cours/MobileApps/Ask
 11 silly lifecycle ask@0.0.0~start: Args: [ '-c', 'node ./bin/www' ]
 12 silly lifecycle ask@0.0.0~start: Returned: code: 1  signal: null
