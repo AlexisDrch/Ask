@@ -343,10 +343,13 @@ COPY request (request_id, item_id, requester_id, requester_name, requester_surna
 --
 
 COPY "user" (user_id, user_name, password, email, name, surname, description, ppicture_url, phone_num, age, sex, country, address, address_string) FROM stdin;
-15	shi.carolyn	askisd@best	cs947@cornell.edu	Carolyn	Shi	College student ex-surfer with a lots of equipments for rent	 http://cache.cosmopolitan.fr/data/photo/w1000_ci/4x/femme-surf-plage-beach-waves.jpg	33767968976	89	0	13	2 rue marconi	2 rue marconi, Metz, France 57070
-16	pulak.azad	logs4daze	pulakazad28@gmail.com	Pulak	Azad	Lit fancy and athletic Gtech student	https://scontent-cdt1-1.xx.fbcdn.net/v/t1.0-1/13177098_1290769994270618_2372859724226444718_n.jpg?_nc_cat=0&oh=8092adbfb57bbb9d6f5670a00376d645&oe=5B6826D9	\N	28	1	67	567 Pharmacia Lane	# some address, Kiev, Ukraine, 09980
-17	alexanderthe1st	empIYAH	alexander.fache@gmail.com	Alexander	Fache	 Half Belgium Half American - Glad to provide tips and stuff for camping	https://www.facebook.com/photo.php?fbid=1991524894446458&set=a.1387780638154223.1073741828.100007669002304&type=3&source=11&referrer_profile_id=100007669002304	\N	\N	\N	\N	\N	\N
-18	alexisdurocherrrr	passwordalexis	aleksi.durocher@gmail.com	Alexis	Durocher	French Master student @Gtech - chill & surf	https://scontent-cdt1-1.cdninstagram.com/vp/3f3acd6ba854fda0f419836c00784c11/5B502A26/t51.2885-19/s320x320/27575232_158575114799090_2511055305371025408_n.jpg	\N	\N	\N	\N	\N	\N
+43	shi.carolyn	askisd@best	cs947@cornell.edu	Carolyn	Shi	College student ex-surfer with a lots of equipments for rent	 http://cache.cosmopolitan.fr/data/photo/w1000_ci/4x/femme-surf-plage-beach-waves.jpg	33767968976	89	0	13	2 rue marconi	2 rue marconi, Metz, France 57070
+44	pulak.azad	logs4daze	pulakazad28@gmail.com	Pulak	Azad	Lit fancy and athletic Gtech student	https://scontent-cdt1-1.xx.fbcdn.net/v/t1.0-1/13177098_1290769994270618_2372859724226444718_n.jpg?_nc_cat=0&oh=8092adbfb57bbb9d6f5670a00376d645&oe=5B6826D9	\N	28	1	67	567 Pharmacia Lane	# some address, Kiev, Ukraine, 09980
+45	alexanderthe1st	empIYAH	alexander.fache@gmail.com	Alexander	Fache	 Half Belgium Half American - Glad to provide tips and stuff for camping	https://www.facebook.com/photo.php?fbid=1991524894446458&set=a.1387780638154223.1073741828.100007669002304&type=3&source=11&referrer_profile_id=100007669002304	\N	\N	\N	\N	\N	\N
+46	alexisdurocherrrr	passwordalexis	aleksi.durocher@gmail.com	Alexis	Durocher	French Master student @Gtech - chill & surf	https://scontent-cdt1-1.cdninstagram.com/vp/3f3acd6ba854fda0f419836c00784c11/5B502A26/t51.2885-19/s320x320/27575232_158575114799090_2511055305371025408_n.jpg	\N	\N	\N	\N	\N	\N
+47	jimyji	jimpwd	jimy.do@gmail.com	Jimmy	Vend	American and campers	https://www.glamour.de/var/condenast/storage/images/media/images/artikelbilder/liebe-bilder/mann-untreu/11180959-1-ger-DE/mann-untreu_generic_large.jpg	\N	\N	\N	\N	\N	\N
+48	isabell	 isapwd	 isabell.lowa@gmail.com	 Isabell	 Lowa	 Ukranian campers	 https://media.gettyimages.com/photos/fashion-portrait-of-a-modern-girl-picture-id507838634?b=1&k=6&m=507838634&s=612x612&w=0&h=VIx7K2FFyscFjgWEAntC9Tmz8Ng5JQcO_BdrNuDFaQs=	\N	\N	\N	\N	\N	\N
+49	Melissa	 Wood	 melissa.wood@gmail.com	 Melissa	 Wood	 Italian food lover	 https://www.photocase.com/photos/327071-human-being-woman-nature-youth-young-adults-blue-water-photocase-stock-photo-large.jpeg	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -382,7 +385,7 @@ SELECT pg_catalog.setval('request_request_id_seq', 5, true);
 -- Name: user_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('user_user_id_seq', 18, true);
+SELECT pg_catalog.setval('user_user_id_seq', 49, true);
 
 
 --
