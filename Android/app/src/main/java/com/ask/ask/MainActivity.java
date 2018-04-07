@@ -284,9 +284,6 @@ public class MainActivity extends AppCompatActivity
      *
      */
     @Override
-    public void onFragmentInteraction(Uri uri){
-        //this is used to communicate with other fragments. Figure out how and if necessary
-        //send data I think
-    }
+    public void onFragmentInteraction(Uri uri){}
 
 }

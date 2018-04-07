@@ -68,7 +68,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final Item currentItem = LocalData.getHashMapItemsById().get(currentRequest.getItem_id());
         holder.itemName.setText(currentItem.getName());
         holder.itemIcon.setImageResource(currentItem.getIcon());
-        final String price = String.valueOf(currentItem.getPrice());
+        final String price = String.valueOf(currentRequest.getRequest_price());
         holder.itemPrice.setText(price);
 
         final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider

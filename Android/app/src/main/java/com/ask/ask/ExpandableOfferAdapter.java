@@ -1,6 +1,7 @@
 package com.ask.ask;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,6 +80,7 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
         String requestId = headerInfoArr[3];
         int color = Integer.parseInt(headerInfoArr[4]);
         int imageIcon = Integer.parseInt(headerInfoArr[5]);
+        String itemName = headerInfoArr[6];
 
         if (status == LocalData.OFFER_PENDING_FOR_REQUEST) {
 
@@ -87,7 +89,10 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_offer_header_pending, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
+
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
@@ -96,6 +101,7 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
             textViewStatus.setText(R.string.OFFER_PENDING_FOR_REQUEST);
+            textViewStatus.setTextColor(view.getResources().getColor(color));
 
             TextView textViewRequestId = (TextView) view.findViewById(R.id.textViewRequestId);
             textViewRequestId.setText(requestId);
@@ -107,7 +113,9 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_offer_header_accepted, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
@@ -121,10 +129,11 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
             Button buttonMessage = (Button) view.findViewById(R.id.buttonMessage);
             buttonMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) { //TODO: switch to messaging screen
-
-
-                    Toast.makeText(v.getContext(), "Go to Message Screen.", Toast.LENGTH_SHORT).show();
+                public void onClick(View v) {
+                    Log.d("OfferAdapter", "buttonMessage");
+                    Log.d("OfferAdapter", "buttonMessage");
+                    final Intent intent = new Intent(v.getContext(), MessagingActivity.class);
+                    v.getContext().startActivity(intent);
                 }
             });
 
@@ -135,7 +144,9 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
                 view = inflater.inflate(R.layout.listview_offer_header_denied, null);
             }
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
@@ -151,18 +162,8 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
         return view;
     }
 
-    //TODO: don't use this anymore
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {
-        Log.d("OFFERADAPTER", "getChildView");
-//        String childText = (String) getChild(groupPosition, childPosition);
-//        if (view == null) {
-//            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            view = inflater.inflate(R.layout.listview_offer_item, null);
-//        }
-//
-//        TextView textViewItem = (TextView) view.findViewById(R.id.textViewItem);
-//        textViewItem.setText(childText);
         return view;
     }
 

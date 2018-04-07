@@ -3,7 +3,7 @@
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="@color/white">
 
@@ -12,12 +12,12 @@
 
     <ImageView android:id="@+id/imageViewItemImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="220dp"
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:layout_weight="0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -31,11 +31,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
             android:layout_marginTop="8dp"
             android:prompt="@string/item"
             android:spinnerMode="dialog"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:background="@color/colorPrimaryDark"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage" />
@@ -45,12 +46,12 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:background="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/spinnerItems"
             tools:ignore="NotSibling">
-
+            <!--
             <TextView
                 android:id="@+id/textViewItemName"
                 android:layout_width="match_parent"
@@ -65,13 +66,13 @@
                 android:textStyle="bold"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
+                app:layout_constraintRight_toRightOf="parent"/>-->
 
 
             <Button
                 android:id="@+id/buttonDatePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -80,82 +81,111 @@
                 android:background="@color/lightGray"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewItemName" />
+                app:layout_constraintTop_toBottomOf="@+id/newRequestFrameLayout" />
 
-            <TextView
-                android:id="@+id/textViewBeginDateLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="From"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/textViewBeginDate"
-                app:layout_constraintTop_toBottomOf="@+id/buttonDatePicker" />
+            <!-- Date -->
+            <LinearLayout
+                android:id="@+id/newRequestDateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:paddingVertical="0dp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/buttonDatePicker">
 
-            <TextView
-                android:id="@+id/textViewBeginDate"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:textSize="16sp"
-                android:background="@color/white"
-                app:layout_constraintLeft_toRightOf="@+id/textViewBeginDateLabel"
-                app:layout_constraintRight_toLeftOf="@+id/textViewEndDateLabel"
-                app:layout_constraintTop_toBottomOf="@+id/buttonDatePicker" />
+                <TextView
+                    android:id="@+id/textViewBeginDateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="From"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textViewEndDateLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:text="to"
-                android:textSize="16sp"
-                app:layout_constraintLeft_toRightOf="@+id/textViewBeginDate"
-                app:layout_constraintRight_toLeftOf="@+id/textViewEndDate"
-                app:layout_constraintTop_toBottomOf="@+id/buttonDatePicker" />
+                <TextView
+                    android:id="@+id/textViewBeginDate"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@color/white"/>
 
-            <TextView
-                android:id="@+id/textViewEndDate"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:textSize="16sp"
-                android:background="@color/white"
-                app:layout_constraintLeft_toRightOf="@+id/textViewEndDateLabel"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textViewEndDateLabel"
-                app:layout_constraintTop_toBottomOf="@+id/buttonDatePicker" />
+                <TextView
+                    android:id="@+id/textViewEndDateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="to"
+                    android:textSize="18sp"/>
 
-            <EditText
-                android:id="@+id/editTextPrice"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:ems="10"
-                android:hint="$ per day"
-                android:inputType="numberDecimal"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                android:background="@color/white"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewBeginDate" />
+                <TextView
+                    android:id="@+id/textViewEndDate"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:textSize="18sp"
+                    android:background="@color/white"
+                    android:textColor="@color/colorPrimaryDark" />
+
+            </LinearLayout>
+
+            <!-- Price -->
+            <LinearLayout
+                android:id="@+id/newRequestPriceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                app:layout_constraintTop_toBottomOf="@id/newRequestDateLayout"
+                android:orientation="horizontal"
+                android:paddingVertical="1dp"
+                android:gravity="center">
+
+
+                <TextView
+                    android:id="@+id/dollarSign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="$"
+                    android:layout_marginRight="5dp"
+                    android:textSize="18sp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorPrimaryDark"/>
+
+                <EditText
+                    android:id="@+id/editTextPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:hint="your price"
+                    android:inputType="numberDecimal"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:background="@color/white"
+                    android:textColor="@color/colorPrimaryDark"/>
+
+                <TextView
+                    android:id="@+id/perDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="per day"
+                    android:textSize="18sp"
+                    android:gravity="center_vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.1"/>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/editTextDescription"
@@ -164,48 +194,27 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="70dp"
                 android:ems="10"
                 android:hint="User request message"
                 android:inputType="textMultiLine"
                 android:lines="5"
                 android:scrollbars="vertical"
-                android:textSize="16sp"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="sans-serif-condensed"
+                android:textStyle="italic"
                 android:background="@color/lightGray"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextPrice" />
+                app:layout_constraintTop_toBottomOf="@+id/newRequestDateLayout" />
 
-            <TextView
-                android:id="@+id/dollarSign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="8dp"
-                android:text="$"
-                android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
-                app:layout_constraintEnd_toStartOf="@+id/editTextPrice"
-                app:layout_constraintHorizontal_bias="0.92"
-                app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/perDay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="per day"
-                app:layout_constraintBottom_toTopOf="@+id/editTextDescription"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.1"
-                app:layout_constraintStart_toEndOf="@+id/editTextPrice" />
 
         </android.support.constraint.ConstraintLayout>
         <Button
             android:id="@+id/buttonAsk2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="16dp"
@@ -215,10 +224,10 @@
             android:textSize="20sp"
             android:textColor="@color/white"
             android:background="@color/askButtonBlue"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/newRequestFrameLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:ignore="NotSibling" />
 
 </android.support.constraint.ConstraintLayout>
