@@ -88,14 +88,12 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 
         if (status == LocalData.OFFER_PENDING_FOR_REQUEST) {
 
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_offer_header_pending, null);
-            }
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.listview_offer_header_pending, null);
 
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
-            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
+            textViewItemName.setBackground(view.getResources().getDrawable(R.drawable.backgroundgradient));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
@@ -105,41 +103,36 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
             textViewStatus.setText(R.string.OFFER_PENDING_FOR_REQUEST);
-            textViewStatus.setTextColor(view.getResources().getColor(color));
-
-            TextView textViewRequestId = (TextView) view.findViewById(R.id.textViewRequestId);
-            textViewRequestId.setText(requestId);
+            textViewStatus.setTextColor(view.getResources().getColor(R.color.offerPending));
 
         } else if (status == LocalData.OFFER_ACCEPTED_FOR_REQUEST) {
 
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_offer_header_accepted, null);
-            }
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.listview_offer_header_accepted, null);
 
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
-            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
+            textViewItemName.setBackground(view.getResources().getDrawable(R.drawable.backgroundgradient));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
+            TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
+            textViewStatus.setText(R.string.OFFER_ACCEPTED_FOR_REQUEST);
+
             TextView textViewRequesterName = (TextView) view.findViewById(R.id.textViewRequesterName);
-            textViewRequesterName.setText(requesterName);
+            textViewRequesterName.setText(context.getString(R.string.requestedBy) + " " + requesterName);
 
             ImageView profileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
             new DownloadImageTask((ImageView) profileImage)
                     .execute(provider_ppictureUrl);
 
-            TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
-            textViewStatus.setText(R.string.OFFER_ACCEPTED_FOR_REQUEST);
 
-            Button buttonMessage = (Button) view.findViewById(R.id.buttonMessage);
-            buttonMessage.setOnClickListener(new View.OnClickListener() {
+            ImageView imageViewButtonMessage = (ImageView) view.findViewById(R.id.imageViewButtonMessage);
+            imageViewButtonMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("OfferAdapter", "buttonMessage");
-                    Log.d("OfferAdapter", "buttonMessage");
+                    Log.d("OfferAdapter", "imageViewButtonMessage");
                     final Intent intent = new Intent(v.getContext(), MessagingActivity.class);
                     v.getContext().startActivity(intent);
                 }
@@ -154,16 +147,13 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
-            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
+            textViewItemName.setBackgroundColor(view.getResources().getColor(R.color.colorPrimary));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);
 
-            TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
-            textViewStatus.setText(R.string.OFFER_DENIED);
-
-            TextView textViewMessage = (TextView) view.findViewById(R.id.textViewMessage);
-            textViewMessage.setText("Your Offer for request " + requestId + " has been denied.");
+            TextView textViewUpdateMessage = (TextView) view.findViewById(R.id.textViewUpdateMessage);
+            textViewUpdateMessage.setText("Your Offer for request " + requestId + " has been denied.");
 
         }
 

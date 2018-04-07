@@ -128,7 +128,6 @@ public class Offer implements Serializable {
         Item item = LocalData.getHashMapItemsById().get(this.getBelonging_id());
 
         return "You are fulfilling a " + item.getName() +
-                " from " + this.getBegin_date() + " to " + this.getEnd_date() +
                 " for $" + item.getPrice() + " per day.";
     }
 
