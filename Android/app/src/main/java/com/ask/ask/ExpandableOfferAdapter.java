@@ -128,14 +128,12 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 
         } else if (status == LocalData.OFFER_DENIED) {
 
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_offer_header_denied, null);
-            }
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.listview_offer_header_denied, null);
 
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
-            textViewItemName.setBackgroundColor(view.getResources().getColor(R.color.colorPrimary));
+            textViewItemName.setBackground(view.getResources().getDrawable(R.drawable.backgroundgradient));
 
             ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
             imageViewHeader.setImageResource(imageIcon);

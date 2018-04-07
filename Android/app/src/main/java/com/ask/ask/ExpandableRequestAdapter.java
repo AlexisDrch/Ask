@@ -109,8 +109,15 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.listview_request_header_pending, parent, false);
 
-            ImageView imageViewCancelRequest = (ImageView) view.findViewById(R.id.imageViewCancelRequest);
-            imageViewCancelRequest.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryDark));
+            ImageView imageViewRemoveRequest = (ImageView) view.findViewById(R.id.imageViewRemoveRequest);
+            imageViewRemoveRequest.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryDark));
+            imageViewRemoveRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("REQUESTADAPTER", "cancel request");
+                    Toast.makeText(v.getContext(), "Requested Removed.", Toast.LENGTH_SHORT);
+                }
+            });
 
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
@@ -134,32 +141,6 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
             textViewItemName.setBackground(view.getResources().getDrawable(R.drawable.backgroundgradient));
-
-//            ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
-////            new DownloadImageTask((ImageView) cardViewProfileImage).execute(provider_ppicture_url);
-//            cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    final View view = v;
-//                    final Intent intent = new Intent(view.getContext(), ProfileActivity.class);
-//
-//                    VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users/" + provider_id, view.getContext());
-//                    process.jsonReader(new VolleyCallback() {
-//                        @Override
-//                        public void onSuccess(JSONArray jsonArrayRequests) {
-//                            HashMap<String, User> currentProviderForRequest = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
-//                            User profile = currentProviderForRequest.get(provider_id);
-//                            intent.putExtra("profileUser", (Serializable) profile);
-//                            view.getContext().startActivity(intent);
-//                        }
-//                        @Override
-//                        public void onFailure() {
-//                            Log.d("REQUESTADAPTER", "failure to get user");
-//                        }
-//                    });
-//
-//                }
-//            });
 
             TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
             textViewProviderName.setText(context.getString(R.string.providedBy) + " " + providerName);
