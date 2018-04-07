@@ -1,5 +1,6 @@
 package com.ask.ask;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -11,7 +12,7 @@ import java.util.LinkedList;
  *
  */
 
-public class Item {
+public class Item implements Serializable{
 
     private String categoryUuid;
     private String name;

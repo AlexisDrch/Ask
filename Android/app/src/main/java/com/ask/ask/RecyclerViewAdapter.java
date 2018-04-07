@@ -3,6 +3,8 @@ package com.ask.ask;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -34,7 +36,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private static HashMap<String, User> userHashMap;
     private Context myContext;
     private int previousPosition = 0;
-    private boolean expanded = false;
 
     public RecyclerViewAdapter (Context myContext, HashMap<String, Request> requestsHashMap){
         this.requestsHashMap = requestsHashMap;
@@ -46,20 +47,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
             return new MyViewHolder(listItem);
-
-        //
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        if (expanded) {
-            holder.expandedCardView.setVisibility(View.VISIBLE);
-            holder.cardView.setVisibility(View.INVISIBLE);
-        } else {
-            holder.expandedCardView.setVisibility(View.INVISIBLE);
-            holder.cardView.setVisibility(View.VISIBLE);
-        }
-
 
         //create a new card using request data
         final Request currentRequest = (Request) requestsHashMap.values().toArray()[position];
@@ -80,11 +71,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final String price = String.valueOf(currentItem.getPrice());
         holder.itemPrice.setText(price);
 
+        final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
+
         // Match button
         holder.matchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
                 String provider_name = currentUser.getName();
                 String provider_surname = currentUser.getSurname();
 
@@ -154,111 +146,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
-        // Card view
+        // Card view onClick so that the card expands
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                expanded = true;
-                holder.expandedCardView.setVisibility(View.VISIBLE);
-                holder.cardView.setVisibility(View.INVISIBLE);
 
-                holder.ex_itemDescription.setText(currentRequest.getDescription());
-                holder.ex_itemName.setText(currentItem.getName());
-                holder.ex_profileName.setText(currentRequest.getRequester_name());
-                new DownloadImageTask((ImageView) holder.ex_profileIcon)
-                        .execute(currentRequest.getRequester_ppicture_url());
-                holder.ex_itemPrice.setText(price);
-                holder.ex_itemIcon.setImageResource(currentItem.getIcon());
+                //Adds a Request and Item to the newFragment
+                MainMenuFragment mainFrag = new MainMenuFragment();
+                Bundle b = new Bundle();
+                b.putSerializable("Request", (Serializable) currentRequest);
+                b.putSerializable("Item", (Serializable) currentItem);
+                mainFrag.setArguments(b);
 
-                // Handles when the profile icon is clicked
-                holder.ex_profileIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        final Intent intent = new Intent(myContext, ProfileActivity.class);
 
-                        VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users", myContext);
-                        process.jsonReader(new VolleyCallback() {
-                            @Override
-                            public void onSuccess(JSONArray jsonArrayRequests) {
-                                // handle JSONOBJECT response
-                                userHashMap = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
-                                for (String each : userHashMap.keySet()) {
-                                    Log.d("USER KEY", each);
-                                }
-                                User profile = userHashMap.get(currentRequest.getRequester_id());
-                                Log.d("PROFILE#", profile.toString());
-                                intent.putExtra("profileUser", (Serializable) profile);
-                                myContext.startActivity(intent);
-                            }
-
-                            @Override
-                            public void onFailure() {
-                                // in case of failure
-                                Log.d("USER_GET_FAILURE", "Something went wrong");
-                            }
-                        });
-
-                    }
-                });
-
-                // Match button
-                holder.ex_matchButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
-                        String provider_name = currentUser.getName();
-                        String provider_surname = currentUser.getSurname();
-
-                        final Offer newOffer = new Offer(
-                                ""+currentItem.getItem_id(),
-                                ""+currentRequest.getRequest_id(),
-                                "" + currentUser.getUser_id(),
-                                ""+currentRequest.getBegin_date(),
-                                ""+currentRequest.getEnd_date(),
-                                ""+currentRequest.getLon(),
-                                ""+currentRequest.getLat(),
-                                ""+price,
-                                ""+currentRequest.getDescription(),
-                                ""+currentRequest.getEnd_date());
-
-                        Log.d("POSTING OFFER", newOffer.toString());
-                        //post new offer json object
-                        final String url = "https://ask-capa.herokuapp.com/api/offers";
-                        POSTData postData = new POSTData();
-                        postData.postOffer(url, newOffer, myContext, new VolleyCallback() {
-                            @Override
-                            public void onSuccess(JSONArray jsonArray) {
-                                //pass request object for RequestConfirmationActivity display
-                                Intent intent = new Intent(myContext, MatchConfirmationActivity.class);
-                                intent.putExtra("Offer", (Serializable) newOffer);
-                                myContext.startActivity(intent);
-                            }
-
-                            @Override
-                            public void onFailure() {
-                                Log.d("RecyclerViewAdapter", "failure posting offer");
-                                Toast.makeText(myContext, "Unable to send Offer.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                    }
-                });
-
-                holder.expandedCardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        expanded = false;
-                        holder.expandedCardView.setVisibility(View.INVISIBLE);
-                        holder.cardView.setVisibility(View.VISIBLE);
-                    }
-                });
-//
-//                MainMenuFragment mainFrag = new MainMenuFragment();
-//
-//                FragmentTransaction ft = ((FragmentActivity)myContext).getSupportFragmentManager().beginTransaction();
-//                ft.replace(R.id.expanded_container, mainFrag);
-//                ft.addToBackStack(null);
-//                ft.commit();
+                FragmentTransaction ft = ((FragmentActivity)myContext).getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_home, mainFrag);
+                ft.addToBackStack(null);
+                ft.commit();
             }
         });
 
@@ -303,7 +207,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView ex_itemDescription;
 
         private CardView cardView;
-        private CardView expandedCardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -318,22 +221,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             matchButton = (Button) itemView.findViewById(R.id.match_button);
             cardView = (CardView) itemView.findViewById(R.id.requestCard);
 
-            //expanded card elements
-            ex_profileIcon = (ImageView) itemView.findViewById(R.id.ex_pA_profilePic);
-            ex_itemIcon = (ImageView) itemView.findViewById(R.id.ex_itemPic);
-            ex_itemName = (TextView) itemView.findViewById(R.id.ex_itemName);
-            ex_itemDate = (TextView) itemView.findViewById(R.id.ex_itemDate);
-            ex_itemDescription = (TextView) itemView.findViewById(R.id.ex_itemDescription);
-            ex_profileName = (TextView) itemView.findViewById(R.id.ex_profileName);
-            ex_itemPrice = (TextView) itemView.findViewById(R.id.ex_itemPrice);
-            ex_itemPrice.setTextColor(Color.parseColor("#85bb65"));
-            ex_matchButton = (Button) itemView.findViewById(R.id.ex_match_button);
-            expandedCardView = (CardView) itemView.findViewById(R.id.expanded_Card);
 
         }
 
     }
-
-
 
 }
