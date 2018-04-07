@@ -1,2 +1,3 @@
 DELETE FROM request;
 DELETE FROM offer;
+DELETE FROM "user";
