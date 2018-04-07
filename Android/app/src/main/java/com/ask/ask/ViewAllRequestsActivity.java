@@ -103,7 +103,7 @@ class JsonParser {
                 jo = jsonArrayOffers.getJSONObject(i);
                 Gson gson = new Gson();
                 Offer newOffer = gson.fromJson(jo.toString(), Offer.class);
-                offerHashMap.put("" + newOffer.getProvider_id(), newOffer);
+                offerHashMap.put("" + newOffer.getRequest_id(), newOffer);
 
                 Log.d("#OFFER", newOffer.toString());
 

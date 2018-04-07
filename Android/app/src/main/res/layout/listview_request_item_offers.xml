@@ -22,7 +22,7 @@
             android:gravity="center"
             android:text="Provider: Alexander Fache"
             android:textAlignment="center"
-            android:textSize="16sp"
+            android:textSize="@dimen/textSizeForMyRequestsOffers"
             android:textStyle="bold" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_marginRight="8dp"
             android:text="Price: $33"
             android:textAlignment="center"
-            android:textSize="16sp"
+            android:textSize="@dimen/textSizeForMyRequestsOffers"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/textViewProviderName" />
 
@@ -42,26 +42,24 @@
     <Button
         android:id="@+id/buttonAcceptOffer"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:text="Accept"
-        android:layout_gravity="center_vertical"/>
+        android:background="@drawable/accept_button"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/buttonDenyOffer"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="16dp"
         android:text="Deny"
-        android:layout_gravity="center_vertical"
-        app:layout_constraintLeft_toRightOf="@+id/buttonAcceptOffer"/>
-
-    <!--<com.baoyz.swipemenulistview.SwipeMenuListView-->
-        <!--android:id="@+id/swipeMenuOfferControl"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content">-->
-    <!--</com.baoyz.swipemenulistview.SwipeMenuListView>-->
+        app:layout_constraintLeft_toRightOf="@+id/buttonAcceptOffer"
+        android:background="@drawable/deny_button"
+        android:textColor="@color/white"/>
 
 </LinearLayout>
