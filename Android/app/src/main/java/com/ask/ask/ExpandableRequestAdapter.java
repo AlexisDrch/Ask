@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,7 +87,6 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
-    @SuppressLint("ResourceType")
     @Override
     public View getGroupView(int position, boolean isExpanded, View view, ViewGroup parent) {
         String headerStr = (String) getGroup(position);
@@ -101,50 +101,39 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         String itemName = headerArr[6];
         String providerName = headerArr[7];
         final String provider_id = headerArr[8];
-        final String requester_id = headerArr[9];
-        final String provider_ppicture_url = headerArr[10];
+//        final String requester_id = headerArr[9];
+//        final String provider_ppicture_url = headerArr[10];
 
         if (statusInt == LocalData.REQUEST_WITH_PENDING_OFFERS) {
 
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_request_header_pending, null);
-            }
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.listview_request_header_pending, parent, false);
+
+            ImageView imageViewCancelRequest = (ImageView) view.findViewById(R.id.imageViewCancelRequest);
+            imageViewCancelRequest.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryDark));
 
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
-            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
+            textViewItemName.setBackground(view.getResources().getDrawable(R.drawable.backgroundgradient));
 
-            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
-            imageViewHeader.setImageResource(imageIcon);
+            ImageView imageViewItemImage = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewItemImage.setImageResource(imageIcon);
 
             TextView textViewNumOffersForRequest = (TextView) view.findViewById(R.id.textViewNumOffersForRequest);
             textViewNumOffersForRequest.setText(numOffersForCurrentRequest);
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
             textViewStatus.setText(R.string.REQUEST_WITH_PENDING_OFFERS);
-            textViewStatus.setTextColor(view.getResources().getColor(color));
-
-            TextView textViewRequestId = (TextView) view.findViewById(R.id.textViewRequestId);
-            textViewRequestId.setText(requestId);
+            textViewStatus.setTextColor(view.getResources().getColor(R.color.requestWithOutOffer));
 
         } else if (statusInt == LocalData.REQUEST_WITH_OFFER_SELECTED) {
 
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_request_header_accepted, null);
-            }
-
-            TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
-            Log.d("textView", "" + ((textViewProviderName == null) ? "null" : "not null") + "    " + providerName);
-            textViewProviderName.setText(providerName);
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.listview_request_header_accepted, parent, false);
 
             TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
             textViewItemName.setText(itemName);
-            textViewItemName.setBackgroundColor(view.getResources().getColor(color));
-
-            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
-            imageViewHeader.setImageResource(imageIcon);
+            textViewItemName.setBackground(view.getResources().getDrawable(R.drawable.backgroundgradient));
 
 //            ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
 ////            new DownloadImageTask((ImageView) cardViewProfileImage).execute(provider_ppicture_url);
@@ -172,13 +161,16 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 //                }
 //            });
 
+            TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
+            textViewProviderName.setText(context.getString(R.string.providedBy) + " " + providerName);
 
+            ImageView imageViewItemImage = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewItemImage.setImageResource(imageIcon);
 
-            Button buttonMessage = (Button) view.findViewById(R.id.buttonMessage);
-            buttonMessage.setOnClickListener(new View.OnClickListener() {
+            ImageView imageViewButtonMessage = (ImageView) view.findViewById(R.id.imageViewButtonMessage);
+            imageViewButtonMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("RequestAdapter", "buttonMessage");
                     final Intent intent = new Intent(v.getContext(), MessagingActivity.class);
                     v.getContext().startActivity(intent);
                 }
@@ -193,17 +185,15 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) { //only when statusInt == LocalData.REQUEST_WITH_OFFER_SELECTED
         String elementStr = (String) getChild(groupPosition, childPosition);
         String[] elementsArr = elementStr.split("#");
-        String provider_name = elementsArr[0];
+        final String provider_name = elementsArr[0];
         final String request_price = elementsArr[1];
-        int color = Integer.parseInt(elementsArr[2]);
+//        int color = Integer.parseInt(elementsArr[2]);
         final String request_id = elementsArr[3];
         final String provider_id = elementsArr[4];
         final String requester_id = elementsArr[5]; //current logged in user
 
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.listview_request_item_offers, null);
-        }
+        LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        view = inflater.inflate(R.layout.listview_request_item_offers, parent, false);
 
         TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
         textViewProviderName.setText(provider_name);
@@ -215,8 +205,6 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         buttonAcceptOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("ExpRequestAdapter", "buttonAccept");
-
                 final String url = "https://ask-capa.herokuapp.com/api/offers/accept/" + requester_id;
                 final View vi = v;
 
@@ -224,10 +212,15 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                 postData.postAcceptOffer(url, request_id, provider_id, "Accepting Offer from user id " + provider_id + ".", v.getContext(), new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONArray jsonArray) {
-                        Log.d("RequestAdapter", "buttonAcceptOffer");
                         Toast.makeText(vi.getContext(), "Offer Accepted.", Toast.LENGTH_SHORT).show();
-                        Log.d("RequestAdapter", "buttonMessage");
-                        final Intent intent = new Intent(vi.getContext(), MessagingActivity.class);
+
+                        final Intent intent = new Intent(vi.getContext(), OfferAcceptedActivity.class);
+                        intent.putExtra("itemName", "ITEM NAME");
+                        intent.putExtra("itemImage", R.drawable.tent);
+                        intent.putExtra("requesterName", "REQUESTER NAME");
+                        intent.putExtra("requesterImage", "https://res.cloudinary.com/campus-job/image/upload/t_student-public-page/v1/profile_pictures/Qooxf0yZAH_20151129.jpeg");
+                        intent.putExtra("providerName", "PROVIDER NAME");
+                        intent.putExtra("providerImage", "https://pbs.twimg.com/media/CkiDYVmUoAAoe6n.jpg");
                         vi.getContext().startActivity(intent);
                     }
 

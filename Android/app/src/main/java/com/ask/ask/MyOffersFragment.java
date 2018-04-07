@@ -128,14 +128,13 @@ public class MyOffersFragment extends Fragment {
                                 offerColor = R.color.offerPending;
                                 Log.d("OFFERS FRAGMENT", "OFFER_PENDING_FOR_REQUEST");
                             } else if (currentOffer.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) { //ACCEPTED
-                                offerColor = R.color.offerAccepted;
                                 Log.d("OFFERS FRAGMENT", "OFFER_ACCEPTED_FOR_REQUEST");
                             } else if (currentOffer.getStatus() == LocalData.OFFER_DENIED){ //DENIED
                                 offerColor = R.color.offerDenied;
                                 Log.d("OFFERS FRAGMENT", "LocalData");
                             }
 
-                            currentOfferInfoStr = offerCount + "#Name: " + "REQUESTER NAME" + "#Status: " + currentOffer.getStatus()
+                            currentOfferInfoStr = offerCount + "#" + "REQUESTER NAME" + "#Status: " + currentOffer.getStatus()
                                     + "#Request Id: " + currentOffer.getRequest_id()
                                     + "#" + offerColor + "#" + currentItem.getIcon() + "#" + currentItem.getName();
 

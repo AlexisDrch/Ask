@@ -33,6 +33,7 @@
             android:label="@string/title_activity_login" />
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".MessagingActivity"></activity>
+        <activity android:name=".OfferAcceptedActivity"></activity>
     </application>
 
 </manifest>

@@ -55,7 +55,7 @@ public class MyRequestsFragment extends Fragment {
     private HashMap<String, List<String>> hashMapRequestData;
 
     private static int requestCount = 0;
-    private int requestColor;
+    private int requestColor = R.color.requestWithOutOffer;
     private int numOffersForCurrentRequest;
     private String providerName;
     private String providerIdForCurrentRequest;
@@ -144,7 +144,6 @@ public class MyRequestsFragment extends Fragment {
                                     Log.d("OFFER HASH MAP", "SIZE: " + offersForRequestHashMap.size());
 
                                     numOffersForCurrentRequest = offersForRequestHashMap.size();
-                                    requestColor = R.color.requestWithOffer;
 
                                     //loop through Offers for current Request and create String description to add to listElements
                                     for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
@@ -157,7 +156,6 @@ public class MyRequestsFragment extends Fragment {
                                     }
                                 } else {
                                     numOffersForCurrentRequest = 0;
-                                    requestColor = R.color.requestWithOutOffer;
                                     Log.d("OFFER HASH MAP", "NO OFFERS");
                                 }
 
@@ -165,21 +163,20 @@ public class MyRequestsFragment extends Fragment {
                                 for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
                                     if (currentOfferForCurrentRequest.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) {
                                         providerName = currentOfferForCurrentRequest.getProvider_name() + " " + currentOfferForCurrentRequest.getProvider_surname();
-                                        providerIdForCurrentRequest = currentOfferForCurrentRequest.getProvider_id();
-                                        providerProfileImageForCurrentRequest = "XXXX";
+//                                        providerIdForCurrentRequest = currentOfferForCurrentRequest.getProvider_id();
+//                                        providerProfileImageForCurrentRequest = "XXXX";
                                         break;
                                     }
                                 }
 
                                 numOffersForCurrentRequest = -1;
-                                requestColor = R.color.requestWithOfferAccepted;
                                 Log.d("OFFER HASH MAP", "OFFER ACCEPTED");
                             }
 
                             //current Request information
-                            String imageHeaderStr = requestCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
+                            String imageHeaderStr = requestCount + "#Your offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
                                     + "#Status: " + currentRequest.getStatus() + "#" + requestColor + "#" + currentItem.getIcon() + "#" + currentItem.getName()
-                                    + "#" + providerName + "#" + providerIdForCurrentRequest + "#" + currentUser.getUser_id() + "#" + providerProfileImageForCurrentRequest;
+                                    + "#" + providerName + "#" + providerIdForCurrentRequest; // + "#" + currentUser.getUser_id() + "#" + providerProfileImageForCurrentRequest;
                             listItemImages.add(imageHeaderStr);
 
                             hashMapRequestData.put(imageHeaderStr, listElements);
