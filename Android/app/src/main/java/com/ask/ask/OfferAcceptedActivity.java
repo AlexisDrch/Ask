@@ -23,8 +23,8 @@ public class OfferAcceptedActivity extends AppCompatActivity {
     private ImageView imageViewRequesterImage;
     private TextView textViewProviderName;
     private ImageView imageViewProviderImage;
-    private Button buttonGoToMessaging;
-    private Button buttonGoToHome;
+    private ImageView imageViewButtonGoToMessaging;
+    private ImageView imageViewButtonGoToHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,20 +47,20 @@ public class OfferAcceptedActivity extends AppCompatActivity {
         textViewProviderName.setText(bundle.get("providerName").toString());
         new DownloadImageTask((ImageView) imageViewProviderImage).execute(bundle.get("providerImage").toString());
 
-        buttonGoToMessaging = (Button) findViewById(R.id.buttonGoToMessaging);
-        buttonGoToMessaging.setOnClickListener(new View.OnClickListener() {
+        imageViewButtonGoToHome = (ImageView) findViewById(R.id.imageViewButtonGoToHome);
+        imageViewButtonGoToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent(v.getContext(), MessagingActivity.class);
+                final Intent intent = new Intent(v.getContext(), MainActivity.class);
                 v.getContext().startActivity(intent);
             }
         });
 
-        buttonGoToHome = (Button) findViewById(R.id.buttonGoToHome);
-        buttonGoToHome.setOnClickListener(new View.OnClickListener() {
+        imageViewButtonGoToMessaging = (ImageView) findViewById(R.id.imageViewButtonGoToMessaging);
+        imageViewButtonGoToMessaging.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent(v.getContext(), MainActivity.class);
+                final Intent intent = new Intent(v.getContext(), MessagingActivity.class);
                 v.getContext().startActivity(intent);
             }
         });

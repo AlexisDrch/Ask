@@ -6,68 +6,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--imageViewButtonGoToHome-->
+    <ImageView
+        android:id="@+id/imageViewButtonGoToHome"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_home"
+        android:text="Home"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textViewConfirmationTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-thin"
         android:text="It's a Match!"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewButtonGoToMessaging"
+        app:layout_constraintStart_toEndOf="@+id/imageViewButtonGoToHome"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewItemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Item Name"
-        android:textSize="20sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewConfirmationTitle" />
-
+    <!--imageViewButtonGoToMessaging-->
     <ImageView
-        android:id="@+id/imageViewItemImage"
-        android:layout_width="@dimen/imageViewSizeOfferAccepted"
-        android:layout_height="@dimen/imageViewSizeOfferAccepted"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewItemName" />
+        android:id="@+id/imageViewButtonGoToMessaging"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_message"
+        android:text="Message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewRequesterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:text="Requester Name"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/textViewProviderName"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewConfirmationTitle" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imageViewRequesterImage"
         android:layout_width="@dimen/imageViewSizeOfferAccepted"
         android:layout_height="@dimen/imageViewSizeOfferAccepted"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
+        app:civ_border_color="#FFFF"
+        app:civ_border_width="2dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/imageViewProviderImage"
         app:layout_constraintTop_toBottomOf="@+id/textViewRequesterName" />
@@ -76,51 +77,53 @@
         android:id="@+id/textViewProviderName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:text="Provider Name"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toRightOf="@+id/textViewRequesterName"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewConfirmationTitle" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/imageViewProviderImage"
         android:layout_width="@dimen/imageViewSizeOfferAccepted"
         android:layout_height="@dimen/imageViewSizeOfferAccepted"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="8dp"
+        app:civ_border_color="#FFFF"
+        app:civ_border_width="2dp"
         app:layout_constraintLeft_toRightOf="@+id/imageViewRequesterImage"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewProviderName" />
 
-    <Button
-        android:id="@+id/buttonGoToMessaging"
+    <TextView
+        android:id="@+id/textViewItemName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Message"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewRequesterImage"/>
+        android:background="@drawable/backgroundgradient"
+        android:text="Item Name"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewRequesterImage" />
 
-    <Button
-        android:id="@+id/buttonGoToHome"
+    <ImageView
+        android:id="@+id/imageViewItemImage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:text="Home"
+        android:alpha=".75"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGoToMessaging" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewItemName" />
 
 </android.support.constraint.ConstraintLayout>

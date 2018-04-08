@@ -7,5 +7,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="requestOfferImageHeight">240dp</dimen>
     <dimen name="textSizeForMyRequestsOffers">16dp</dimen>
-    <dimen name="imageViewSizeOfferAccepted">125dp</dimen>
+    <dimen name="imageViewSizeOfferAccepted">150dp</dimen>
 </resources>

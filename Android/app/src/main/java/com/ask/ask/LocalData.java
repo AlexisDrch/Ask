@@ -53,15 +53,15 @@ public abstract class LocalData {
             Item item_data[] = new Item[]
                     {
                             new Item(1, "Golf Club", null,
-                                    5.00, null, R.drawable.item_golfclub),
+                                    10.00, null, R.drawable.item_golfclub),
                             new Item(2, "Pot", null,
-                                    10.00, null, R.drawable.item_pot),
+                                    5.00, null, R.drawable.item_pot),
                             new Item(3, "Sleeping Bag", null,
                                     7.00, null, R.drawable.item_sleepingbag),
                             new Item(4, "Surfboard", null,
                                     12.00, null, R.drawable.item_surfboard),
                             new Item(5, "Tent", null,
-                                    5.00, null, R.drawable.item_tent)
+                                    15.00, null, R.drawable.item_tent)
                     };
             itemHashMapByName = new HashMap<String, Item>();
             for (Item e : item_data) {

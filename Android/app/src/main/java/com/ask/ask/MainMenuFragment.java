@@ -116,7 +116,7 @@ public class MainMenuFragment extends Fragment {
         // Items data
         itemName.setText(currentItem.getName());
         itemIcon.setImageResource(currentItem.getIcon());
-        final String price = String.valueOf(currentItem.getPrice());
+        final String price = String.valueOf(currentRequest.getRequest_price());
         itemPrice.setText(price);
         itemPrice.setTextColor(Color.parseColor("#85bb65"));
         itemDescription.setText(currentRequest.getDescription());

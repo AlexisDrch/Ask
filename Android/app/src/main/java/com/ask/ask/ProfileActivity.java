@@ -33,14 +33,11 @@ public class ProfileActivity extends AppCompatActivity {
         String description = newUser.getDescription();
         String temp_rating = ""+ newUser.getUser_id();
 
-        int int_rating = Integer.parseInt(temp_rating);
-        int_rating = int_rating % 5;
-        String rating = "" + int_rating;
-
         profileName.setText(name);
         profileDescription.setText(description);
+        float rating = Float.parseFloat(temp_rating);
 
-        ratingBarUserRating.setRating(Float.parseFloat(rating) % ratingBarUserRating.getNumStars());
+        ratingBarUserRating.setRating(3 + rating % 2); //% ratingBarUserRating.getNumStars());
 
         //redownloads image from url
         //TODO: make this more efficient in that it only creates the image once
