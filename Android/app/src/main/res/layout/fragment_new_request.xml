@@ -27,14 +27,17 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:prompt="@string/item"
         android:spinnerMode="dialog"
         android:textAlignment="center"
         android:gravity="center"
-        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage" />
+        <!--style="@style/itemSpinnerTheme"-->
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/newRequestFrameLayout"

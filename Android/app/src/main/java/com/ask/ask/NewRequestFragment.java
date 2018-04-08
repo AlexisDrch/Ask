@@ -80,9 +80,9 @@ public class NewRequestFragment extends Fragment {
         spinnerLocalItems.setEnabled(true);
         // spinner colors
         spinnerLocalItems.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
-        spinnerLocalItems.setBackgroundColor(getResources().getColor(R.color.primaryGreen));
+        spinnerLocalItems.setBackground(getResources().getDrawable(R.drawable.backgroundgradient));
 
-        spinnerLocalItemsAdapter = ArrayAdapter.createFromResource(fragmentContext,  R.array.localItemsArray,
+        spinnerLocalItemsAdapter = ArrayAdapter.createFromResource(fragmentContext, R.array.localItemsArray,
                 android.R.layout.simple_spinner_dropdown_item);
         spinnerLocalItemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerLocalItems.setAdapter(spinnerLocalItemsAdapter);
@@ -95,8 +95,7 @@ public class NewRequestFragment extends Fragment {
                 currentItem = (Item) LocalData.getHashMapItemsByName().get(spinnerLocalItemsAdapter.getItem(position));
                 updateItemFields(currentItem);
                 localItemsSpinnerPosition = position;
-                view.setBackgroundColor(getResources().getColor(R.color.primaryGreen));
-
+                spinnerLocalItems.setBackground(getResources().getDrawable(R.drawable.backgroundgradient));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
