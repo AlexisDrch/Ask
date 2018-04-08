@@ -69,7 +69,7 @@
                     android:textColor="@color/milkWhite"
                     android:fontFamily="sans-serif-thin"
                     app:layout_collapseMode="pin"
-                    android:textSize="35sp"/>
+                    android:textSize="40sp"/>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
