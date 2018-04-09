@@ -33,11 +33,10 @@
         android:spinnerMode="dialog"
         android:textAlignment="center"
         android:gravity="center"
-        android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage" />
-        <!--style="@style/itemSpinnerTheme"-->
+        app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage"
+        style="@style/itemSpinnerTheme" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/newRequestFrameLayout"

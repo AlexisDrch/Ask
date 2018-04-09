@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import com.ask.ask.Utils.DownloadImageTask;
 
+import org.json.JSONArray;
+
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +28,7 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> listHeaders;
     private HashMap<String, List<String>> listHashMap;
+    private static HashMap<String, User> userHashMap;
 
     public ExpandableOfferAdapter(Context context, List<String> listHeaders, HashMap<String, List<String>> listHashMap) {
         this.context = context;
@@ -79,11 +83,11 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
         String statusStr = headerInfoArr[2];
         int temp = statusStr.indexOf(":");
         int status = Integer.parseInt(statusStr.substring(temp + 1).trim());
-        String requestId = headerInfoArr[3];
+        final String requestId = headerInfoArr[3];
         int color = Integer.parseInt(headerInfoArr[4]);
         int imageIcon = Integer.parseInt(headerInfoArr[5]);
         String itemName = headerInfoArr[6];
-        String provider_ppictureUrl = headerInfoArr[7];
+        String requester_ppicture_url = headerInfoArr[7];
 
 
         if (status == LocalData.OFFER_PENDING_FOR_REQUEST) {
@@ -120,10 +124,34 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
             TextView textViewRequesterName = (TextView) view.findViewById(R.id.textViewRequesterName);
             textViewRequesterName.setText(context.getString(R.string.requestedBy) + " " + requesterName);
 
-            ImageView profileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
-            new DownloadImageTask((ImageView) profileImage)
-                    .execute(provider_ppictureUrl);
-
+//            ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
+//            new DownloadImageTask((ImageView) cardViewProfileImage).execute(requester_ppicture_url);
+//            cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    final Intent intent = new Intent(context, ProfileActivity.class);
+//
+//                    VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users", context);
+//                    process.jsonReader(new VolleyCallback() {
+//                        @Override
+//                        public void onSuccess(JSONArray jsonArrayRequests) {
+//                            // handle JSONOBJECT response
+//                            userHashMap = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
+//                            User profile = userHashMap.get();
+//                            Log.d("PROFILE#", profile.toString());
+//                            intent.putExtra("profileUser", (Serializable) profile);
+//                            context.startActivity(intent);
+//                        }
+//
+//                        @Override
+//                        public void onFailure() {
+//                            // in case of failure
+//                            Log.d("USER_GET_FAILURE", "Something went wrong");
+//                        }
+//                    });
+//
+//                }
+//            });
 
             ImageView imageViewButtonMessage = (ImageView) view.findViewById(R.id.imageViewButtonMessage);
             imageViewButtonMessage.setOnClickListener(new View.OnClickListener() {

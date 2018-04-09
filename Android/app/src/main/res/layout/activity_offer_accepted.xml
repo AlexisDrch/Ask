@@ -34,7 +34,6 @@
         app:layout_constraintStart_toEndOf="@+id/imageViewButtonGoToHome"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--imageViewButtonGoToMessaging-->
     <ImageView
         android:id="@+id/imageViewButtonGoToMessaging"
         android:layout_width="40dp"
@@ -46,59 +45,67 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewRequesterName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayoutRequester"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:text="Requester Name"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textViewProviderName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewConfirmationTitle" />
+        app:layout_constraintRight_toLeftOf="@+id/linearLayoutProvider"
+        app:layout_constraintTop_toBottomOf="@+id/textViewConfirmationTitle">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageViewRequesterImage"
-        android:layout_width="@dimen/imageViewSizeOfferAccepted"
-        android:layout_height="@dimen/imageViewSizeOfferAccepted"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        app:civ_border_color="#FFFF"
-        app:civ_border_width="2dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/imageViewProviderImage"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRequesterName" />
+        <TextView
+            android:id="@+id/textViewRequesterName"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Requester Name"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textViewProviderName"
-        android:layout_width="wrap_content"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imageViewRequesterImage"
+            android:layout_width="@dimen/imageViewSizeOfferAccepted"
+            android:layout_height="@dimen/imageViewSizeOfferAccepted"
+            app:civ_border_color="#FFFF"
+            app:civ_border_width="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRequesterName" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutProvider"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:text="Provider Name"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@+id/textViewRequesterName"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toRightOf="@+id/linearLayoutRequester"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewConfirmationTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewConfirmationTitle">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/imageViewProviderImage"
-        android:layout_width="@dimen/imageViewSizeOfferAccepted"
-        android:layout_height="@dimen/imageViewSizeOfferAccepted"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        app:civ_border_color="#FFFF"
-        app:civ_border_width="2dp"
-        app:layout_constraintLeft_toRightOf="@+id/imageViewRequesterImage"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProviderName" />
+        <TextView
+            android:id="@+id/textViewProviderName"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="Provider Name"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imageViewProviderImage"
+            android:layout_width="@dimen/imageViewSizeOfferAccepted"
+            android:layout_height="@dimen/imageViewSizeOfferAccepted"
+            app:civ_border_color="#FFFF"
+            app:civ_border_width="2dp"
+            app:layout_constraintTop_toBottomOf="@+id/textViewProviderName" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textViewItemName"
@@ -110,20 +117,15 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewRequesterImage" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutRequester" />
 
     <ImageView
         android:id="@+id/imageViewItemImage"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:alpha=".75"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/requestOfferImageHeight"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewItemName" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewItemName"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

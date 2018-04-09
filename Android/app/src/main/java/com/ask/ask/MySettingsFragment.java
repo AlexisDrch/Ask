@@ -38,6 +38,7 @@ public class MySettingsFragment extends Fragment {
     private Switch switchNotifications;
     private CheckBox checkBoxRequestUpdates;
     private CheckBox checkBoxOfferUpdates;
+    private CheckBox checkBoxMessages;
     private Button buttonLogout;
 
     public MySettingsFragment() {
@@ -79,10 +80,12 @@ public class MySettingsFragment extends Fragment {
         switchNotifications = (Switch) rootView.findViewById(R.id.switchNotifications);
         checkBoxRequestUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxRequestUpdates);
         checkBoxOfferUpdates = (CheckBox) rootView.findViewById(R.id.checkBoxOfferUpdates);
+        checkBoxMessages = (CheckBox) rootView.findViewById(R.id.checkBoxMessages);
         buttonLogout = (Button) rootView.findViewById(R.id.buttonLogout);
 
         checkBoxRequestUpdates.setEnabled(false);
         checkBoxOfferUpdates.setEnabled(false);
+        checkBoxMessages.setEnabled(false);
 
         switchNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -90,9 +93,11 @@ public class MySettingsFragment extends Fragment {
                 if (isChecked) {
                     checkBoxRequestUpdates.setEnabled(true);
                     checkBoxOfferUpdates.setEnabled(true);
+                    checkBoxMessages.setEnabled(true);
                 } else {
                     checkBoxRequestUpdates.setEnabled(false);
                     checkBoxOfferUpdates.setEnabled(false);
+                    checkBoxMessages.setEnabled(false);
                 }
 
             }

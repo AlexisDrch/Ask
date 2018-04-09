@@ -42,7 +42,7 @@
                 android:layout_height="match_parent"
                 app:titleEnabled="false"
                 app:contentScrim="@color/colorPrimaryDark"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:title="@string/app_name">
 
                 <!-- Fragment where user can  -->

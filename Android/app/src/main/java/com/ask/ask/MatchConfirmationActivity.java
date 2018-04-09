@@ -3,7 +3,6 @@ package com.ask.ask;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MatchConfirmationActivity extends AppCompatActivity {
@@ -13,7 +12,7 @@ public class MatchConfirmationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_match_confirmation);
+        setContentView(R.layout.activity_offer_confirmation);
 
         textViewInformation = (TextView) findViewById(R.id.textViewInformation);
 
