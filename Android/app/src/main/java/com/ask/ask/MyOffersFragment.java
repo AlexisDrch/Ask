@@ -134,12 +134,11 @@ public class MyOffersFragment extends Fragment {
                                 Log.d("OFFERS FRAGMENT", "LocalData");
                             }
                             String name = currentOffer.getRequester_name() + " " + currentOffer.getRequester_surname();
-                            Log.d("POOOOP", name);
 
                             currentOfferInfoStr = offerCount + "#" + name +  "#Status: " + currentOffer.getStatus()
                                     + "#Request Id: " + currentOffer.getRequest_id()
                                     + "#" + offerColor + "#" + currentItem.getIcon() + "#" + currentItem.getName()
-                                    + "#" + currentOffer.getProvider_ppicture_url();
+                                    + "#" + currentOffer.getRequester_ppicture_url(); // + "#" + currentOffer.getRequester_id(); //don't have access to this
 
                             listItemImages.add(currentOfferInfoStr);
                             hashMapOfferData.put(currentOfferInfoStr, listElements);

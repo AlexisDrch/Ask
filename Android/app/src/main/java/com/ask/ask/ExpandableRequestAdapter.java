@@ -226,8 +226,6 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
 
         ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.pA_profilePic);
         new DownloadImageTask((ImageView) cardViewProfileImage).execute(provider_ppicture_url);
-
-        // Handles when profilePic is clicked
         cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,9 +237,6 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                     public void onSuccess(JSONArray jsonArrayRequests) {
                         // handle JSONOBJECT response
                         userHashMap = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
-                        for (String each : userHashMap.keySet()) {
-                            Log.d("USER KEY", each);
-                        }
                         User profile = userHashMap.get(provider_id);
                         Log.d("PROFILE#", profile.toString());
                         intent.putExtra("profileUser", (Serializable) profile);
