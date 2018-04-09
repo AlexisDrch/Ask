@@ -2,24 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/navigationDrawerHeader"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
+    android:layout_height="200dp"
     android:background="@drawable/backgroundgradient"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
     android:gravity="bottom">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/sideMenuUserImage"
-        android:layout_width="95dp"
-        android:layout_height="95dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        app:civ_border_width="2dp"
-        app:civ_border_color="#FFFF"/>
+        app:civ_border_color="#FFFF"
+        app:civ_border_width="2dp" />
 
     <TextView
         android:id="@+id/sideMenuUserNameSurname"
@@ -34,5 +30,16 @@
         android:layout_height="wrap_content"
         android:text="your email is not provided."
         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+    <RatingBar
+        android:id="@+id/sideMenuRatingBar"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:numStars="5"
+        android:progressTint="#ffd700 "
+        android:stepSize="0.1" />
 
 </LinearLayout>

@@ -138,7 +138,7 @@ public class MyOffersFragment extends Fragment {
                             currentOfferInfoStr = offerCount + "#" + name +  "#Status: " + currentOffer.getStatus()
                                     + "#Request Id: " + currentOffer.getRequest_id()
                                     + "#" + offerColor + "#" + currentItem.getIcon() + "#" + currentItem.getName()
-                                    + "#" + currentOffer.getRequester_ppicture_url(); // + "#" + currentOffer.getRequester_id(); //don't have access to this
+                                    + "#" + currentOffer.getRequester_ppicture_url() + "#" + currentOffer.getRequest_id(); //don't have access to this
 
                             listItemImages.add(currentOfferInfoStr);
                             hashMapOfferData.put(currentOfferInfoStr, listElements);

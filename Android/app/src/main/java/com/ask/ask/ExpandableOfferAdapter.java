@@ -124,8 +124,8 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
             TextView textViewRequesterName = (TextView) view.findViewById(R.id.textViewRequesterName);
             textViewRequesterName.setText(context.getString(R.string.requestedBy) + " " + requesterName);
 
-            ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
-            new DownloadImageTask((ImageView) cardViewProfileImage).execute(requester_ppicture_url);
+//            ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
+//            new DownloadImageTask((ImageView) cardViewProfileImage).execute(requester_ppicture_url);
 //            cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
@@ -137,7 +137,7 @@ public class ExpandableOfferAdapter extends BaseExpandableListAdapter {
 //                        public void onSuccess(JSONArray jsonArrayRequests) {
 //                            // handle JSONOBJECT response
 //                            userHashMap = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
-//                            User profile = userHashMap.get(re);
+//                            User profile = userHashMap.get();
 //                            Log.d("PROFILE#", profile.toString());
 //                            intent.putExtra("profileUser", (Serializable) profile);
 //                            context.startActivity(intent);

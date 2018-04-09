@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.ask.ask.Utils.DownloadImageTask;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout navigationDrawerLayout;
     private NavigationView navigationView;
     private ImageView sideMenuUserImage;
+    private RatingBar sideMenuRatingBar;
     private TextView sideMenuUserNameSurname;
     private TextView sideMenuUserEmail;
     private Boolean NewRequestFragmentIsSet = false;
@@ -103,11 +105,14 @@ public class MainActivity extends AppCompatActivity
                     public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                         //side menu header with current user info when menu clicked
                         sideMenuUserImage = findViewById(R.id.sideMenuUserImage);
+                        sideMenuRatingBar = findViewById(R.id.sideMenuRatingBar);
                         sideMenuUserNameSurname = (TextView) findViewById(R.id.sideMenuUserNameSurname);
                         sideMenuUserEmail = (TextView) findViewById(R.id.sideMenuUserEmail);
 
                         new DownloadImageTask((ImageView) sideMenuUserImage)
                                 .execute(LocalData.getCurrentUserInstance().getPpicture_url());
+                        int rating = LocalData.getCurrentUserInstance().getUser_id();
+                        sideMenuRatingBar.setRating(3 + rating % 2);
                         sideMenuUserNameSurname.setText(LocalData.getCurrentUserInstance().getName() + " " +
                                 LocalData.getCurrentUserInstance().getSurname());
                         sideMenuUserEmail.setText(LocalData.getCurrentUserInstance().getEmail());

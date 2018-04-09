@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/itemPic"
-                android:layout_width="271dp"
-                android:layout_height="245dp"
+                android:layout_width="@dimen/requestOfferImageHeight"
+                android:layout_height="@dimen/requestOfferImageHeight"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -38,8 +38,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/pA_profilePic"
-                android:layout_width="54dp"
-                android:layout_height="53dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
@@ -49,31 +49,29 @@
                 app:layout_constraintHorizontal_bias="0.433"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/itemPic" />
+
             <TextView
                 android:id="@+id/itemName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="12dp"
                 android:text="item_name"
-                android:textSize="28sp"
+                android:textSize="30sp"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/itemPic" />
 
             <TextView
                 android:id="@+id/profileName"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:text="name"
-                card_view:layout_constraintBottom_toTopOf="@+id/itemDescription"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/pA_profilePic"
-                card_view:layout_constraintVertical_bias="0.0" />
+                card_view:layout_constraintTop_toBottomOf="@+id/pA_profilePic" />
 
             <TextView
                 android:id="@+id/itemDate"
@@ -90,26 +88,28 @@
 
             <TextView
                 android:id="@+id/itemPrice"
-                android:layout_width="78dp"
-                android:layout_height="42dp"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="16dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:text="Price"
                 android:textAlignment="center"
                 android:textSize="28sp"
                 card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="0.946"
+                card_view:layout_constraintHorizontal_bias="0.967"
+                card_view:layout_constraintRight_toRightOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
                 card_view:layout_constraintTop_toBottomOf="@+id/itemDate" />
 
             <TextView
                 android:id="@+id/itemDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="8dp"
                 android:text="description"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="italic"
@@ -117,25 +117,24 @@
                 card_view:layout_constraintLeft_toLeftOf="parent"
                 card_view:layout_constraintRight_toRightOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/itemName" />
+                card_view:layout_constraintTop_toBottomOf="@+id/itemPrice" />
 
             <Button
                 android:id="@+id/match_button"
                 android:layout_width="88dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Match"
                 android:background="@color/askButtonBlue"
                 android:fontFamily="sans-serif-thin"
+                android:text="Match"
                 android:textColor="@color/white"
                 card_view:layout_constraintBottom_toBottomOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@+id/itemDescription"
-                card_view:layout_constraintVertical_bias="0.682" />
+                card_view:layout_constraintTop_toBottomOf="@+id/itemDescription" />
 
         </android.support.constraint.ConstraintLayout>
 
