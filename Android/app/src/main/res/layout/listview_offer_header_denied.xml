@@ -1,39 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textViewItemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="25dp" />
+
     <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="@dimen/requestOfferImageHeight"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/textViewItemName" >
 
-        <TextView
-            android:id="@+id/textViewStatus"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/imageViewItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/requestOfferImageHeight" />
 
-        <TextView
-            android:id="@+id/textViewMessage"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewItemImage">
+
+            <TextView
+                android:id="@+id/textViewUpdateMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_weight=".33"
+                android:gravity="center"
+                android:text="Your Offer for request 19 has been denied."
+                android:textAlignment="center"
+                android:textSize="@dimen/textSizeForMyRequestsOffers"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageViewItemImage"
-        android:layout_height="@dimen/requestOfferImageHeight"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNumOffersForRequest" />
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

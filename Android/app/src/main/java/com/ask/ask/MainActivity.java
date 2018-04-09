@@ -29,6 +29,8 @@ import com.ask.ask.Utils.DownloadImageTask;
 import com.elmargomez.typer.Font;
 import com.elmargomez.typer.Typer;
 
+import org.w3c.dom.Text;
+
 public class MainActivity extends AppCompatActivity
     implements
         HomeFragment.OnFragmentInteractionListener,
@@ -36,14 +38,16 @@ public class MainActivity extends AppCompatActivity
         MyRequestsFragment.OnFragmentInteractionListener,
         MyOffersFragment.OnFragmentInteractionListener,
         MySettingsFragment.OnFragmentInteractionListener,
-        MyAboutFragment.OnFragmentInteractionListener {
+        MyAboutFragment.OnFragmentInteractionListener,
+        MainMenuFragment.OnFragmentInteractionListener {
 
-    private String DEFAULT_USER_EMAIL = "alexander.fache@gmail.com";
-    private String DEFAULT_USER_PASSWORD = "empIYAH";
+    private String DEFAULT_USER_EMAIL = "cs947@cornell.edu"; //aleksi.durocher@gmail.com
+    private String DEFAULT_USER_PASSWORD = "askisd@best"; //passwordalexis
 
     //toolbars
     private CollapsingToolbarLayout mCollapsingToolbar;
     private Toolbar myToolbar;
+    public TextView toolBarTitle;
 
     // side menu views
     private DrawerLayout navigationDrawerLayout;
@@ -130,7 +134,7 @@ public class MainActivity extends AppCompatActivity
         //navigation bar "button"/slide
         Toolbar navigationToolbar = findViewById(R.id.toolbarid);
         setSupportActionBar(navigationToolbar);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_navigation_menu);
@@ -147,12 +151,9 @@ public class MainActivity extends AppCompatActivity
 
         //creating collapsing toolbar and adding title
         mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbar);
-        mCollapsingToolbar.setTitle(getTitle());
-        mCollapsingToolbar.setExpandedTitleTextAppearance(R.style.expandingToolbar);
-        mCollapsingToolbar.setCollapsedTitleTextAppearance(R.style.collapsingToolbar);
 
-    // display new request fragment
-    // add focus on spinner when toolbar dragged to ask new request
+        // display new request fragment
+        // add focus on spinner when toolbar dragged to ask new request
         myToolbar = (Toolbar) findViewById(R.id.toolbarid);
         myToolbar.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -173,12 +174,6 @@ public class MainActivity extends AppCompatActivity
                 return false;
             }
         });
-
-
-    //changing title font
-    Typeface font = Typer.set(this).getFont(Font.ROBOTO_THIN);
-    mCollapsingToolbar.setExpandedTitleTypeface(font);
-    mCollapsingToolbar.setCollapsedTitleTypeface(font);
 
 
         //creating the card
@@ -215,10 +210,12 @@ public class MainActivity extends AppCompatActivity
 
 
     /**
-     * Determines the menuItem that was selected and goes to the corresponding fragments.
+     * Determines the menuItem that was to be selected and goes to the corresponding fragments.
      * @param menuItem
      */
     private void selectDrawerItem(MenuItem menuItem) {
+        setTitle("");
+        TextView toolBarTitle = findViewById(R.id.toolBarTitleId);
         Fragment requestedFragment = null;
         Class requestedFragmentClass = null;
         switch (menuItem.getItemId()) {
@@ -261,7 +258,7 @@ public class MainActivity extends AppCompatActivity
         // set item as selected to persist highlight
         menuItem.setChecked(true);
         // close drawer when item is tapped
-        setTitle(menuItem.getTitle());
+        toolBarTitle.setText(menuItem.getTitle());
         navigationDrawerLayout.closeDrawers();
     }
 
@@ -287,9 +284,6 @@ public class MainActivity extends AppCompatActivity
      *
      */
     @Override
-    public void onFragmentInteraction(Uri uri){
-        //this is used to communicate with other fragments. Figure out how and if necessary
-        //send data I think
-    }
+    public void onFragmentInteraction(Uri uri){}
 
 }

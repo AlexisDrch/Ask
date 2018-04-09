@@ -24,10 +24,8 @@
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <!--<style name="collapsingToolbar" parent="@style/Base.TextAppearance.AppCompat.Title">-->
-    <!--<item name="android:textSize">24sp</item>-->
-    <!--<item name="android:textColor">@color/white</item>-->
-    <!--<item name="android:textStyle">normal</item>-->
-    <!--</style>-->
+    <style name="itemSpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/item_spinner</item>
+    </style>
 
 </resources>

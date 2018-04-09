@@ -12,11 +12,11 @@
     <string name="beach">Beach</string>
     <string name="hiking">Hiking</string>
 
-    <string name="REQUEST_WITH_PENDING_OFFERS">Status: Pending</string>
-    <string name="REQUEST_WITH_OFFER_SELECTED">Status: Match</string>
-    <string name="OFFER_PENDING_FOR_REQUEST">Status: Pending</string>
-    <string name="OFFER_ACCEPTED_FOR_REQUEST">Status: Match</string>
-    <string name="OFFER_DENIED">Status: Denied</string>
+    <string name="REQUEST_WITH_PENDING_OFFERS">Request Pending</string>
+    <string name="REQUEST_WITH_OFFER_SELECTED">Match</string>
+    <string name="OFFER_PENDING_FOR_REQUEST">Offer Pending</string>
+    <string name="OFFER_ACCEPTED_FOR_REQUEST">Match</string>
+    <string name="OFFER_DENIED">Offer Denied</string>
 
     <string name="category">Category</string>
     <string name="item">Item</string>
@@ -54,7 +54,7 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -66,5 +66,7 @@
     </string>
     <string name="noRequestsMade">You have made no Requests.</string>
     <string name="noOffersMade">You have made no Offers.</string>
+    <string name="providedBy">Provided by</string>
+    <string name="requestedBy">Requested by</string>
 
 </resources>

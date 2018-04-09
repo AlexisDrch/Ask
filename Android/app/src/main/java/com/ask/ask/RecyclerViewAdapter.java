@@ -3,6 +3,8 @@ package com.ask.ask;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -42,13 +44,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //
-        View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
-        return new MyViewHolder(listItem);
+
+            View listItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview, parent, false);
+            return new MyViewHolder(listItem);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+
         //create a new card using request data
         final Request currentRequest = (Request) requestsHashMap.values().toArray()[position];
 
@@ -65,14 +68,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final Item currentItem = LocalData.getHashMapItemsById().get(currentRequest.getItem_id());
         holder.itemName.setText(currentItem.getName());
         holder.itemIcon.setImageResource(currentItem.getIcon());
-        final String price = String.valueOf(currentItem.getPrice());
+        final String price = String.valueOf(currentRequest.getRequest_price());
         holder.itemPrice.setText(price);
+
+        final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
 
         // Match button
         holder.matchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final User currentUser = LocalData.getCurrentUserInstance(); //this is the logged in provider
                 String provider_name = currentUser.getName();
                 String provider_surname = currentUser.getSurname();
 
@@ -86,7 +90,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         ""+currentRequest.getLat(),
                         ""+price,
                         ""+currentRequest.getDescription(),
-                        ""+currentRequest.getEnd_date());
+                        ""+currentRequest.getEnd_date(),
+                        ""+currentUser.getPpicture_url(),
+                        ""+currentRequest.getRequester_name(),
+                        ""+currentRequest.getRequester_surname(),
+                        ""+currentRequest.getRequester_ppicture_url());
 
                 Log.d("POSTING OFFER", newOffer.toString());
                 //post new offer json object
@@ -142,15 +150,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
-        // Card view
+        // Card view onClick so that the card expands
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                //Adds a Request and Item to the newFragment
                 MainMenuFragment mainFrag = new MainMenuFragment();
+                Bundle b = new Bundle();
+                b.putSerializable("Request", (Serializable) currentRequest);
+                b.putSerializable("Item", (Serializable) currentItem);
+                mainFrag.setArguments(b);
+
 
                 FragmentTransaction ft = ((FragmentActivity)myContext).getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.expanded_container, mainFrag);
+                ft.replace(R.id.fragment_home, mainFrag);
                 ft.addToBackStack(null);
                 ft.commit();
             }
@@ -184,8 +198,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView profileName;
         private TextView itemPrice;
         private Button matchButton;
-
         private TextView itemDescription;
+
+        //expanded card elements
+        private ImageView ex_profileIcon;
+        private ImageView ex_itemIcon;
+        private TextView ex_itemName;
+        private TextView ex_itemDate;
+        private TextView ex_profileName;
+        private TextView ex_itemPrice;
+        private Button ex_matchButton;
+        private TextView ex_itemDescription;
 
         private CardView cardView;
 
@@ -202,10 +225,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             matchButton = (Button) itemView.findViewById(R.id.match_button);
             cardView = (CardView) itemView.findViewById(R.id.requestCard);
 
+
         }
 
     }
-
-
 
 }

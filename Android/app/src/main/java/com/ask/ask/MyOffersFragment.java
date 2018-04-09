@@ -89,7 +89,7 @@ public class MyOffersFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_offers, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_myoffers, container, false);
         refreshOffersFragment(rootView);
         return rootView;
     }
@@ -128,16 +128,18 @@ public class MyOffersFragment extends Fragment {
                                 offerColor = R.color.offerPending;
                                 Log.d("OFFERS FRAGMENT", "OFFER_PENDING_FOR_REQUEST");
                             } else if (currentOffer.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) { //ACCEPTED
-                                offerColor = R.color.offerAccepted;
                                 Log.d("OFFERS FRAGMENT", "OFFER_ACCEPTED_FOR_REQUEST");
                             } else if (currentOffer.getStatus() == LocalData.OFFER_DENIED){ //DENIED
                                 offerColor = R.color.offerDenied;
                                 Log.d("OFFERS FRAGMENT", "LocalData");
                             }
+                            String name = currentOffer.getRequester_name() + " " + currentOffer.getRequester_surname();
+                            Log.d("POOOOP", name);
 
-                            currentOfferInfoStr = offerCount + "#Name: " + "REQUESTER NAME" + "#Status: " + currentOffer.getStatus()
+                            currentOfferInfoStr = offerCount + "#" + name +  "#Status: " + currentOffer.getStatus()
                                     + "#Request Id: " + currentOffer.getRequest_id()
-                                    + "#" + offerColor + "#" + currentItem.getIcon();
+                                    + "#" + offerColor + "#" + currentItem.getIcon() + "#" + currentItem.getName()
+                                    + "#" + currentOffer.getProvider_ppicture_url();
 
                             listItemImages.add(currentOfferInfoStr);
                             hashMapOfferData.put(currentOfferInfoStr, listElements);
@@ -147,7 +149,7 @@ public class MyOffersFragment extends Fragment {
 
                     } //end for loop
 
-                    expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers); //defined in fragment_offers.xml
+                    expandableListViewOffers = (ExpandableListView) rootView.findViewById(R.id.expandableListViewOffers); //defined in fragment_myoffersrs.xml
                     expandableListViewAdapter = new ExpandableOfferAdapter(getContext(), listItemImages, hashMapOfferData);
                     expandableListViewOffers.setAdapter(expandableListViewAdapter);
                     int[] color = {Color.BLACK, Color.BLACK};
@@ -159,7 +161,7 @@ public class MyOffersFragment extends Fragment {
                     display.getSize(size);
                     int width = size.x;
 
-                    expandableListViewOffers.setIndicatorBounds(width - 100, width);
+                    expandableListViewOffers.setIndicatorBounds(width + 100, width);
 
                 }
 

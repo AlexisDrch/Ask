@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,15 +47,22 @@ public class MyRequestsFragment extends Fragment {
 
     private ExpandableListView expandableListViewRequests;
     private ExpandableListAdapter expandableListViewAdapter;
-    private static HashMap<String, Request> requestHashMap = null; //
+    private static HashMap<String, Request> requestHashMap = null;//
+    private static HashMap<String, User> userHashMap;
+
     private HashMap<String, Offer> offersForRequestHashMap = null; //offer id, Offer object
     private List<String> listItemImages;
     private List<String> listElements;
     private HashMap<String, List<String>> hashMapRequestData;
 
     private static int requestCount = 0;
-    private int requestColor;
+    private int requestColor = R.color.requestWithOutOffer;
     private int numOffersForCurrentRequest;
+    private String providerName;
+    private String providerIdForCurrentRequest;
+    private String providerProfileImageForCurrentRequest;
+    private User provider;
+
 
     public MyRequestsFragment() {
         // Required empty public constructor
@@ -89,7 +97,7 @@ public class MyRequestsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_requests, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_myrequests, container, false);
         refreshRequestsFragment(rootView);
         return rootView;
     }
@@ -107,6 +115,7 @@ public class MyRequestsFragment extends Fragment {
                 hashMapRequestData = new HashMap<>();
                 listItemImages = new ArrayList<>();
                 listElements = null;
+                provider = null;
 
                 requestCount = 0;
 
@@ -128,6 +137,9 @@ public class MyRequestsFragment extends Fragment {
                             offersForRequestHashMap = JsonParser.JsonArrayOffersToHashMapOffers(jsonArrayOffersForRequest);
 
                             listElements = new ArrayList<>();
+                            providerName = "XXXX"; //to make string split happy
+                            providerIdForCurrentRequest = "XXXX";
+                            providerProfileImageForCurrentRequest = "XXXX";
 
                             Log.d("CURRENT REQUEST", "ID: " + currentRequest.getRequest_id() + " STATUS: " + currentRequest.getStatus());
                             if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_WITH_PENDING_OFFERS) { //With or without pending Offers
@@ -136,32 +148,43 @@ public class MyRequestsFragment extends Fragment {
                                     Log.d("OFFER HASH MAP", "SIZE: " + offersForRequestHashMap.size());
 
                                     numOffersForCurrentRequest = offersForRequestHashMap.size();
-                                    requestColor = R.color.requestWithOffer;
 
                                     //loop through Offers for current Request and create String description to add to listElements
                                     for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
-                                        String currentOfferInfoStr = "Provider: " + (currentOfferForCurrentRequest.getProvider_name() + " "
-                                                + currentOfferForCurrentRequest.getProvider_surname()) + "#Price: $" + currentItem.getPrice()
+                                        String currentOfferInfoStr = (currentOfferForCurrentRequest.getProvider_name() + " "
+                                                + currentOfferForCurrentRequest.getProvider_surname()) + "#$" + currentItem.getPrice()
                                                 + "0#" + requestColor + "#" + currentRequest.getRequest_id()
-                                                + "#" + currentOfferForCurrentRequest.getProvider_id() + "#" + currentRequest.getRequester_id();
+                                                + "#" + currentOfferForCurrentRequest.getProvider_id() + "#" + currentRequest.getRequester_id()
+                                                + "#" + currentOfferForCurrentRequest.getProvider_ppicture_url() + "#" + currentUser.getPpicture_url()
+                                                + "#" + (currentUser.getName() + " " + currentUser.getSurname()) + "#" + currentItem.getName() + "#" + currentItem.getItem_id();
 
                                         listElements.add(currentOfferInfoStr);
                                     }
                                 } else {
                                     numOffersForCurrentRequest = 0;
-                                    requestColor = R.color.requestWithOutOffer;
                                     Log.d("OFFER HASH MAP", "NO OFFERS");
                                 }
 
                             } else if (Integer.parseInt(currentRequest.getStatus()) == LocalData.REQUEST_WITH_OFFER_SELECTED){ //Requester accepted an Offer
+                                for (final Offer currentOfferForCurrentRequest : offersForRequestHashMap.values()) {
+                                    if (currentOfferForCurrentRequest.getStatus() == LocalData.OFFER_ACCEPTED_FOR_REQUEST) {
+
+
+                                        providerName = currentOfferForCurrentRequest.getProvider_name() + " " + currentOfferForCurrentRequest.getProvider_surname();
+                                        providerIdForCurrentRequest = currentOfferForCurrentRequest.getProvider_id();
+                                        providerProfileImageForCurrentRequest = currentOfferForCurrentRequest.getProvider_ppicture_url();
+                                        break;
+                                    }
+                                }
+
                                 numOffersForCurrentRequest = -1;
-                                requestColor = R.color.requestWithOfferAccepted;
                                 Log.d("OFFER HASH MAP", "OFFER ACCEPTED");
                             }
 
                             //current Request information
-                            String imageHeaderStr = requestCount + "#Offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
-                                    + "#Status: " + currentRequest.getStatus() + "#" + requestColor + "#" + currentItem.getIcon();
+                            String imageHeaderStr = requestCount + "#Your offers: " + numOffersForCurrentRequest + "#Request Id: " + currentRequest.getRequest_id()
+                                    + "#Status: " + currentRequest.getStatus() + "#" + requestColor + "#" + currentItem.getIcon() + "#" + currentItem.getName()
+                                    + "#" + providerName + "#" + providerIdForCurrentRequest + "#" + currentUser.getUser_id() + "#" + providerProfileImageForCurrentRequest;
                             listItemImages.add(imageHeaderStr);
 
                             hashMapRequestData.put(imageHeaderStr, listElements);
@@ -201,7 +224,7 @@ public class MyRequestsFragment extends Fragment {
     public void assignToExpandableListView(View rootView) {
 //        Log.d("hashMapRequestData", hashMapRequestData.toString());
 
-        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests); //defined in fragment_requests.xml
+        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests); //defined in fragment_myrequests.xmlml
         expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemImages, hashMapRequestData);
         expandableListViewRequests.setAdapter(expandableListViewAdapter);
         int[] color = {Color.BLACK, Color.BLACK};

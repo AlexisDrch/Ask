@@ -27,8 +27,6 @@
         android:fitsSystemWindows="true"
         android:id="@+id/container">
 
-
-
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
@@ -37,18 +35,14 @@
             android:fitsSystemWindows="true">
 
 
-            <android.support.design.widget.CollapsingToolbarLayout
+        <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/collapsingToolbar"
+                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background"
-                app:titleEnabled="true"
+                app:titleEnabled="false"
                 app:contentScrim="@color/colorPrimaryDark"
-                app:expandedTitleMarginEnd="64dp"
-                app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:expandedTitleGravity="bottom"
-                app:collapsedTitleGravity="bottom|center_horizontal"
                 app:title="@string/app_name">
 
                 <!-- Fragment where user can  -->
@@ -62,8 +56,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:collapsedTitleGravity="bottom|center_horizontal"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                </android.support.v7.widget.Toolbar>
+
+                <TextView
+                    android:id="@+id/toolBarTitleId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/app_name"
+                    android:textColor="@color/milkWhite"
+                    android:fontFamily="sans-serif-thin"
+                    app:layout_collapseMode="pin"
+                    android:textSize="40sp"/>
 
             </android.support.design.widget.CollapsingToolbarLayout>
 

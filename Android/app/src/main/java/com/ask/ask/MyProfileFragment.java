@@ -83,7 +83,7 @@ public class MyProfileFragment extends Fragment {
 
         currentlyEditing = false;
 
-        View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_myprofile, container, false);
 
         editTextName = (EditText) rootView.findViewById(R.id.editTextName);
 //        ratingBarUserRating = (RatingBar) rootView.findViewById(R.id.ratingBarUserRating);

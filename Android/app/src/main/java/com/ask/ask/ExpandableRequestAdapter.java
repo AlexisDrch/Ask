@@ -1,9 +1,12 @@
 package com.ask.ask;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,8 @@ import android.widget.Toast;
 //import com.baoyz.swipemenulistview.SwipeMenuCreator;
 //import com.baoyz.swipemenulistview.SwipeMenuItem;
 //import com.baoyz.swipemenulistview.SwipeMenuListView;
+
+import com.ask.ask.Utils.DownloadImageTask;
 
 import org.json.JSONArray;
 import org.w3c.dom.Text;
@@ -36,6 +41,8 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> listHeaders;
     private HashMap<String, List<String>> listHashMap;
+    private static HashMap<String, User> userHashMap;
+
 
     public ExpandableRequestAdapter(Context context, List<String> listHeaders, HashMap<String, List<String>> listHashMap) {
         this.context = context;
@@ -87,62 +94,103 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         String headerStr = (String) getGroup(position);
         String[] headerArr = headerStr.split("#");
         String numOffersForCurrentRequest = headerArr[1];
-        String requestId = headerArr[2];
+        final String requestId = headerArr[2];
         String status = headerArr[3];
         int temp = status.indexOf(":");
         int statusInt = Integer.parseInt(status.substring(temp + 1).trim());
         int color = Integer.parseInt(headerArr[4]);
         int imageIcon = Integer.parseInt(headerArr[5]);
+        String itemName = headerArr[6];
+        String providerName = headerArr[7];
+        final String provider_id = headerArr[8];
+        final String requester_id = headerArr[9];
+        final String provider_ppicture_url = headerArr[10];
 
         if (statusInt == LocalData.REQUEST_WITH_PENDING_OFFERS) {
 
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_request_header_pending, null);
-            }
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.listview_request_header_pending, parent, false);
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            ImageView imageViewRemoveRequest = (ImageView) view.findViewById(R.id.imageViewRemoveRequest);
+            imageViewRemoveRequest.setBackgroundColor(view.getResources().getColor(R.color.colorPrimaryDark));
+            imageViewRemoveRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("REQUESTADAPTER", "cancel request");
+                    Toast.makeText(v.getContext(), "Requested Removed.", Toast.LENGTH_SHORT);
+                }
+            });
 
-            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
-            imageViewHeader.setImageResource(imageIcon);
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackground(view.getResources().getDrawable(R.drawable.backgroundgradient));
+
+            ImageView imageViewItemImage = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewItemImage.setImageResource(imageIcon);
 
             TextView textViewNumOffersForRequest = (TextView) view.findViewById(R.id.textViewNumOffersForRequest);
             textViewNumOffersForRequest.setText(numOffersForCurrentRequest);
 
             TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
             textViewStatus.setText(R.string.REQUEST_WITH_PENDING_OFFERS);
-
-            TextView textViewRequestId = (TextView) view.findViewById(R.id.textViewRequestId);
-            textViewRequestId.setText(requestId);
+            textViewStatus.setTextColor(view.getResources().getColor(R.color.requestWithOutOffer));
 
         } else if (statusInt == LocalData.REQUEST_WITH_OFFER_SELECTED) {
 
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.listview_request_header_accepted, null);
-            }
+            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.listview_request_header_accepted, parent, false);
 
-            view.setBackgroundColor(view.getResources().getColor(color));
+            TextView textViewItemName = (TextView) view.findViewById(R.id.textViewItemName);
+            textViewItemName.setText(itemName);
+            textViewItemName.setBackground(view.getResources().getDrawable(R.drawable.backgroundgradient));
 
-            ImageView imageViewHeader = (ImageView) view.findViewById(R.id.imageViewItemImage);
-            imageViewHeader.setImageResource(imageIcon);
-
-            TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
-            textViewProviderName.setText("PROVIDER NAME"); //TODO: get Provider name to display here
-
-            TextView textViewStatus = (TextView) view.findViewById(R.id.textViewStatus);
-            textViewStatus.setText(R.string.REQUEST_WITH_OFFER_SELECTED);
-
-            Button buttonMessage = (Button) view.findViewById(R.id.buttonMessage);
-            buttonMessage.setOnClickListener(new View.OnClickListener() {
+            // Handles when profilePic is clicked
+            ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.cardViewProfileImage);
+            new DownloadImageTask((ImageView) cardViewProfileImage).execute(provider_ppicture_url);
+            cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) { //TODO: switch to messaging screen
+                public void onClick(View view) {
+                    final Intent intent = new Intent(context, ProfileActivity.class);
 
+                    VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users", context);
+                    process.jsonReader(new VolleyCallback() {
+                        @Override
+                        public void onSuccess(JSONArray jsonArrayRequests) {
+                            // handle JSONOBJECT response
+                            userHashMap = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
+                            for (String each : userHashMap.keySet()) {
+                                Log.d("USER KEY", each);
+                            }
+                            User profile = userHashMap.get(provider_id);
+                            Log.d("PROFILE#", profile.toString());
+                            intent.putExtra("profileUser", (Serializable) profile);
+                            context.startActivity(intent);
+                        }
 
+                        @Override
+                        public void onFailure() {
+                            // in case of failure
+                            Log.d("USER_GET_FAILURE", "Something went wrong");
+                        }
+                    });
 
-                    Toast.makeText(v.getContext(), "Go to Message Screen.", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
+            textViewProviderName.setText(context.getString(R.string.providedBy) + " " + providerName);
+
+            ImageView imageViewButtonMessage = (ImageView) view.findViewById(R.id.imageViewButtonMessage);
+            imageViewButtonMessage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Intent intent = new Intent(v.getContext(), MessagingActivity.class);
+                    v.getContext().startActivity(intent);
+                }
+            });
+
+            ImageView imageViewItemImage = (ImageView) view.findViewById(R.id.imageViewItemImage);
+            imageViewItemImage.setImageResource(imageIcon);
 
         }
 
@@ -153,19 +201,22 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) { //only when statusInt == LocalData.REQUEST_WITH_OFFER_SELECTED
         String elementStr = (String) getChild(groupPosition, childPosition);
         String[] elementsArr = elementStr.split("#");
-        String provider_name = elementsArr[0];
+        final String provider_name = elementsArr[0];
         final String request_price = elementsArr[1];
-        int color = Integer.parseInt(elementsArr[2]);
+//        int color = Integer.parseInt(elementsArr[2]);
         final String request_id = elementsArr[3];
         final String provider_id = elementsArr[4];
         final String requester_id = elementsArr[5]; //current logged in user
+        final String provider_ppicture_url = elementsArr[6];
+        final String requester_ppicture_url = elementsArr[7];
+        final String requester_name = elementsArr[8];
+        final String itemName = elementsArr[9];
+        final String itemId = elementsArr[10];
 
-        if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.listview_request_item_offers, null);
-        }
 
-        view.setBackgroundColor(view.getResources().getColor(color));
+        LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        view = inflater.inflate(R.layout.listview_request_item_offers, parent, false);
 
         TextView textViewProviderName = (TextView) view.findViewById(R.id.textViewProviderName);
         textViewProviderName.setText(provider_name);
@@ -173,12 +224,44 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         TextView textViewPrice = (TextView) view.findViewById(R.id.textViewPrice);
         textViewPrice.setText(request_price);
 
+        ImageView cardViewProfileImage = (ImageView) view.findViewById(R.id.pA_profilePic);
+        new DownloadImageTask((ImageView) cardViewProfileImage).execute(provider_ppicture_url);
+
+        // Handles when profilePic is clicked
+        cardViewProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Intent intent = new Intent(context, ProfileActivity.class);
+
+                VolleyFetcher process = new VolleyFetcher("https://ask-capa.herokuapp.com/api/users", context);
+                process.jsonReader(new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONArray jsonArrayRequests) {
+                        // handle JSONOBJECT response
+                        userHashMap = JsonParser.JsonArrayUsersToHashMapUsers(jsonArrayRequests);
+                        for (String each : userHashMap.keySet()) {
+                            Log.d("USER KEY", each);
+                        }
+                        User profile = userHashMap.get(provider_id);
+                        Log.d("PROFILE#", profile.toString());
+                        intent.putExtra("profileUser", (Serializable) profile);
+                        context.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        // in case of failure
+                        Log.d("USER_GET_FAILURE", "Something went wrong");
+                    }
+                });
+
+            }
+        });
+
         Button buttonAcceptOffer = (Button) view.findViewById(R.id.buttonAcceptOffer);
         buttonAcceptOffer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //TODO: send Offer accept status to database and update Request, Offer
-                Log.d("ExpRequestAdapter", "buttonAccept");
-
+            public void onClick(View v) {
                 final String url = "https://ask-capa.herokuapp.com/api/offers/accept/" + requester_id;
                 final View vi = v;
 
@@ -187,15 +270,20 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onSuccess(JSONArray jsonArray) {
                         Toast.makeText(vi.getContext(), "Offer Accepted.", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(vi.getContext(), "Go to Message Screen.", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(vi.getContext(), .class); //TODO: go to messaging, same as for buttonMessage
-//                        vi.getContext().startActivity(intent);
+
+                        final Intent intent = new Intent(vi.getContext(), OfferAcceptedActivity.class);
+                        intent.putExtra("itemName", itemName);
+                        intent.putExtra("itemImage", LocalData.getHashMapItemsById().get(itemId).getIcon());
+                        intent.putExtra("requesterName", requester_name);
+                        intent.putExtra("requesterImage", requester_ppicture_url);
+                        intent.putExtra("providerName", provider_name);
+                        intent.putExtra("providerImage", provider_ppicture_url);
+                        vi.getContext().startActivity(intent);
                     }
 
                     @Override
                     public void onFailure() {
                         Toast.makeText(vi.getContext(), "Error Accepting Offer. Returning to Home Screen.", Toast.LENGTH_SHORT).show();
-                        // handle failure on accepting offer
                         Intent intent = new Intent(vi.getContext(), MainActivity.class);
                         vi.getContext().startActivity(intent);
                     }
@@ -209,7 +297,7 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) { //TODO: send Offer accept status to database and update Request, Offer
                 //TODO: send OFFER_DENIED to database with the offer_id
-                Log.d("ExpRequestAdapter", "buttonAccept");
+                Log.d("RequestAdapter", "buttonDenyOffer");
 
 
                 Toast.makeText(v.getContext(), "Offer Denied.", Toast.LENGTH_SHORT).show();
@@ -219,60 +307,9 @@ public class ExpandableRequestAdapter extends BaseExpandableListAdapter {
         return view;
     }
 
-    private void sendAcceptOffer(View view, String request_id, String provider_id) {
-
-
-    }
-
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
 
 }
-
-
-//v would be to replace buttonAccept and buttonDeny
-
-//        SwipeMenuListView swipeMenuOfferControl = (SwipeMenuListView) view.findViewById(R.id.swipeMenuOfferControl);
-//
-//        ArrayList<String> listView = new ArrayList<>();
-//
-//        ArrayAdapter adapter = new ArrayAdapter(view.getContext(), android.R.layout.simple_list_item_1);
-//        swipeMenuOfferControl.setAdapter(adapter);
-//
-//        final View v = view;
-//        SwipeMenuCreator creator = new SwipeMenuCreator() {
-//            @Override
-//            public void create(SwipeMenu menu) {
-//                // create "open" item
-//                SwipeMenuItem openItem = new SwipeMenuItem(v.getContext());
-//                // set item background
-//                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
-//                        0xCE)));
-//                // set item width
-//                openItem.setWidth(dp2px(90));
-//                // set item title
-//                openItem.setTitle("Open");
-//                // set item title fontsize
-//                openItem.setTitleSize(18);
-//                // set item title font color
-//                openItem.setTitleColor(Color.WHITE);
-//                // add to menu
-//                menu.addMenuItem(openItem);
-//
-//                // create "delete" item
-//                SwipeMenuItem deleteItem = new SwipeMenuItem(v.getContext());
-//                // set item background
-//                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
-//                        0x3F, 0x25)));
-//                // set item width
-//                deleteItem.setWidth(dp2px(90));
-//                // set a icon
-//                deleteItem.setIcon(R.drawable.ic_delete);
-//                // add to menu
-//                menu.addMenuItem(deleteItem);
-//            }
-//        };
-//
-//        listView.setMenuCreator(creator);

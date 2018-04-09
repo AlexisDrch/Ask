@@ -186,7 +186,7 @@ public class Request implements Serializable {
 
         return "A " + requestedItem.getName() +
                 " from " + this.getBegin_date() + " to " + this.getEnd_date() +
-                " for " + requestedItem.getPrice() + " $ per day";
+                " for $" + request_price + " per day";
     }
 
 }
