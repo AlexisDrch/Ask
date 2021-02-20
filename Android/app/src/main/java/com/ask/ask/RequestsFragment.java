@@ -1,14 +1,31 @@
 package com.ask.ask;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -30,13 +47,19 @@ public class RequestsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+
     private ExpandableListView expandableListViewRequests;
+    private ExpandableListAdapter expandableListViewAdapter;
+    private List<Request> listRequests;
+    private List<Integer> listItemHeaders;
+    private List<String> listElements;
+    private HashMap<Integer, List<String>> hashMapRequestData;
+
 
     public RequestsFragment() {
         // Required empty public constructor
     }
-
-    // myRequest
 
     /**
      * Use this factory method to create a new instance of
@@ -66,90 +89,44 @@ public class RequestsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d("onCreateView()", "RequestsFragment");
         View rootView = inflater.inflate(R.layout.fragment_requests, container, false);
 
-        User user_data[] = new User[]
-                {
-                        new User(5, "bob123", "password",
-                        "bob@gmail.com", "Bob", "Builder",
-                        "Construction worker looking for some stuff",
-                        "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-                        "678-456-9831", 25, 1, "711-2880 Nulla St." +
-                                "Mankato, Mississippi 96522", R.drawable.bob_profile),
-
-                        new User(6, "jim123", "password",
-                                "jim@gmail.com", "Jim", "Jimmy",
-                                "Just a dude, doing dude things",
-                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-                                "770-783-2923", 29, 1, "606-3727 Ullamcorper. Street " +
-                                "Roseville, NH 11523", R.drawable.jim_profile),
-
-                        new User(7, "nancy123", "password",
-                                "nancy@gmail.com", "Nancy", "Yancy",
-                                "Just a dudette, doing dudette things",
-                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-                                "404-719-3817", 26, 0, "Ap #867-859 Sit Rd. Azusa, New York 39531",
-                                R.drawable.nancy_profile),
-
-                        new User(8, "karen123", "password",
-                                "karen@gmail.com", "Karen", "Barron",
-                                "Just a girl, doing girl things",
-                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-                                "678-820-8638", 29, 0, "7292 Dictum Av. San Antonio, MI 47096",
-                                R.drawable.karen_profile),
-
-                        new User(9, "john123", "password",
-                                "john@gmail.com", "John", "Smith",
-                                "I'm confident in my password strength",
-                                "https://en.wikipedia.org/wiki/Bob_the_Builder#/media/File:Bob_the_builder.jpg",
-                                "770-293-3621", 31, 1, "191-103 Integer Rd. " +
-                                "Corona, New Mexico 08219",
-                                R.drawable.john_profile)
-                };
-
-        //Creating an array of items
-
-        Item item_data[] = new Item[]
-                {
-                        new Item(5,"Golf Club", null,
-                                5.00, null, R.mipmap.item_golfclub),
-                        new Item(6,"Pot", null,
-                                10.00, null, R.mipmap.item_pot),
-                        new Item( 7,"Sleeping Bag", null,
-                                7.00, null, R.mipmap.item_sleepingbag),
-                        new Item(8,"Surfboard", null,
-                                12.00, null, R.mipmap.item_surfboard),
-                        new Item(9, "Tent", null,
-                                5.00, null, R.mipmap.item_tent)
-                };
-
-        //Creating an array of Requests
-
-//        Request request_data[] = new Request[]
-//                {
-//                        new Request(user_data[0], item_data[0], "6/10/18", "6/12/18",
-//                                "I want a golf club for one weekend," +
-//                                        " price can be negotiable" ),
-//                        new Request(user_data[1], item_data[1], "7/05/18", "7/06/18",
-//                                "I am traveling for a day and " +
-//                                        "need a pot to cook some food" ),
-//                        new Request(user_data[2], item_data[2], "7/15/18", "7/18/18",
-//                                "I am camping for a couple of days and need" +
-//                                        " a sleeping bag"),
-//                        new Request(user_data[3], item_data[3], "6/12/18", "6/13/18",
-//                                "I want to go surfing for the day"),
-//                        new Request(user_data[4], item_data[4], "7/24/18", "7/26/18",
-//                                "I need a tent for the weekend, preferably" +
-//                                        " for one person")
-//                };
-
-//        ExpandableRequestAdapter adapter = new ExpandableRequestAdapter(getContext(), R.layout.listview_request_row, request_data);
+//        //https://ask-capa.herokuapp.com/api/requests/by/1
+//        HashMap<String, Request> hashMapOfUserRequests = FetchRequest("https://ask-capa.herokuapp.com/api/requests/by/" + "1", getContext());
+//        listRequests = new ArrayList<Request>(hashMapOfUserRequests.values()); //TODO: get Requests //these are the Requests
+//        listItemHeaders = new ArrayList<>(listRequests.size());
+//        listElements = new ArrayList<>();
+//        hashMapRequestData = new HashMap<>(listRequests.size());
+//
+//        for (int i = 0; i < listRequests.size(); i++) {
+////            listItemHeaders.add(listRequests.get(i).getItem().getIcon());
+//            listItemHeaders.add(R.drawable.tent); //0000000000 TODO: set item ids locally
+//
+//            listElements.clear();
+//            listElements.add("Item: " + listRequests.get(i).getItem().getName());
+//            listElements.add("Date: " + listRequests.get(i).getBeginDate() + " - " + listRequests.get(i).getEndDate());
+//            listElements.add("Price: $" + listRequests.get(i).getItem().getPrice());
+//            listElements.add("Description: " + listRequests.get(i).getDescription());
+//            listElements.add("Status: " + listRequests.get(i).getStatus());
+//
+//            hashMapRequestData.put(listItemHeaders.get(i), listElements);
+//        }
+//
 //        expandableListViewRequests = (ExpandableListView) rootView.findViewById(R.id.expandableListViewRequests);
-//        expandableListViewRequests.setAdapter(adapter);
+//        expandableListViewAdapter = new ExpandableRequestAdapter(getContext(), listItemHeaders, hashMapRequestData);
+//        expandableListViewRequests.setAdapter(expandableListViewAdapter);
+//        int[] color = {Color.BLACK, Color.BLACK};
+//        expandableListViewRequests.setDivider(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, color));
+//        expandableListViewRequests.setDividerHeight(4);
+//
+//        Display display = getActivity().getWindowManager().getDefaultDisplay();
+//        Point size = new Point();
+//        display.getSize(size);
+//        int width = size.x;
+//
+//        expandableListViewRequests.setIndicatorBounds(width - 100, width);
 
         return rootView;
     }

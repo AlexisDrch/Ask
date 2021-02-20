@@ -114,6 +114,16 @@ public class Request {
 //                '}';
 //    }
 
+
+    public Request(String requester_id, String request_id, String item_id, String begin_date, String end_date, String description) {
+        this.end_date = end_date;
+        this.request_id = request_id;
+        this.description = description;
+        this.item_id = item_id;
+        this.begin_date = begin_date;
+        this.requester_id = requester_id;
+    }
+
     private String lon;
 
     private String end_date;

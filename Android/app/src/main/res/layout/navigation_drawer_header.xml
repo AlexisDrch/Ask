@@ -13,10 +13,11 @@
         android:layout_height="wrap_content"
         android:text="Profile Image"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
     <!--<ImageView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:/>-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@mipmap/alex_profile"/>-->
 
     <TextView
         android:layout_width="match_parent"
@@ -32,3 +33,26 @@
 
 
 </LinearLayout>
+
+<!--<ImageView-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:src="@mipmap/alex_profile" />-->
+
+<!--<TextView-->
+<!--android:id="@+id/textViewName"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:text="Alex Fache"-->
+<!--android:layout_gravity="center_horizontal|bottom"-->
+<!--android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>-->
+
+<!--<TextView-->
+<!--android:id="@+id/textViewEmail"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_gravity="end|bottom"-->
+<!--android:text="alexander.fache@gmail.com"-->
+<!--android:textAlignment="textEnd"-->
+<!--android:textAppearance="@style/TextAppearance.AppCompat.Caption"-->
+<!--app:layout_gravity=".9" />-->

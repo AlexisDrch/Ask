@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-
 /**
  * Created by alexander on 2/26/2018.
  *
@@ -37,7 +36,7 @@ public class User {
 
     private ArrayList<Request> requests;
     private ArrayList<Offer> offers;
-    private ArrayList<Match> matches;
+    private ArrayList<Offer> matches;
 
     private LinkedList<Review> reviews;
 
@@ -76,7 +75,7 @@ public class User {
         return offers;
     }
 
-    public ArrayList<Match> getMatches() {
+    public ArrayList<Offer> getOfferes() {
         return matches;
     }
 
